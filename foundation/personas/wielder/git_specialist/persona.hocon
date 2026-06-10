@@ -1,0 +1,20 @@
+id = "git_specialist"
+kind = "persona"
+base = "wielder_core"
+extends = []
+version = 1
+prompt_body_file = "body.md"
+
+tools = [
+  "git"
+]
+
+outputs = {
+  change_summary = true
+  submodule_state_report = true
+}
+
+final = [
+  "safety.no_destructive_git"
+  "provenance.require_diff_summary"
+]

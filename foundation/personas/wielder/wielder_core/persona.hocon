@@ -1,0 +1,12 @@
+id = "wielder_core"
+kind = "persona"
+extends = []
+version = 1
+prompt_body_file = "body.md"
+
+tools = []
+
+final = [
+  "safety.no_destructive_git"
+]
+

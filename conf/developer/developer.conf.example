@@ -1,0 +1,8 @@
+user_name = "replace_me_user_name"
+provider = "openai"
+agent_type = "codex-cli"
+agent_instance_id = "replace_me_instance_id"
+agent_version = "replace_me_model_version"
+session_id = "replace_me_session_id"
+run_id = "replace_me_run_id"
+invoked_at_utc = "replace_me_utc_iso8601"

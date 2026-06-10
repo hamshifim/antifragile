@@ -1,0 +1,6 @@
+.foundation_audit/
+conf/developer/developer.conf
+__pycache__/
+*.py[cod]
+
+*secret*
