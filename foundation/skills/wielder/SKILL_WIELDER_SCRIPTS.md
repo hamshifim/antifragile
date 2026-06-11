@@ -35,6 +35,33 @@ Operational scripts become fragile when they grow a second understanding of conf
 * Strongly suggest treating such cross-repo access as explicit dependency wiring, not as a generic framework feature. The script should read foreign owned fields, not absorb the foreign app's whole config identity.
 * If the bridge logic is only a few lines, keep it WET and local on purpose. A garden of tiny explicit bridges is healthier than a premature generic loader that hides ownership.
 
+### 2.1.0 Project-Level App Config Entrypoint
+
+Each Wielder-managed project or submodule should expose a local canonical config
+accessor, following the Starget pattern:
+
+```python
+from <project>_wielder.core.configurer import get_app_conf
+
+APP_NAME = "<app-or/nested/app>"
+
+def main() -> None:
+    conf = get_app_conf(APP_NAME)
+    ...
+```
+
+Leaf scripts should import the project/submodule accessor instead of calling
+`wielder.wield.wield_conf.get_wield_app_conf(...)` directly. The project accessor
+owns `project_root`, `conf_root`, `project_name`, runtime defaults, project-local
+ontology injections, and any sanctioned compatibility options such as `mute`,
+`module_paths`, `app_conf_root`, and `resolve`.
+
+Local operator verbs may have a small positional vocabulary, but Wielder action
+selection should still enter config before execution, usually through
+`cli_overrides={"action": WieldAction.INIT}` or the shared
+`build_cli_overrides(...)` helper. Avoid resolving config and then overriding
+`action` as a separate Python side channel.
+
 ### 2.1.1 Thin Ecosystem Wrapper Discipline
 
 Scripts should treat local, hybrid, and cloud expressions as phenotypes of the same configured app family whenever possible.
