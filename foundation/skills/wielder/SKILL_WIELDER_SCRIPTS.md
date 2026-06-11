@@ -125,6 +125,12 @@ When a Wielder script depends on a backend CLI, the script should remove manual 
 ## 2.6 Factory Surfaces and Typed Contracts
 When the same abstract operation exists across multiple provider surfaces, prefer a factory/accessor pattern over scattered provider conditionals.
 
+Use [Capability Surface Extraction](SKILL_CAPABILITY_SURFACE_EXTRACTION.md)
+when a script, service wrapper, GUI, API, or notebook is trying to expose the
+full useful range of an existing module, model, service, or app. That skill owns
+the inventory-to-operator-surface workflow; this section owns the script/factory
+boundary discipline.
+
 * Define a shared surface contract for the abstract operation, such as storage cloning, secret management, scheduling, image publishing, monitoring, or provisioning.
 * Implement provider-specific classes behind a small factory or accessor boundary. Client scripts should ask for the configured surface and call the common interface.
 * When wrapping a third-party API behind a generic Wielder surface, keep provider API nomenclature and full provider API shape in a dedicated `<platform>_wrapper` module/class. The wrapper should speak the platform's native ontology and expose enough platform-native capability for diagnostics, edge cases, and maximal functionality. The Wielder adapter should wrap that provider class and expose generic Wielder verbs and ontology. Both surfaces may be available to callers, but Wielder scripts should prefer the generic adapter unless they are explicitly inspecting provider-specific behavior.

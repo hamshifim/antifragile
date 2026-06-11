@@ -24,6 +24,9 @@ To ensure architectural alignment across varying Python execution environments a
 5. **[Wielder Scripting & Evaluation Skills](../../skills/wielder/SKILL_WIELDER_SCRIPTS.md)**
    *Scope:* Thin Wielder orchestration scripts, configuration-driven filesystem operations, local action discipline, long-running handoffs, and backend CLI configuration from resolved HOCON.
 
+5.1. **[Capability Surface Extraction](../../skills/wielder/SKILL_CAPABILITY_SURFACE_EXTRACTION.md)**
+   *Scope:* Deriving the fullest honest operator-facing capability surface from an app, model, service, or module through typed contracts, config-owned defaults, shared projections, lifecycle events, artifact access, and validation ladders.
+
 6. **[Local Hybrid Dev Workflow](../../skills/wielder/SKILL_LOCAL_HYBRID_DEV_WORKFLOW.md)**
    *Scope:* Fast local app or service iteration against a full remote/provider ecosystem using thin hybrid overlays, local server/client/GPU-service restart discipline, provider-backed service probes, and clear handoffs for image, Kubernetes, Spark, or cloud runtime changes.
 
