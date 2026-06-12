@@ -86,6 +86,37 @@ Some scripts need a small local command vocabulary in addition to Wielder topolo
 * Strongly suggest defaulting direct CLI execution to the dominant operational behavior when one obviously exists, rather than multiplexing many loosely maintained modes through one argv surface.
 * Strongly suggest separating internal programmatic action hooks from human-facing shell invocation if a script starts accumulating too many modes.
 
+### 2.2.1 Test Mode Endpoint Discipline
+
+The Wielder `-t/--test` mode makes test scenarios available through the same
+endpoint that plans, applies, deletes, runs, or monitors the normal workload.
+See [Architectural Testing & Live QA Execution Protocols](SKILL_TEST_GUIDELINES.md)
+for the fixture philosophy and [Wielder PyHocon Configuration Guidelines](SKILL_CONFIGURATION_GUIDELINES.md)
+for overlay precedence.
+
+* A Wielder endpoint that uses `get_ecosystem_parser()` should pass `args.test`
+  into `build_cli_overrides(...)` with the other mode dimensions. Do not add a
+  sibling `--system-test`, `--test-fixture`, or environment-variable switch when
+  the scenario can be expressed by the configured test overlay.
+* A parent endpoint that invokes child Wielder apps should propagate the
+  resolved test mode through `build_cli_overrides_from_conf(conf, action=...)`.
+  This lets every child endpoint see the same scenario envelope without a
+  bespoke override ferry.
+* Test behavior belongs in resolved HOCON, usually
+  `conf/test/<domain>/<ecosystem>/test.conf` for system scenarios and
+  `conf/apps/<app>/test.conf` for app-local fixture deltas. Scripts should read
+  typed test subtrees such as `deploy_steps`, `delete_steps`, `validation`,
+  `foreign_apps`, `cleanup`, `capacity_profiles`, or scenario DAG lists from
+  `conf`; they should not synthesize those decisions in Python.
+* `-t/--test` does not select action. A test endpoint should still branch on
+  `WieldAction(conf.action)`, and the operator should still use `-w plan`,
+  `-w apply`, `-w delete`, `-w run`, or `-w monitor` to choose lifecycle.
+* Handoff commands for system scenarios should show test mode as an explicit
+  Wielder mode on the same one-line endpoint command, for example:
+  ```bash
+  /path/to/<endpoint>.py -es <ecosystem> -st dev -se org -dl standard -cn standard -cc default_conf -t -w plan
+  ```
+
 ## 2.3 Granular Apply/Delete Control
 Deployment workflows frequently need asymmetric behavior between `apply` and `delete`. A step that is desirable during bring-up is often dangerous or wasteful during teardown.
 

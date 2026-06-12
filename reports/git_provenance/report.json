@@ -1,0 +1,64 @@
+{
+  "schema": "wielder.git_provenance.v1",
+  "created_at": "2026-06-12T07:55:23Z",
+  "operator": "Gideon",
+  "agent": {
+    "commit": true,
+    "platform": "OpenAI Codex",
+    "model": "GPT-5"
+  },
+  "scope": {
+    "super_repo": "/home/gideon/dev/culture",
+    "repo": "/home/gideon/dev/culture/antifragile",
+    "branch": "feature/revive-culture/main",
+    "submodules": [],
+    "paths": [
+      "foundation/skills/wielder/SKILL_CONFIGURATION_GUIDELINES.md",
+      "foundation/skills/wielder/SKILL_TEST_GUIDELINES.md",
+      "foundation/skills/wielder/SKILL_WIELDER_SCRIPTS.md",
+      "reports/git_provenance/report.json"
+    ],
+    "modes": {
+      "ecosystem": "local",
+      "stage_tier": "dev",
+      "context_conf": "default_conf",
+      "security": "standard",
+      "canary": "standard"
+    }
+  },
+  "commits": [
+    {
+      "repo": "antifragile",
+      "sha": "containing commit",
+      "subject": "Document Wielder test mode scenario overlays",
+      "kind": "submodule"
+    }
+  ],
+  "audit": {
+    "summary": "Task-scoped doctrine update: formalize Wielder -t/--test as an endpoint-universal scenario overlay, link the testing, configuration, and scripting skills, and keep action selection under -w/--wield.",
+    "uncommitted_leftovers": [
+      "/home/gideon/dev/culture/Tasks/pattern_walker_reverse_api_revival_stam.md is ignored task planning state and was updated but not committed."
+    ],
+    "risks": [
+      "Doctrine-only change; code implementations still need follow-up work where endpoints do not yet propagate test mode.",
+      "Server/API spin-up and notebook companion execution are planned but not run in this commit."
+    ]
+  },
+  "validation": [
+    {
+      "command": "git diff --check -- foundation/skills/wielder/SKILL_CONFIGURATION_GUIDELINES.md foundation/skills/wielder/SKILL_TEST_GUIDELINES.md foundation/skills/wielder/SKILL_WIELDER_SCRIPTS.md reports/git_provenance/report.json",
+      "result": "passed",
+      "notes": "Whitespace check passed for touched antifragile files."
+    },
+    {
+      "command": "manual Starget reference inspection",
+      "result": "passed",
+      "notes": "Reviewed Starget Wielder parser/config loader, Wielder test_conf mode tests, and Starget test overlays before writing doctrine."
+    },
+    {
+      "command": "manual notebook skill review",
+      "result": "passed",
+      "notes": "Read SKILL_NOTEBOOK_GUIDELINES.md and updated the Culture revival plan to use notebook companion scripts through Wielder notebook conversion."
+    }
+  ]
+}
