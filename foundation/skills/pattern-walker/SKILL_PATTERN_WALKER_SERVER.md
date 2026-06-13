@@ -17,6 +17,8 @@ Load the relevant upstream Antifragile skills before applying this one:
   paths.
 - Wielder scripts for thin, repeatable operational entrypoints.
 - Test guidelines for in-process and live API validation.
+- Workflow validation guidelines for Wielder `-t/--test` scenario overlays.
+- Notebook guidelines for visible API/data inspection surfaces.
 - Git versioning when recording completed server changes.
 
 This skill adds Pattern Walker shape. It should not duplicate those rules.
@@ -59,6 +61,27 @@ ecosystem-specific image wiring do not belong in the server package. Route them
 to the wielding module for the ecosystem, for example `culture-wielding`, and
 keep the server as a local, testable protocol surface.
 
+## Test Data Mode
+
+A Pattern Walker server should not be revived against an empty world unless the
+task is explicitly about empty-state behavior. Use Wielder test mode to automate
+the smallest honest data chain that gives the server something visible to
+serve:
+
+- fetch or synthesize a named source fixture;
+- ingest it through the domain app's normal entry script;
+- harmonize it through the domain harmonization path, preserving raw/native
+  records and key lineage;
+- materialize Pattern Walker ledgers and streams;
+- start the local reverse API; and
+- validate with API integration tests and notebook companion views.
+
+`-t/--test` selects the fixture overlay. It does not select the action. The same
+entrypoint should support ordinary Wielder actions such as `-w plan`,
+`-w apply`, and `-w delete` with the test scenario active. Scenario identity,
+fixture size, expected source ids, output roots, cleanup policy, and validation
+toggles belong in HOCON, not in pytest-only flags or ad hoc Python branches.
+
 ## Implementation Rules
 
 - Back discovery endpoints with a small metadata ledger or index; avoid O(N)
@@ -72,6 +95,11 @@ keep the server as a local, testable protocol surface.
   filesystem paths.
 - Keep ports, hosts, artifact roots, and client config deposit paths in HOCON or
   derived local overrides.
+- Keep test fixture outputs in ignored sandbox roots or configured local bucket
+  paths. Do not commit generated Arrow, Parquet, screenshots, or notebook output
+  data.
+- Maintain a small `tests/TESTS.md` or equivalent index for live Pattern Walker
+  surfaces when the server owns data-seeding entry scripts.
 
 ## Antipatterns
 
@@ -84,13 +112,23 @@ keep the server as a local, testable protocol surface.
   handler because it works for one sample.
 - Adding small package-local Dockerfiles or deployment scripts to "just run" the
   server outside the local loop.
+- Writing bespoke sample-data scripts that bypass the Wielder entrypoint,
+  test-mode HOCON, or the domain ingestion/harmonization path.
+- Treating a pytest fixture as the only owner of required source identities or
+  generated stream locations.
 
 ## Validation Ladder
 
 1. Resolve HOCON config and construct the Pydantic contract.
-2. Exercise the ASGI app with an in-process test client.
-3. Probe live HTTP metadata, discovery, and representative stream endpoints.
-4. Audit binary payloads with `pattern_walker_lib.auditor` or equivalent typed
+2. Run the Wielder entrypoint in test mode with `-w plan -t` to show source,
+   ingest, harmonization, materialization, cleanup, and validation targets.
+3. Run the smallest safe `-w apply -t` path that creates representative visible
+   data.
+4. Exercise the ASGI app with an in-process test client.
+5. Probe live HTTP metadata, discovery, and representative stream endpoints.
+6. Audit binary payloads with `pattern_walker_lib.auditor` or equivalent typed
    readers.
-5. Verify a real client can discover terminology, layers, and streams without
+7. Verify notebooks can display the seeded raw, harmonized, and Pattern Walker
+   stream evidence.
+8. Verify a real client can discover terminology, layers, and streams without
    domain-specific edits.

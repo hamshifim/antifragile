@@ -10,8 +10,9 @@ or client-side configuration bridge.
 ## Inherit First
 
 Load the upstream Antifragile skills for epigenetic config, configuration,
-testing, scripts, and versioning before applying this one. This skill only
-specializes client behavior for Pattern Walker.
+testing, workflow validation, notebooks, scripts, and versioning before
+applying this one. This skill only specializes client behavior for Pattern
+Walker.
 
 ## Client Shape
 
@@ -46,6 +47,19 @@ and browser verification. Docker images, deployment manifests, hosted client
 routing, and environment-specific publication belong in the ecosystem wielding
 module, for example `culture-wielding`.
 
+## Visible Fixture Expectations
+
+Client verification should prefer a Wielder test-mode data scenario over a
+hand-maintained UI fixture. The domain server should expose a small fetched,
+ingested, harmonized, and materialized dataset created by normal entry scripts
+under `-t/--test`; the client should then consume that server exactly as it
+would consume a larger local or hosted dataset.
+
+The client may ship static fallback config and mocked component fixtures for
+isolated UI development, but Pattern Walker revival is not complete until a
+browser can render test-mode server data through `/metadata`, discovery, and at
+least one stream family.
+
 ## UI Rules
 
 - Generate labels, tabs, scales, layer names, and temporal controls from server
@@ -67,12 +81,18 @@ module, for example `culture-wielding`.
   satisfy the traversal flow.
 - Hiding deployment or Docker behavior inside the client package instead of the
   ecosystem wielding module.
+- Calling a client revival complete with only static mocked UI data and no
+  test-mode server stream to view.
 
 ## Validation Ladder
 
 1. Build or typecheck the client.
 2. Fetch public default config and transient local override from the served app.
-3. Fetch live `/metadata` and verify UI terminology comes from it.
-4. Load representative domain items/systems and at least one stream family.
-5. Use browser verification for console errors, blank canvases, layout overlap,
+3. Confirm the selected server was seeded through the domain Wielder test-mode
+   entrypoint or an equivalent documented live fixture.
+4. Fetch live `/metadata` and verify UI terminology comes from it.
+5. Load representative domain items/systems and at least one stream family.
+6. Cross-check a notebook or API test can inspect the same seeded data the
+   browser is rendering.
+7. Use browser verification for console errors, blank canvases, layout overlap,
    and stream-driven controls when frontend behavior changed.

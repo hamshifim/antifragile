@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-13T06:28:47Z",
+  "created_at": "2026-06-13T07:40:41Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -8,14 +8,15 @@
     "model": "GPT-5"
   },
   "scope": {
-    "super_repo": "/home/gideon/dev/culture",
-    "repo": "/home/gideon/dev/culture/antifragile",
+    "super_repo": "~/dev/culture",
+    "repo": "~/dev/culture/antifragile",
     "branch": "feature/revive-culture/main",
     "submodules": [],
     "paths": [
-      "foundation/skills/wielder/SKILL_EPIGENETIC_CONFIG_CONTRACTS.md",
-      "foundation/skills/wielder/SKILL_CONTEXT_INITIATION_ALIGNMENT.md",
-      "foundation/docs/catalogs/MASTER_SKILLS.md",
+      "foundation/skills/pattern-walker/MASTER_SKILLS.md",
+      "foundation/skills/pattern-walker/SKILL_PATTERN_WALKER_CLIENT.md",
+      "foundation/skills/pattern-walker/SKILL_PATTERN_WALKER_REVIVAL.md",
+      "foundation/skills/pattern-walker/SKILL_PATTERN_WALKER_SERVER.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
@@ -23,36 +24,33 @@
       "stage_tier": "dev",
       "context_conf": "default_conf",
       "security": "standard",
-      "canary": "standard"
+      "canary": "standard",
+      "test": true
     }
   },
   "commits": [
     {
       "repo": "antifragile",
       "sha": "containing commit",
-      "subject": "Document the Wieldering Way config doctrine",
+      "subject": "Teach Pattern Walker visible test-mode data",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Task-scoped doctrine commit: add the Wieldering Way epigenetic config contract skill, wire it into initiation, and index it in the master skill catalog.",
+    "summary": "Task-scoped Antifragile doctrine update: Pattern Walker skills now require Wielder test-mode visible data, API/notebook/client validation, and config-owned fixture scenarios.",
     "uncommitted_leftovers": [
-      "Personal Codex skill under ~/.codex/skills is outside this git repository and cannot be pushed with antifragile."
+      "Super-repo .vscode/settings.json newline change is outside this task scope.",
+      "culture-proteins dirty ESMFold/test-mode work is outside this task scope."
     ],
     "risks": [
-      "Doctrine-only change; implementation migration into pattern-walker-lib remains follow-up work."
+      "Doctrine-only change; concrete astronomy implementation is committed separately in culture-astronomy."
     ]
   },
   "validation": [
     {
-      "command": "/home/gideon/dev/culture/.venv/bin/python /mnt/c/Users/Gideon/.codex/skills/.system/skill-creator/scripts/quick_validate.py /mnt/c/Users/Gideon/.codex/skills/wielder-epigenetic-config",
+      "command": "git -C ~/dev/culture/antifragile diff --check",
       "result": "passed",
-      "notes": "Personal Codex skill frontmatter validated."
-    },
-    {
-      "command": "git diff --check -- foundation/skills/wielder/SKILL_EPIGENETIC_CONFIG_CONTRACTS.md foundation/skills/wielder/SKILL_CONTEXT_INITIATION_ALIGNMENT.md foundation/docs/catalogs/MASTER_SKILLS.md",
-      "result": "passed",
-      "notes": "Whitespace check run before commit."
+      "notes": "Whitespace check passed before commit."
     }
   ]
 }

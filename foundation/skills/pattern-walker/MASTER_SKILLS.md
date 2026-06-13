@@ -16,6 +16,7 @@ Read these upstream skills when they apply:
 - `../wielder/SKILL_WIELDER_SCRIPTS.md`
 - `../wielder/SKILL_TEST_GUIDELINES.md`
 - `../wielder/SKILL_NOTEBOOK_GUIDELINES.md`
+- `../wielder/SKILL_WORKFLOW_VALIDATION_GUIDELINES.md`
 - `../wielder/SKILL_GIT_VERSIONING.md`
 
 Pattern Walker-specific guidance should compose with those skills. If a local
@@ -27,6 +28,12 @@ surfaces do not belong in the Pattern Walker server or client packages. They
 belong in the appropriate wielding module, such as `culture-wielding`, where
 operational ownership, image provenance, and environment contracts can be
 managed as a first-class Wielder surface.
+
+Pattern Walker revival must also create something real to see. Use Wielder
+`-t/--test` mode as the scenario overlay for fetching, ingesting, harmonizing,
+and materializing a small representative dataset. The test overlay should drive
+the same entry scripts, API integration tests, and notebook companions used by
+ordinary local operation. It should not become a second hand-built fixture path.
 
 ## General Shape
 
@@ -55,6 +62,32 @@ The core conceptual split is:
 - Visuals: rendering channels such as color, scale, shape, labels, and styles.
 - Layers: semantic/topological subsets and optional pointer streams.
 - Functions: optional advertised behavior payloads, never arbitrary path lookup.
+
+## Visible Test Data
+
+For Pattern Walker work, "the server starts" is not enough. A local revival or
+test scenario should be able to seed enough domain data for a human to inspect
+the client and notebooks.
+
+The expected local chain is:
+
+- Fetch: acquire or synthesize a small named domain fixture through configured
+  source accessors.
+- Ingest: write raw/domain truth artifacts through the domain app's normal
+  entry scripts.
+- Harmonize: produce comparable indexed records without erasing native meaning.
+- Materialize: generate Pattern Walker topology, trajectory, visuals, layers,
+  metadata ledgers, and optional function payloads.
+- Serve: expose the reverse API locally.
+- View: prove the same data through API tests, notebooks, and the browser
+  client.
+
+The scenario identity, scale, source selection, expected rows, cleanup policy,
+and validation toggles belong in Wielder test-mode HOCON such as
+`conf/test/<domain>/<ecosystem>/test.conf` or app-local `test.conf` overlays.
+Use `-t` with normal Wielder actions such as `-w plan`, `-w apply`, and
+`-w delete`; do not invent a separate "sample-data" action when the normal
+entrypoint can be phenotyped by test config.
 
 ## Local Skill Index
 
