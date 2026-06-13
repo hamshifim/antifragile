@@ -12,6 +12,9 @@ To ensure architectural alignment across varying Python execution environments a
 1. **[Configuration & Datastore Lineage](../../skills/wielder/SKILL_CONFIGURATION_GUIDELINES.md)**
    *Scope:* Wielder PyHocon constraint mapping, local environment sandboxing (`developer.conf`), explicit failure rules over protective exceptions, and `<run_uuid>` partition isolation parameters.
 
+1.1. **[The Wieldering Way: Epigenetic Config Contracts](../../skills/wielder/SKILL_EPIGENETIC_CONFIG_CONTRACTS.md)**
+   *Scope:* The Wieldering Way for library/functionality contracts: callers provide versioned HOCON and reusable libraries validate strict typed models without descriptor synthesis, callbacks, defensive defaults, or hidden fallback config.
+
 2. **[Wielder Ecosystem Guidelines](../../skills/wielder/SKILL_ECOSYSTEM_GUIDELINES.md)**
    *Scope:* Multi-surface ecosystem topology, app-vs-deployment semantics, core-union ecosystem family contracts, thin phenotype overlays, dependency routing, concrete bootable ecosystems, and local WSL GPU cluster surface choices.
 

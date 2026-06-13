@@ -38,6 +38,7 @@ The skill output is a super-short report for each initiation step, followed by c
 
 4. Load configuration ecology.
    - Read [SKILL_CONFIGURATION_GUIDELINES.md](SKILL_CONFIGURATION_GUIDELINES.md) as part of initiation.
+   - Read [SKILL_EPIGENETIC_CONFIG_CONTRACTS.md](SKILL_EPIGENETIC_CONFIG_CONTRACTS.md) as part of initiation to ground the Wieldering Way: versioned HOCON contracts feed strict library validation, not hand-built descriptors or defensive defaults.
    - Treat configuration as the coded modulation layer that activates, suppresses, routes, and parameterizes system functionalities into concrete operational phenotypes.
    - Identify available config modulators and context pack locations at a high level, especially `context_conf`, ecosystem, stage tier, surface, security, app/deploy/workflow identity, and canonical accessors.
    - Do not assume which context pack or phenotype is active unless the user task requires that decision.
@@ -63,7 +64,7 @@ Safety: <local contract in one phrase>.
 Modules: <role/scope map in one phrase>.
 Layers: <Antifragile/Wielder/wielding/business-lib-infra map in one phrase>.
 Config: <configuration ecology and phenotype modulators in one phrase>.
-Doctrine: <skills to load on demand in one phrase>.
+Doctrine: <Wieldering Way plus skills to load on demand in one phrase>.
 Gestalt: <project shape and boundary assumption in one sentence>.
 
 Is this a new task, or are we recovering a lost/stale thread?
