@@ -36,6 +36,9 @@ Commands shown to the operator must be root-safe and current-directory agnostic.
   virtualenv activation, shell aliases, or environment-variable incantations.
 - Assume the operator's uvenv/shell is already active unless the task is
   explicitly about workstation bootstrap.
+- For directory-sensitive non-Wielder tools, use the tool's root/workdir option
+  instead of `cd`. Examples include `npm --prefix <absolute-client-dir> run dev`
+  and `pytest <absolute-test-path> -q`.
 - If a script cannot be run directly, fix the script boundary with a shebang and
   executable bit according to `SKILL_WIELDER_SCRIPTS.md`; do not normalize the
   bad boundary by handing off `python path/to/script.py`.
@@ -178,6 +181,9 @@ the operator to reconstruct a command.
 
 - Prepending `cd`, `source .venv/bin/activate`, `python`, `python -m`, or
   `uv run` to normal Wielder entrypoints in handoff commands.
+- Handing off directory-dependent tools by changing directories first instead
+  of using root-safe command-native options such as `--prefix`, `--cwd`,
+  `--project`, or absolute file paths.
 - Creating bespoke CLI flags or env vars instead of adding config-owned intent.
 - Reporting "tests passed" without naming the tests or materially summarizing
   failures.

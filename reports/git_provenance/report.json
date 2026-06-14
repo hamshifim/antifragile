@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-13T07:40:41Z",
+  "created_at": "2026-06-14T08:14:34Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -8,49 +8,46 @@
     "model": "GPT-5"
   },
   "scope": {
-    "super_repo": "~/dev/culture",
-    "repo": "~/dev/culture/antifragile",
+    "super_repo": "/home/gideon/dev/culture",
+    "repo": "/home/gideon/dev/culture/antifragile",
     "branch": "feature/revive-culture/main",
     "submodules": [],
     "paths": [
-      "foundation/skills/pattern-walker/MASTER_SKILLS.md",
-      "foundation/skills/pattern-walker/SKILL_PATTERN_WALKER_CLIENT.md",
-      "foundation/skills/pattern-walker/SKILL_PATTERN_WALKER_REVIVAL.md",
-      "foundation/skills/pattern-walker/SKILL_PATTERN_WALKER_SERVER.md",
+      "docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md",
+      "foundation/skills/wielder/SKILL_WIELDER_HANDOFF.md",
+      "foundation/skills/wielder/SKILL_WIELDER_SCRIPTS.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
-      "ecosystem": "local",
+      "ecosystem": "culture",
       "stage_tier": "dev",
       "context_conf": "default_conf",
       "security": "standard",
-      "canary": "standard",
-      "test": true
+      "canary": "standard"
     }
   },
   "commits": [
     {
       "repo": "antifragile",
       "sha": "containing commit",
-      "subject": "Teach Pattern Walker visible test-mode data",
+      "subject": "Document root-safe handoffs and mock consent",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Task-scoped Antifragile doctrine update: Pattern Walker skills now require Wielder test-mode visible data, API/notebook/client validation, and config-owned fixture scenarios.",
+    "summary": "Task-scoped doctrine commit: require root-safe handoff commands, document command-native workdir options, and record the stale summary/mock escape antipattern with the Wieldering test-mode consent exception.",
     "uncommitted_leftovers": [
-      "Super-repo .vscode/settings.json newline change is outside this task scope.",
-      "culture-proteins dirty ESMFold/test-mode work is outside this task scope."
+      "No ESMFold code or config is in this repository scope."
     ],
     "risks": [
-      "Doctrine-only change; concrete astronomy implementation is committed separately in culture-astronomy."
+      "Doctrine changes rely on future agents following the updated skills; enforcement remains procedural."
     ]
   },
   "validation": [
     {
-      "command": "git -C ~/dev/culture/antifragile diff --check",
+      "command": "/home/gideon/.uvenvs/culture12/bin/python /home/gideon/dev/culture/Wielder/wielder/scripts/security_versioning_check.py --repo /home/gideon/dev/culture/antifragile --expected-branch feature/revive-culture/main",
       "result": "passed",
-      "notes": "Whitespace check passed before commit."
+      "notes": "Security/versioning gate scanned 95 files and passed with only the intended doctrine/report changes."
     }
   ]
 }

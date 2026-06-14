@@ -50,6 +50,25 @@ config. If a topology switch is genuinely required, override only that narrow
 dimension and document why. If the downstream entrypoint needs a durable choice,
 add it to the owning config rather than smuggling it through a wrapper.
 
+## Stale Summary Mock Escape
+
+**Smell:** An agent avoids expensive upstream work by creating, reusing, or
+pointing tests at a stale summary, mock artifact, hand-authored fixture, or
+synthetic payload while reporting the downstream surface as if the real pipeline
+ran.
+
+**Why it is harmful:** The downstream app can pass against yesterday's shape
+while the upstream contract is broken. The operator loses the ability to tell
+whether a notebook, API, or data lake view is proving reality or proving a
+memory of reality.
+
+**Preferred move:** Run the real upstream path at the smallest safe configured
+scale. If the true process or dataset is too heavy for a local machine, stop and
+ask for consent before substituting. Any approved substitute must be owned by
+resolved HOCON, selected through `-t`, clearly labeled in plan/apply logs as
+synthetic, fixture-backed, or precomputed, and keep the real entrypoint contract
+available for full validation.
+
 ## Corrective Review Questions
 
 - Where does the operator intent live in resolved HOCON?
@@ -59,3 +78,7 @@ add it to the owning config rather than smuggling it through a wrapper.
   or because we are patching around a missing app/ecosystem contract?
 - Could the downstream app resolve this natively if the ecosystem contract were
   complete?
+- Am I proving the current upstream workflow, or only proving a stale/mock
+  downstream artifact?
+- If this is synthetic, fixture-backed, or precomputed because reality is too
+  heavy, did the operator consent and do the `-t` logs say so plainly?

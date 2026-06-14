@@ -108,6 +108,13 @@ for overlay precedence.
   typed test subtrees such as `deploy_steps`, `delete_steps`, `validation`,
   `foreign_apps`, `cleanup`, `capacity_profiles`, or scenario DAG lists from
   `conf`; they should not synthesize those decisions in Python.
+* Antipattern: do not replace real upstream work with a stale summary,
+  hand-authored fixture, synthetic payload, or mock output merely to avoid a
+  slow run. If a process or dataset is too heavy for the operator's local
+  machine, the exception must be explicit: ask for user consent, express the
+  substitute in the `-t` test overlay or owning config, label it as synthetic or
+  fixture-backed in plan/apply logs, and keep the real entrypoint contract
+  intact. Silent mocks and stale summaries are not acceptable proof surfaces.
 * `-t/--test` does not select action. A test endpoint should still branch on
   `WieldAction(conf.action)`, and the operator should still use `-w plan`,
   `-w apply`, `-w delete`, `-w run`, or `-w monitor` to choose lifecycle.
@@ -133,6 +140,10 @@ Some Wielder actions are expected to run for minutes or hours, especially bucket
 * Agents should run short validation actions themselves, such as `show`, `plan`, `probe`, linting, focused tests, and command construction checks.
 * Agents should not start long-running `apply`, sync, mirror, clone, build, or migration jobs unless the operator explicitly asks the agent to run them and wait.
 * For long-running jobs, provide the exact absolute one-line command for the operator's terminal, including the repository-root-safe script path and required Wielder modes. Do not require a preceding `cd`.
+* If an agent wants to avoid a long apply by using a mock, precomputed summary,
+  or synthetic fixture, it must stop and ask first. Approved substitutes must
+  run only through `-t`, be config-owned, and print clear logs identifying the
+  substitute source and why the real upstream stage was not run.
 * Before handing off, verify that config resolves and that the command shape is correct with the lightest available action (`show`, `plan`, or `probe`).
 * After handoff, treat pasted terminal output as the continuation point. Diagnose failures from that output and patch the smallest relevant source/config boundary.
 * If an agent accidentally starts a long-running local process and it is not needed for immediate inspection, stop it cleanly when safe and give the operator the command to rerun.
