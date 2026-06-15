@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-14T08:14:34Z",
+  "created_at": "2026-06-15T06:00:24Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -13,15 +13,20 @@
     "branch": "feature/revive-culture/main",
     "submodules": [],
     "paths": [
-      "docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md",
-      "foundation/skills/wielder/SKILL_WIELDER_HANDOFF.md",
+      "foundation/docs/catalogs/MASTER_SKILLS.md",
+      "foundation/skills/wielder/SKILL_CAPABILITY_SURFACE_EXTRACTION.md",
+      "foundation/skills/wielder/SKILL_CONFIGURATION_GUIDELINES.md",
+      "foundation/skills/wielder/SKILL_FUNCTIONAL_MAXIMIZATION.md",
+      "foundation/skills/wielder/SKILL_TEST_GUIDELINES.md",
+      "foundation/skills/wielder/SKILL_UVENV_GUIDELINES.md",
       "foundation/skills/wielder/SKILL_WIELDER_SCRIPTS.md",
+      "foundation/skills/wielder/SKILL_ZSHRC_GUIDELINES.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
-      "ecosystem": "culture",
-      "stage_tier": "dev",
-      "context_conf": "default_conf",
+      "ecosystem": "shared skill doctrine",
+      "stage_tier": "local/dev",
+      "context_conf": "n/a",
       "security": "standard",
       "canary": "standard"
     }
@@ -30,24 +35,24 @@
     {
       "repo": "antifragile",
       "sha": "containing commit",
-      "subject": "Document root-safe handoffs and mock consent",
+      "subject": "Extend Wielder skills for functional model workflows",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Task-scoped doctrine commit: require root-safe handoff commands, document command-native workdir options, and record the stale summary/mock escape antipattern with the Wieldering test-mode consent exception.",
+    "summary": "Task-scoped antifragile commit: add functional maximization, uvenv, and zshrc skill guidance; update config/test/script doctrine for provider defaults, minimal test overlays, no quiet downgrades, and third-party model capability extraction.",
     "uncommitted_leftovers": [
-      "No ESMFold code or config is in this repository scope."
+      "No task-relevant antifragile leftovers identified."
     ],
     "risks": [
-      "Doctrine changes rely on future agents following the updated skills; enforcement remains procedural."
+      "Skill guidance is documentation and doctrine only; downstream projects still need code-level validation enforcement for malformed model output."
     ]
   },
   "validation": [
     {
-      "command": "/home/gideon/.uvenvs/culture12/bin/python /home/gideon/dev/culture/Wielder/wielder/scripts/security_versioning_check.py --repo /home/gideon/dev/culture/antifragile --expected-branch feature/revive-culture/main",
+      "command": "manual markdown/diff review",
       "result": "passed",
-      "notes": "Security/versioning gate scanned 95 files and passed with only the intended doctrine/report changes."
+      "notes": "Reviewed changed skill diffs for scope, starget scrubbing, and Wieldering-way consistency."
     }
   ]
 }

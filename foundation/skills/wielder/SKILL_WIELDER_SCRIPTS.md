@@ -38,7 +38,7 @@ Operational scripts become fragile when they grow a second understanding of conf
 ### 2.1.0 Project-Level App Config Entrypoint
 
 Each Wielder-managed project or submodule should expose a local canonical config
-accessor, following the Starget pattern:
+accessor, following the project-local accessor pattern:
 
 ```python
 from <project>_wielder.core.configurer import get_app_conf
@@ -108,6 +108,12 @@ for overlay precedence.
   typed test subtrees such as `deploy_steps`, `delete_steps`, `validation`,
   `foreign_apps`, `cleanup`, `capacity_profiles`, or scenario DAG lists from
   `conf`; they should not synthesize those decisions in Python.
+* App defaults should remain best-practice or production-grade for the normal
+  contract. Scripts should not quietly downgrade model loops, sample counts,
+  batch sizes, polling windows, data limits, or cleanup behavior to make an
+  endpoint cheap. Minimal viability is a test/developer overlay concern: put
+  the reduced values in `-t` HOCON or an explicit transient context pack and
+  have the script consume the resolved profile by strict config access.
 * Antipattern: do not replace real upstream work with a stale summary,
   hand-authored fixture, synthetic payload, or mock output merely to avoid a
   slow run. If a process or dataset is too heavy for the operator's local
@@ -172,6 +178,12 @@ when a script, service wrapper, GUI, API, or notebook is trying to expose the
 full useful range of an existing module, model, service, or app. That skill owns
 the inventory-to-operator-surface workflow; this section owns the script/factory
 boundary discipline.
+
+Use [Functional Maximization](SKILL_FUNCTIONAL_MAXIMIZATION.md) before or beside
+capability extraction when the script wraps a third-party model, provider API,
+scientific tool, scoring tool, ingestion tool, or workflow and the immediate
+question is whether the tool's full honest native envelope has been exercised,
+preserved, and validated.
 
 * Define a shared surface contract for the abstract operation, such as storage cloning, secret management, scheduling, image publishing, monitoring, or provisioning.
 * Implement provider-specific classes behind a small factory or accessor boundary. Client scripts should ask for the configured surface and call the common interface.

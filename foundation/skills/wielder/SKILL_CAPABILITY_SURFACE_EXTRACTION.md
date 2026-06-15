@@ -11,6 +11,11 @@ Use this skill when turning a working module, model, service, app, or workflow
 into an operator-facing surface: GUI, API, CLI, Wielder entrypoint, notebook
 companion, or monitoring panel.
 
+Use [Functional Maximization](SKILL_FUNCTIONAL_MAXIMIZATION.md) first when the
+main risk is under-exercising a third-party model/tool, dropping native outputs,
+or overclaiming scientific meaning. Use this skill to project the maximized
+capability into operator surfaces.
+
 The goal is maximal honest functionality, not maximal UI size. A surface is
 complete when it exposes the configured capabilities a real operator needs to
 plan, configure, run, observe, debug, and clean up the module while preserving

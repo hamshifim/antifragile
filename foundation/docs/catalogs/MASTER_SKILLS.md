@@ -33,11 +33,20 @@ To ensure architectural alignment across varying Python execution environments a
 5.1. **[Capability Surface Extraction](../../skills/wielder/SKILL_CAPABILITY_SURFACE_EXTRACTION.md)**
    *Scope:* Deriving the fullest honest operator-facing capability surface from an app, model, service, or module through typed contracts, config-owned defaults, shared projections, lifecycle events, artifact access, and validation ladders.
 
+5.2. **[Functional Maximization](../../skills/wielder/SKILL_FUNCTIONAL_MAXIMIZATION.md)**
+   *Scope:* Maximizing and auditing configurable tools, third-party models, services, and workflows for scenario coverage, advanced options, native output preservation, ecosystem boundaries, scientific honesty, fixture design, and inspectable knowledge extraction.
+
 6. **[Local Hybrid Dev Workflow](../../skills/wielder/SKILL_LOCAL_HYBRID_DEV_WORKFLOW.md)**
    *Scope:* Fast local app or service iteration against a full remote/provider ecosystem using thin hybrid overlays, local server/client/GPU-service restart discipline, provider-backed service probes, and clear handoffs for image, Kubernetes, Spark, or cloud runtime changes.
 
 6. **[Wielder Imager & Staging Sandboxing](../../skills/wielder/SKILL_WIELDER_IMAGER.md)**
    *Scope:* Isolated Docker staging sandboxes, image build/push/runtime topology, committed-state image verification, build-surface detection, and workflow-driven image validation.
+
+6.1. **[Uvenv Guidelines](../../skills/wielder/SKILL_UVENV_GUIDELINES.md)**
+   *Scope:* uv-managed workspace Python environments, Wielder `uvenv` activation, VSCode/Pyright interpreter binding, shell-default isolation, and avoiding accidental inheritance from unrelated active virtualenvs.
+
+6.2. **[Zshrc Guidelines](../../skills/wielder/SKILL_ZSHRC_GUIDELINES.md)**
+   *Scope:* zsh startup files, project-local uvenv precedence, VSCode terminal isolation, prompt labels, and preventing global shell defaults from leaking between workspaces.
 
 7. **[Git Versioning Guidelines](../../skills/wielder/SKILL_GIT_VERSIONING.md)**
    *Scope:* Agent-created commit provenance, adversarial pre-commit audit, super-repo/submodule commit order, and committed-state image/deploy version integrity.
