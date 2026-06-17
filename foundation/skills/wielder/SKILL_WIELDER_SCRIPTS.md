@@ -170,6 +170,41 @@ When a Wielder script depends on a backend CLI, the script should remove manual 
 * Preserve provider surfaces through factories and accessors. A script should ask a Bucketeer/WCloner-style surface to ensure a bucket or destination, not branch on concrete provider names except at the factory registry boundary.
 * Add new reusable capabilities to the Wieldable Functionalities catalog when they become stable operator-facing patterns.
 
+### 2.5.1 No Dirty Source Overlays Into Runtime Staging
+
+With prejudice: copying dirty local module source into a staged Terraform,
+image, artifact, or hosted-runtime execution tree is a Wieldering antipattern.
+It is a seductive dev-flow shortcut and a provenance trap.
+
+Wielder staging sandboxes may isolate execution from the live checkout, but they
+must not smuggle uncommitted local edits into cloud-mutating or runtime-bearing
+surfaces. Terraform, image contexts, Spark artifacts, provisioned scripts, and
+other distributed/baked inputs are operational truth. They must be traceable to
+the committed submodule revision and final super-repo SHA selected by the
+resolved configuration.
+
+Rules:
+
+* Do not refresh staged Terraform modules from the dirty developer checkout
+  immediately before `plan`, `apply`, `delete`, or `init`.
+* Do not copy uncommitted local code into image/build/runtime staging as a
+  convenience workaround.
+* Deterministic non-source payloads may be copied into an image or staging tree
+  when they are selected by resolved config, immutable for the selected version,
+  and not source code, not execution config, and not a hidden operator decision.
+  Examples include a versioned model weight file, a pinned public reference
+  bundle, or a generated asset whose content hash is recorded in the artifact
+  manifest. This exception is not a loophole for Python, Terraform, shell,
+  HOCON, YAML, notebooks, or runtime scripts.
+* If a staged module is missing or stale, fail early and tell the operator to
+  review, commit the owning submodule, update the super-repo pointer, and rerun
+  the Wielder command from that committed source of truth.
+* A read-only local inspection command may print local dirty status for human
+  awareness, but it must not use that dirtiness as execution input.
+* If a one-off emergency experiment truly requires dirty source, it must be a
+  separately named throwaway command or test fixture with loud logs, no
+  promotion semantics, and no claim of reproducible runtime truth.
+
 ## 2.6 Factory Surfaces and Typed Contracts
 When the same abstract operation exists across multiple provider surfaces, prefer a factory/accessor pattern over scattered provider conditionals.
 
