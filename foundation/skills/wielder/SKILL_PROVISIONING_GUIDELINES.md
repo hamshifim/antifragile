@@ -4,6 +4,7 @@ description: Wielder doctrine for planning and provisioning durable infrastructu
 ---
 
 [Read the package guidelines](SKILL_PACKAGE_GUIDELINES.md) if you haven't recently.
+[Read lifecycle scope guidelines](SKILL_LIFECYCLE_SCOPE_GUIDELINES.md) when deciding whether a resource is project-, ecosystem-, app-, context-, or test-owned.
 
 # Provisioning Guidelines
 

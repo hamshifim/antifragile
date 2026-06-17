@@ -3,6 +3,7 @@ description: Wielder Multi-Surface Ecosystem Architecture Guidelines
 ---
 
 [Read the package guidelines](SKILL_PACKAGE_GUIDELINES.md) if you haven't recently.
+[Read lifecycle scope guidelines](SKILL_LIFECYCLE_SCOPE_GUIDELINES.md) when deciding whether topology, durable resources, app defaults, context overrides, or test fixtures own a behavior.
 
 # Wielder Ecosystem Guidelines
 

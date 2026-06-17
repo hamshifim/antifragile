@@ -3,6 +3,7 @@ description: Wielder PyHocon Configuration Guidelines (Strict Architectural SOP)
 ---
 
 [Read the package guidelines](SKILL_PACKAGE_GUIDELINES.md) if you haven't recently.
+[Read lifecycle scope guidelines](SKILL_LIFECYCLE_SCOPE_GUIDELINES.md) when deciding where a durable resource, ecosystem phenotype, app default, context override, or test fixture belongs.
 
 # Wielder PyHocon Configuration Guidelines
 
