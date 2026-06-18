@@ -43,6 +43,32 @@ Commands shown to the operator must be root-safe and current-directory agnostic.
   executable bit according to `SKILL_WIELDER_SCRIPTS.md`; do not normalize the
   bad boundary by handing off `python path/to/script.py`.
 
+### Installed Operator CLI Tools
+
+Some Wielder surfaces are deliberately installed as operator CLI tools rather
+than handed off as source paths. For these, the CLI name is the canonical
+operator entrypoint.
+
+- Use the installed CLI command for tools such as `pan` and `uvenv`.
+- Do not replace an installed CLI tool with its Python source file, import path,
+  generated zsh function body, or package-internal script path.
+- Keep the command current-directory agnostic by relying on the tool's resolved
+  config and Wielder modes, not on `cd`.
+- If a CLI tool is unavailable, hand off the bootstrap or shell-install command
+  that creates the CLI surface; do not work around the missing installation by
+  exposing internals.
+- If a CLI command delegates to another app or project lifecycle layer, name that
+  relationship in prose, but still hand off the user-facing command when that is
+  the designed surface.
+
+Examples:
+
+```bash
+pan -es pan_aws -st dev -se standard -dl standard -cn standard -cc default_conf -w plan
+pan -es pan_aws -st dev -se standard -dl standard -cn standard -cc default_conf -w init
+uvenv doctor
+```
+
 For tests, use `pytest` directly:
 
 ```bash
