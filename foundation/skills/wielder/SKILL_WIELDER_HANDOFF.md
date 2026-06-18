@@ -52,6 +52,10 @@ operator entrypoint.
 - Use the installed CLI command for tools such as `pan` and `uvenv`.
 - Do not replace an installed CLI tool with its Python source file, import path,
   generated zsh function body, or package-internal script path.
+- Do not pad CLI handoffs with default Wielder mode values. Include only the
+  selector or action arguments needed to disambiguate the operator intent; let
+  the CLI and resolved config supply defaults such as stage tier, security,
+  deletion, canary, and context.
 - Keep the command current-directory agnostic by relying on the tool's resolved
   config and Wielder modes, not on `cd`.
 - If a CLI tool is unavailable, hand off the bootstrap or shell-install command
@@ -64,8 +68,8 @@ operator entrypoint.
 Examples:
 
 ```bash
-pan -es pan_aws -st dev -se standard -dl standard -cn standard -cc default_conf -w plan
-pan -es pan_aws -st dev -se standard -dl standard -cn standard -cc default_conf -w init
+pan -es pan_aws plan
+pan -es pan_aws init
 uvenv doctor
 ```
 
