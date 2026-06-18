@@ -1,32 +1,28 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-15T06:00:24Z",
+  "created_at": "2026-06-18T12:38:37Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
     "platform": "OpenAI Codex",
-    "model": "GPT-5"
+    "model": "unavailable in session"
   },
   "scope": {
-    "super_repo": "/home/gideon/dev/culture",
-    "repo": "/home/gideon/dev/culture/antifragile",
-    "branch": "feature/revive-culture/main",
-    "submodules": [],
-    "paths": [
-      "foundation/docs/catalogs/MASTER_SKILLS.md",
-      "foundation/skills/wielder/SKILL_CAPABILITY_SURFACE_EXTRACTION.md",
-      "foundation/skills/wielder/SKILL_CONFIGURATION_GUIDELINES.md",
-      "foundation/skills/wielder/SKILL_FUNCTIONAL_MAXIMIZATION.md",
-      "foundation/skills/wielder/SKILL_TEST_GUIDELINES.md",
-      "foundation/skills/wielder/SKILL_UVENV_GUIDELINES.md",
-      "foundation/skills/wielder/SKILL_WIELDER_SCRIPTS.md",
-      "foundation/skills/wielder/SKILL_ZSHRC_GUIDELINES.md",
-      "reports/git_provenance/report.json"
+    "super_repo": "~/dev/culture",
+    "submodules": [
+      {
+        "name": "antifragile",
+        "commit": "recorded by enclosing git commit",
+        "paths": [
+          "foundation/skills/wielder/SKILL_HARMONIZATION_GUIDELINES.md",
+          "reports/git_provenance/report.json"
+        ]
+      }
     ],
     "modes": {
-      "ecosystem": "shared skill doctrine",
-      "stage_tier": "local/dev",
-      "context_conf": "n/a",
+      "ecosystem": "wielder_skills",
+      "stage_tier": "dev",
+      "context_conf": "default_conf",
       "security": "standard",
       "canary": "standard"
     }
@@ -34,25 +30,36 @@
   "commits": [
     {
       "repo": "antifragile",
-      "sha": "containing commit",
-      "subject": "Extend Wielder skills for functional model workflows",
+      "sha": "recorded by enclosing git commit",
+      "subject": "Document base-key harmonization contracts",
       "kind": "submodule"
+    },
+    {
+      "repo": "culture",
+      "sha": "reported after super-repo pointer commit",
+      "subject": "Update base-key harmonization pointers",
+      "kind": "supermodule"
     }
   ],
   "audit": {
-    "summary": "Task-scoped antifragile commit: add functional maximization, uvenv, and zshrc skill guidance; update config/test/script doctrine for provider defaults, minimal test overlays, no quiet downgrades, and third-party model capability extraction.",
+    "summary": "Scoped antifragile commit creates a versioned Wielder harmonization skill and records the base-key hydration rule for future tables.",
     "uncommitted_leftovers": [
-      "No task-relevant antifragile leftovers identified."
+      "~/dev/culture/Wielder: dirty cloud/PAN edits outside this harmonization-skill scope"
     ],
     "risks": [
-      "Skill guidance is documentation and doctrine only; downstream projects still need code-level validation enforcement for malformed model output."
+      "The local Codex skill cache also has a harmonization skill; this commit versions the rule in antifragile for repo-owned reuse."
     ]
   },
   "validation": [
     {
-      "command": "manual markdown/diff review",
+      "command": "git diff --check",
       "result": "passed",
-      "notes": "Reviewed changed skill diffs for scope, starget scrubbing, and Wieldering-way consistency."
+      "notes": "No whitespace errors in antifragile"
+    },
+    {
+      "command": "manual skill review",
+      "result": "passed",
+      "notes": "Rule states hot discovery rows should use source_base_key plus hydrator kind/version and avoid bulky derivable manifests"
     }
   ]
 }
