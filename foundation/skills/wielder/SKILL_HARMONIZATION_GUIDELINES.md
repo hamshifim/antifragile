@@ -21,9 +21,11 @@ erasing native meaning.
 Keep these layers distinct:
 
 - raw artifact discovery
-- run index
-- entity/component index
-- identity index
+- experiment/run catalog
+- logical output catalog
+- native/source artifact inventory
+- derived materialization inventory
+- entity/component identity tables
 - native result rows
 - hydration/replay contract
 - harmonized comparable views
@@ -31,6 +33,41 @@ Keep these layers distinct:
 
 Native rows answer "what did the tool report?" Harmonized rows answer "what can
 be compared across tools, under which mapping and caveats?"
+
+## Experiment Output Catalog Rule
+
+For computational experiment outputs, prefer this operational shape:
+
+```text
+experiment_runs
+  -> experiment_outputs
+       -> output_artifacts
+       -> output_materializations
+       -> output-kind-specific domain tables
+```
+
+Use `experiment_runs` for what was attempted or executed. Use
+`experiment_outputs` for logical outputs produced by a run, such as a complex
+structure set, trajectory set, binding-energy profile, or score table. Use
+`output_artifacts` only for native/source files produced by the upstream tool.
+Use `output_materializations` only for Culture-derived physical products such
+as Parquet tables, serving bundles, notebook bundles, or Pattern Viewer
+payloads.
+
+Do not let a domain object become the root operational catalog. For example,
+`ComplexStructureSet` should own molecular structure facts and source-reported
+measurements, not run status, artifact storage layout, or lake materialization
+bookkeeping.
+
+Prefer durable table names that describe nouns in the catalog or domain model,
+not implementation mechanics. Avoid schema names such as `*_df`, `*_index`, or
+`*_projection` unless the table's actual domain concept is an index or
+projection. Local notebook variables may still use `_df`.
+
+For source-reported tool values, use names that preserve source semantics.
+Prefer `source_reported_metric_types` and `source_reported_metrics` over generic
+`quality_metrics` when the values are native confidence or score outputs, not
+universal scientific quality claims.
 
 ## Base-Key Hydration Rule
 
@@ -40,7 +77,7 @@ hydrate the rest of the source detail.
 Prefer:
 
 ```text
-source_base_key
+native_output_base_key
 hydrator_kind
 hydrator_version
 ```
@@ -49,20 +86,20 @@ Avoid duplicating every derived artifact key, sidecar key, URI, or large JSON
 manifest into the hot row when those values can be reconstructed from the base
 key and the versioned hydrator contract.
 
-The `source_base_key` is a storage-key prefix or blob namespace for the native
-run. It is not necessarily a local filesystem directory. A concrete hydrator
+The base key is a storage-key prefix or blob namespace for the native output. It
+is not necessarily a local filesystem directory. A concrete hydrator/accessor
 owns how subkeys are appended, such as:
 
 ```text
-<source_base_key>/molecular_topology_result.json
-<source_base_key>/prediction/<artifact>.cif
-<source_base_key>/prediction/<artifact>_mmcif.cif
+<native_output_base_key>/molecular_topology_result.json
+<native_output_base_key>/prediction/<artifact>.cif
+<native_output_base_key>/prediction/<artifact>_mmcif.cif
 ```
 
 Keep detailed artifact roles in one of these places:
 
-- the native result sidecar read by the hydrator
-- a separate artifact index table for audit/search
+- `output_artifacts`, using role, content type, and `artifact_subkey`
+- the native result sidecar read by the hydrator/accessor
 - a versioned artifact manifest object referenced by key, when the manifest is
   too useful to derive
 
@@ -83,6 +120,7 @@ Any harmonization `plan` or `apply` must show:
 - configured discovery prefixes
 - the base key used for replay
 - the hydrator kind and version that own subkey derivation
+- the logical output kind and output schema/version
 - sidecar pointer keys read from native result payloads when they are material
 - raw experiment/output boundary inventory prefixes
 - harmonized output base key, table or artifact destination keys, write mode,
