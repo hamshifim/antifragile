@@ -53,7 +53,7 @@ in conversation.
 
 ## Task Markdown Output
 
-The grilling process should converge into a markdown file near the target code or owning app. Use a versioned `*_task.md` file when the task is intended to become durable repository doctrine. Use an ignored `*_stam.md` file for scratch alignment plans that should not be versioned. The task file should contain:
+The grilling process should converge into a markdown file near the target code or owning app. Use a versioned `*_task.md` file when the task is intended to become durable repository doctrine. Use an ignored, meaningfully named `*_stam.md` file for scratch alignment plans that should not be versioned, such as `nabu_data_sync_plan_stam.md`; avoid generic names like `stam.md`. The task file should contain:
 
 - goal
 - inspected evidence

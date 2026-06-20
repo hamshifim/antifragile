@@ -1,65 +1,51 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-18T12:38:37Z",
+  "created_at": "2026-06-20T15:51:41Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
     "platform": "OpenAI Codex",
-    "model": "unavailable in session"
+    "model": "GPT-5"
   },
   "scope": {
-    "super_repo": "~/dev/culture",
-    "submodules": [
-      {
-        "name": "antifragile",
-        "commit": "recorded by enclosing git commit",
-        "paths": [
-          "foundation/skills/wielder/SKILL_HARMONIZATION_GUIDELINES.md",
-          "reports/git_provenance/report.json"
-        ]
-      }
-    ],
+    "super_repo": "/home/gideon/dev/culture",
+    "repository": "antifragile",
+    "branch": "feature/revive-culture/main",
+    "submodules": [],
     "modes": {
       "ecosystem": "wielder_skills",
       "stage_tier": "dev",
-      "context_conf": "default_conf",
+      "context_conf": "gideon",
       "security": "standard",
       "canary": "standard"
-    }
+    },
+    "paths": [
+      "foundation/skills/wielder/SKILL_GRILL_ME.md",
+      "reports/git_provenance/report.json"
+    ]
   },
   "commits": [
     {
       "repo": "antifragile",
-      "sha": "recorded by enclosing git commit",
-      "subject": "Document base-key harmonization contracts",
+      "sha": "containing commit",
+      "subject": "Clarify Grill Me planning scratch names",
       "kind": "submodule"
-    },
-    {
-      "repo": "culture",
-      "sha": "reported after super-repo pointer commit",
-      "subject": "Update base-key harmonization pointers",
-      "kind": "supermodule"
     }
   ],
   "audit": {
-    "summary": "Scoped antifragile commit creates a versioned Wielder harmonization skill and records the base-key hydration rule for future tables.",
+    "summary": "Updated the Grill Me skill to prefer meaningful ignored planning note names ending in _stam.md, matching the Nabu planning workflow.",
     "uncommitted_leftovers": [
-      "~/dev/culture/Wielder: dirty cloud/PAN edits outside this harmonization-skill scope"
+      "culture-biochem has unrelated local notebook/script exploration changes intentionally left uncommitted."
     ],
     "risks": [
-      "The local Codex skill cache also has a harmonization skill; this commit versions the rule in antifragile for repo-owned reuse."
+      "This is a documentation/skill instruction change only."
     ]
   },
   "validation": [
     {
       "command": "git diff --check",
       "result": "passed",
-      "notes": "No whitespace errors in antifragile"
-    },
-    {
-      "command": "manual skill review",
-      "result": "passed",
-      "notes": "Rule states hot discovery rows should use source_base_key plus hydrator kind/version and avoid bulky derivable manifests"
+      "notes": "No whitespace errors in scoped antifragile changes."
     }
   ]
 }
