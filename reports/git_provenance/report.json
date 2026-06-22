@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-20T15:51:41Z",
+  "created_at": "2026-06-22T08:09:59Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -10,42 +10,46 @@
   "scope": {
     "super_repo": "/home/gideon/dev/culture",
     "repository": "antifragile",
-    "branch": "feature/revive-culture/main",
-    "submodules": [],
+    "branch": "dev",
+    "paths": [
+      "foundation/skills/wielder/SKILL_WIELDER_HANDOFF.md",
+      "reports/git_provenance/report.json"
+    ],
     "modes": {
       "ecosystem": "wielder_skills",
       "stage_tier": "dev",
-      "context_conf": "gideon",
+      "context_conf": "default_conf",
       "security": "standard",
       "canary": "standard"
-    },
-    "paths": [
-      "foundation/skills/wielder/SKILL_GRILL_ME.md",
-      "reports/git_provenance/report.json"
-    ]
+    }
   },
   "commits": [
     {
       "repo": "antifragile",
-      "sha": "containing commit",
-      "subject": "Clarify Grill Me planning scratch names",
+      "sha": "self: commit containing this report",
+      "subject": "Clarify Wielder handoff default selectors",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Updated the Grill Me skill to prefer meaningful ignored planning note names ending in _stam.md, matching the Nabu planning workflow.",
-    "uncommitted_leftovers": [
-      "culture-biochem has unrelated local notebook/script exploration changes intentionally left uncommitted."
+    "summary": "Scoped to the handoff skill rule that Wielder handoffs should not restate default selectors unless explicitly requested or needed for disambiguation.",
+    "included": [
+      "Updated direct Wielder script handoff guidance.",
+      "Aligned installed CLI handoff guidance with the default-minimal rule.",
+      "Added the redundant selector restatement anti-pattern."
+    ],
+    "excluded": [
+      "No other antifragile skills or docs are included."
     ],
     "risks": [
-      "This is a documentation/skill instruction change only."
+      "Documentation/skill instruction change only."
     ]
   },
   "validation": [
     {
-      "command": "git diff --check",
+      "command": "git -C /home/gideon/dev/culture/antifragile diff -- foundation/skills/wielder/SKILL_WIELDER_HANDOFF.md",
       "result": "passed",
-      "notes": "No whitespace errors in scoped antifragile changes."
+      "notes": "Scoped diff reviewed before staging."
     }
   ]
 }
