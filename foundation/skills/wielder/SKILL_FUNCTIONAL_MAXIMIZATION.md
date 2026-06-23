@@ -40,6 +40,13 @@ When working inside a Wielder/Antifragile project, read:
 Use [Capability Surface Extraction](SKILL_CAPABILITY_SURFACE_EXTRACTION.md) when
 the maximized function must become an operator-facing GUI, API, CLI, Wielder
 entrypoint, notebook companion, or monitoring panel.
+Use [App Incorporation](SKILL_APP_INCORPORATION.md) first when the tool is being
+copied, revived, or adapted from a legacy repo so ownership boundaries,
+fixtures, and project vocabulary are corrected before maximizing the native
+capability surface.
+For incorporation work, do not let maximization become early cleanup: first copy
+the legacy/app surface verbosely, make it run minimally, and use a functionality
+ledger to expose anything not imported.
 
 ## Workflow
 

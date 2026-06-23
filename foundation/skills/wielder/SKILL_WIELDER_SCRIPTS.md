@@ -34,6 +34,7 @@ Operational scripts become fragile when they grow a second understanding of conf
 * When a script must orchestrate a child repo, strongly suggest loading that child repo through the child repo's own canonical accessor rather than inventing a second local reader.
 * Strongly suggest treating such cross-repo access as explicit dependency wiring, not as a generic framework feature. The script should read foreign owned fields, not absorb the foreign app's whole config identity.
 * If the bridge logic is only a few lines, keep it WET and local on purpose. A garden of tiny explicit bridges is healthier than a premature generic loader that hides ownership.
+* When incorporating an app from another repo, use [App Incorporation](SKILL_APP_INCORPORATION.md) to decide what belongs in the project, functional ecosystem, concrete ecosystem, app baseline, and test overlay before writing the entrypoint.
 
 ### 2.1.0 Project-Level App Config Entrypoint
 

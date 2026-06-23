@@ -36,6 +36,9 @@ To ensure architectural alignment across varying Python execution environments a
 5.2. **[Functional Maximization](../../skills/wielder/SKILL_FUNCTIONAL_MAXIMIZATION.md)**
    *Scope:* Maximizing and auditing configurable tools, third-party models, services, and workflows for scenario coverage, advanced options, native output preservation, ecosystem boundaries, scientific honesty, fixture design, and inspectable knowledge extraction.
 
+5.3. **[App Incorporation](../../skills/wielder/SKILL_APP_INCORPORATION.md)**
+   *Scope:* Incorporating, copying, reviving, or adapting an app/tool/model service from another repo or legacy codebase while preserving config ownership, ecosystem boundaries, fixtures, notebooks, and source provenance.
+
 6. **[Local Hybrid Dev Workflow](../../skills/wielder/SKILL_LOCAL_HYBRID_DEV_WORKFLOW.md)**
    *Scope:* Fast local app or service iteration against a full remote/provider ecosystem using thin hybrid overlays, local server/client/GPU-service restart discipline, provider-backed service probes, and clear handoffs for image, Kubernetes, Spark, or cloud runtime changes.
 
