@@ -113,6 +113,37 @@ Use configured accessors, Bucketeers, Spark wrappers, table schemas, table URIs,
 write modes, deduplication keys, and app/runtime configuration. Do not bypass
 storage abstractions with local filesystem assumptions.
 
+## Serving Materialization Rule
+
+A materialization is a physically written, reproducible derivative of already
+ingested or harmonized data. The term is intentional and follows the database
+and warehouse meaning of a materialized view: the semantic source remains the
+harmonized table or native artifact, while the materialized product is optimized
+for a target consumer, lookup pattern, or service-level objective.
+
+Use materialization for products such as Pattern Viewer bundles, Arrow stream
+pages, notebook-ready payloads, or other serving/detail layouts. Do not call
+these products harmonization unless they change the canonical comparable data
+model. A Pattern Viewer serving materialization, for example, may project
+ComplexStructureSet tables into manifests, lookup pages, visual buffers,
+trajectory buffers, and layer streams without rerunning the source model or
+rewriting the harmonized lake tables.
+
+Every serving materialization should expose the normal Wielder lifecycle:
+
+- `plan` shows source tables, output bucket/base key, replacement strategy, and
+  planned child keys.
+- `apply` writes or rewrites the materialized product according to configured
+  write mode.
+- `plan-delete` shows the exact materialized product that would be removed.
+- `delete` removes only the materialized product, never native artifacts or
+  harmonized source tables.
+
+The action surface should be named for the consumer and product, such as
+`pattern_walker_materialization`, while the output catalog should record
+`materialization_kind` values such as `serving_bundle`, `arrow_stream_page`, or
+`notebook_view`.
+
 ## Plan/Apply Key Schema
 
 Any harmonization `plan` or `apply` must show:

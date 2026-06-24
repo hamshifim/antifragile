@@ -82,6 +82,25 @@ entrypoint should support ordinary Wielder actions such as `-w plan`,
 fixture size, expected source ids, output roots, cleanup policy, and validation
 toggles belong in HOCON, not in pytest-only flags or ad hoc Python branches.
 
+## Serving Materialization
+
+Pattern Walker ready data is a serving materialization: a reproducible physical
+projection of domain-owned native and harmonized data into Pattern Walker
+metadata, discovery pages, manifests, visual buffers, trajectory buffers, and
+layer streams. It is not the canonical harmonization itself.
+
+Domain repos should provide a Wielder entrypoint for this product with:
+
+- `-w plan` to show source tables and planned output keys;
+- `-w apply` to materialize or rematerialize the serving bundle;
+- `-w plan-delete` to show the exact serving bundle root that would be removed;
+- `-w delete` to remove only Pattern Walker serving output.
+
+Rematerialization is the correct operation when the Pattern Walker protocol
+contract changes, such as adding a building-block scale from existing
+ComplexStructureSet tables. Rerun ingestion or harmonization only when the
+source tables required by the new materialization do not exist or are stale.
+
 ## Implementation Rules
 
 - Back discovery endpoints with a small metadata ledger or index; avoid O(N)

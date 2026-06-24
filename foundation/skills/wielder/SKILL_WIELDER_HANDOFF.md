@@ -29,13 +29,25 @@ Commands shown to the operator must be root-safe and current-directory agnostic.
 
 - Use absolute script paths rooted at the shared checkout, for example:
   ```bash
-  <workspace>/workflow-wielder/src/workspace_wielder/deploy/apps/wgit_toolbox/wield/wgit_toolbox_branch_all_around.py -es wgit_toolbox -st dev -se org -dl standard -cn standard -cc default_conf -w plan
+  <workspace>/workflow-wielder/src/workspace_wielder/deploy/apps/wgit_toolbox/wield/wgit_toolbox_branch_all_around.py -es wgit_toolbox -st dev -w plan
   ```
+- For contextual operator-home paths, use `$HOME` in commands. Do not hand off
+  machine-specific literal home paths such as `/home/gideon/...`; write
+  `$HOME/dev/culture/...`, `$HOME/.uvenvs/culture/bin/python`, or a configured
+  `<workspace>` placeholder instead. Use `~` only in explanatory prose where it
+  improves readability, not in pasteable commands.
 - Do not require a preceding `cd`.
 - Do not prefix Wielder script handoffs with `python`, `python -m`, `uv run`,
   virtualenv activation, shell aliases, or environment-variable incantations.
 - Assume the operator's uvenv/shell is already active unless the task is
-  explicitly about workstation bootstrap.
+  explicitly about workstation bootstrap. In Culture-style workstations this
+  means the human operator is expected to be in the uvenv-aware zsh environment;
+  do not add `source`, `$HOME/.uvenvs/.../bin/python`, or prompt-repair steps to
+  ordinary handoff commands.
+- Do not restate default Wielder mode values unless the operator explicitly asks
+  for a fully expanded command or the value is needed to disambiguate intent.
+  Include only selectors and actions that change meaning, such as an ecosystem,
+  non-default stage tier, test mode, named context pack, or plan/apply action.
 - For directory-sensitive non-Wielder tools, use the tool's root/workdir option
   instead of `cd`. Examples include `npm --prefix <absolute-client-dir> run dev`
   and `pytest <absolute-test-path> -q`.
@@ -55,7 +67,8 @@ operator entrypoint.
 - Do not pad CLI handoffs with default Wielder mode values. Include only the
   selector or action arguments needed to disambiguate the operator intent; let
   the CLI and resolved config supply defaults such as stage tier, security,
-  deletion, canary, and context.
+  deletion, canary, and context. This is the same default-minimal rule that
+  applies to direct Wielder script handoffs.
 - Keep the command current-directory agnostic by relying on the tool's resolved
   config and Wielder modes, not on `cd`.
 - If a CLI tool is unavailable, hand off the bootstrap or shell-install command
@@ -211,6 +224,11 @@ the operator to reconstruct a command.
 
 - Prepending `cd`, `source .venv/bin/activate`, `python`, `python -m`, or
   `uv run` to normal Wielder entrypoints in handoff commands.
+- Hardcoding contextual operator-home paths such as `/home/gideon/...` in
+  pasteable handoff commands instead of using `$HOME/...` or a configured
+  workspace placeholder.
+- Restating default mode selectors such as security, canary, deletion, context,
+  or stage tier when they are not needed to distinguish the operator intent.
 - Handing off directory-dependent tools by changing directories first instead
   of using root-safe command-native options such as `--prefix`, `--cwd`,
   `--project`, or absolute file paths.
