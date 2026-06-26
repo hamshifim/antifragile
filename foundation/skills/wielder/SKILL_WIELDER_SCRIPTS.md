@@ -63,6 +63,36 @@ selection should still enter config before execution, usually through
 `build_cli_overrides(...)` helper. Avoid resolving config and then overriding
 `action` as a separate Python side channel.
 
+### 2.1.0.1 Runtime-Polymorphic App Shape
+
+Some apps have one stable domain contract but several valid runtime phenotypes.
+MSA/MMSeqs is a representative shape: the service can run inside Kubernetes or
+on the workstation, use inner or outer Kafka, select CPU or GPU profiles, and
+read the same bucket keys through different mounted roots.
+
+Use this app shape when the polymorphism is real:
+
+* Keep the app entrypoint thin: parse Wielder modes, call the project-local
+  `get_app_conf(APP_NAME)`, validate the resolved app contract, then delegate to
+  deploy/image/runtime helpers.
+* Put the domain contract in the functional ecosystem or app namespace that owns
+  it: topics, consumer groups, result keys, request payload profiles, model/tool
+  parameters, database contracts, and output semantics.
+* Put physical facts in thin wrapper ecosystems or context packs: kube context,
+  service hostnames, bind/access ports, local bucket roots, mounted bucket roots,
+  registry authority, scheduling, and CPU/GPU capacity expression.
+* Let runtime code branch only on resolved, typed config leaves such as
+  `service_target`, `kafka.endpoint`, `use_gpu`, or `bucket_mount.root`. Do not
+  branch by rereading HOCON files, probing the current machine to infer intent,
+  or adding bespoke flags.
+* If a runtime needs a payload larger than convenient scalar config, stage it as
+  a config-selected artifact such as a ConfigMap file or generated ephemeral
+  context pack. Do not pass domain payloads through environment variables or
+  hidden CLI strings.
+* For tests, put reduced databases, tiny sequences, fast polling, and fixture
+  payloads under `-t` overlays. The same endpoint should still exercise the real
+  service boundary, Kafka topics, bucket paths, and gRPC/API surface.
+
 ### 2.1.1 Thin Ecosystem Wrapper Discipline
 
 Scripts should treat local, hybrid, and cloud expressions as phenotypes of the same configured app family whenever possible.
