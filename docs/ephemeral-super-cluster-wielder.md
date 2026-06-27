@@ -105,7 +105,7 @@ Every explicitly anchored Epoch must resolutely capture the following footprint:
 
 The epoch contract is not enforced by a single Python-level gate. It is enforced
 structurally, and the mechanism differs by artifact class. See
-[`SKILL_EPOCH_ARTIFACT_GOVERNANCE.md`](../foundation/skills/wielder/SKILL_EPOCH_ARTIFACT_GOVERNANCE.md)
+[`SKILL_EPOCH_ARTIFACT_GOVERNANCE.md`](../foundation/skills/wielder/ops_skills/SKILL_EPOCH_ARTIFACT_GOVERNANCE.md)
 for the full specification. Summary:
 
 | Artifact Class | Mechanism |

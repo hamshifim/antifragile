@@ -120,7 +120,7 @@ Then edit the copied local files to match the developer or agent context.
 
 ### Root
 
-- [README](README.md)
+- [README](foundation/skills/wielder/utility_skills/README.md)
 
 ### Docs
 
@@ -141,7 +141,7 @@ Then edit the copied local files to match the developer or agent context.
 
 ### Foundation
 
-- [Foundation README](foundation/README.md)
+- [Foundation README](foundation/skills/wielder/utility_skills/README.md)
 - [Glossary](foundation/docs/GLOSSARY.md)
 - [Master Personas](foundation/docs/catalogs/MASTER_PERSONAS.md)
 - [Master Skills](foundation/docs/catalogs/MASTER_SKILLS.md)
@@ -154,29 +154,28 @@ Then edit the copied local files to match the developer or agent context.
 - [Persona Planner](foundation/personas/wielder/PERSONA_PLANNER.md)
 - [Persona Platform Developer](foundation/personas/wielder/PERSONA_PLATFORM_DEVELOPER.md)
 - [Persona QA Architect](foundation/personas/wielder/PERSONA_QA_ARCHITECT.md)
-- [Git Specialist README](foundation/personas/wielder/git_specialist/README.md)
+- [Git Specialist README](foundation/skills/wielder/utility_skills/README.md)
 - [Git Specialist Body](foundation/personas/wielder/git_specialist/body.md)
 - [Wielder Core Body](foundation/personas/wielder/wielder_core/body.md)
 
 ### Skills
 
-- [Agent Partner Communication](foundation/skills/wielder/SKILL_AGENT_PARTNER_COMMUNICATION.md)
-- [Configuration Guidelines](foundation/skills/wielder/SKILL_CONFIGURATION_GUIDELINES.md)
-- [Epoch Artifact Governance](foundation/skills/wielder/SKILL_EPOCH_ARTIFACT_GOVERNANCE.md)
-- [Context Recovery Alignment](foundation/skills/wielder/SKILL_CONTEXT_RECOVERY_ALIGNMENT.md)
-- [Ecosystem Guidelines](foundation/skills/wielder/SKILL_ECOSYSTEM_GUIDELINES.md)
-- [Einstein Simplicity](foundation/skills/wielder/SKILL_EINSTEIN_SIMPLICITY.md)
-- [Naming Guidelines](foundation/skills/wielder/SKILL_NAMING_GUIDELINES.md)
-- [Package Guidelines](foundation/skills/wielder/SKILL_PACKAGE_GUIDELINES.md)
-- [MCP Browser Bridge](foundation/skills/wielder/SKILL_MCP_BROWSER_BRIDGE.md)
-- [Monday MCP](foundation/skills/wielder/SKILL_MONDAY_MCP.md)
-- [Notebook Guidelines](foundation/skills/wielder/SKILL_NOTEBOOK_GUIDELINES.md)
-- [Parcelling Guidelines](foundation/skills/wielder/SKILL_PARCELLING_GUIDELINES.md)
-- [Scope Guidelines](foundation/skills/wielder/SKILL_SCOPE_GUIDELINES.md)
-- [Test Guidelines](foundation/skills/wielder/SKILL_TEST_GUIDELINES.md)
-- [Wielder Imager](foundation/skills/wielder/SKILL_WIELDER_IMAGER.md)
-- [Wielder Scripts](foundation/skills/wielder/SKILL_WIELDER_SCRIPTS.md)
-- [Yoda Council](foundation/skills/wielder/SKILL_YODA_COUNCIL.md)
+- [Agent Partner Communication](foundation/skills/wielder/agent_human_skills/SKILL_AGENT_PARTNER_COMMUNICATION.md)
+- [Antifragile Planning](foundation/skills/wielder/agent_human_skills/SKILL_ANTIFRAGILE_PLANNING.md)
+- [Configuration Guidelines](foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md)
+- [Epoch Artifact Governance](foundation/skills/wielder/ops_skills/SKILL_EPOCH_ARTIFACT_GOVERNANCE.md)
+- [Context Recovery Alignment](foundation/skills/wielder/agent_human_skills/SKILL_CONTEXT_RECOVERY_ALIGNMENT.md)
+- [Ecosystem Guidelines](foundation/skills/wielder/config_skills/SKILL_ECOSYSTEM_GUIDELINES.md)
+- [Einstein Simplicity](foundation/skills/wielder/architecture_skills/SKILL_EINSTEIN_SIMPLICITY.md)
+- [Naming Guidelines](foundation/skills/wielder/utility_skills/SKILL_NAMING_GUIDELINES.md)
+- [MCP Browser Bridge](foundation/skills/wielder/utility_skills/SKILL_MCP_BROWSER_BRIDGE.md)
+- [Monday MCP](foundation/skills/wielder/utility_skills/SKILL_MONDAY_MCP.md)
+- [Notebook Guidelines](foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md)
+- [Parcelling Guidelines](foundation/skills/wielder/architecture_skills/SKILL_PARCELLING_GUIDELINES.md)
+- [Scope Guidelines](foundation/skills/wielder/architecture_skills/SKILL_SCOPE_GUIDELINES.md)
+- [Test Guidelines](foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md)
+- [Wielder Imager](foundation/skills/wielder/ops_skills/SKILL_WIELDER_IMAGER.md)
+- [Wielder Scripts](foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md)
 
 ### Contracts and Workflows
 
