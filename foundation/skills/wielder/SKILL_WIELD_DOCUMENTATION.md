@@ -50,6 +50,12 @@ Each app/tool page should include:
   files that prove the handoff did the intended work.
 - Cautions: only risks that change the next operator decision.
 
+Service pages may name downstream consumers in prose, but must not own
+downstream lifecycle commands. Put cross-service commands in the workflow page
+that actually orchestrates those services. For example, an MSA service page may
+say that Protenix consumes MSA outputs, while the topological-predictions
+workflow page owns the command that runs MSA and Protenix together.
+
 ## Command Rules
 
 - Use installed CLI names for installed tools. Do not expose their Python
@@ -104,3 +110,5 @@ When an app, workflow, or CLI changes:
 - Test docs that omit `-t` even though the scenario lives in a test overlay.
 - Duplicating large plan output instead of naming the command and expected
   evidence.
+- A service page that hands off downstream workflow commands, blurring service
+  lifecycle with consumer orchestration.

@@ -141,6 +141,11 @@ for overlay precedence.
   typed test subtrees such as `deploy_steps`, `delete_steps`, `validation`,
   `foreign_apps`, `cleanup`, `capacity_profiles`, or scenario DAG lists from
   `conf`; they should not synthesize those decisions in Python.
+* Workflow child-operation inventories that are reusable across modes should
+  live in an app-owned `wield_steps.conf` included by `app.conf`. Mode overlays
+  such as `test.conf` should select or modulate named wield step sets while the
+  script continues to consume resolved `deploy_steps`, `delete_steps`, or an
+  equivalently typed subtree through the canonical accessor.
 * App defaults should remain best-practice or production-grade for the normal
   contract. Scripts should not quietly downgrade model loops, sample counts,
   batch sizes, polling windows, data limits, or cleanup behavior to make an
