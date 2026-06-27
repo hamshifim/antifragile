@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-27T18:34:59Z",
+  "created_at": "2026-06-27T20:02:00Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -12,16 +12,12 @@
     "repository": "antifragile",
     "branch": "feature/wield_msa/moonshot",
     "paths": [
-      "README.md",
-      "foundation/docs/catalogs/MASTER_SKILLS.md",
-      "foundation/skills/wielder/architecture_skills/README.md",
-      "foundation/skills/wielder/architecture_skills/SKILL_ANTIFRAGILE_EVOLUTION.md",
-      "foundation/skills/wielder/architecture_skills/SKILL_WIELDER_APP_FORM.md",
-      "foundation/skills/wielder/architecture_skills/the-reactive-manifesto-2.0.pdf",
+      "foundation/skills/wielder/script_skills/SKILL_APP_INCORPORATION.md",
+      "foundation/skills/wielder/utility_skills/SKILL_APP_INCORPORATION.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
-      "ecosystem": "wielder_architecture_skills",
+      "ecosystem": "antifragile_skills",
       "stage_tier": "dev",
       "context_conf": "not_applicable",
       "security": "standard",
@@ -32,47 +28,29 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Add Wielder app form doctrine",
+      "subject": "Move app incorporation skill to scripting",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Added Wielder App Form architecture doctrine for service, Spark, ingestion, harmonization, materialization, aggregate reactive step mixes, source-transform-sink pipeline form, minimal app config, ecosystem contracts, and thin surfaces. Linked Antifragile Evolution to the local Reactive Manifesto PDF and reactive composition guidance.",
+    "summary": "Moved the App Incorporation skill from utility_skills to script_skills so incorporation guidance lives with app/script migration doctrine.",
     "included": [
-      "New Wielder App Form architecture skill.",
-      "Reactive Manifesto 2.0 PDF as local architecture background.",
-      "Antifragile Evolution cross-link and reactive composition guidance.",
-      "Architecture README, master catalog, top-level README discoverability updates.",
-      "Submodule provenance report."
+      "Renamed SKILL_APP_INCORPORATION.md into foundation/skills/wielder/script_skills.",
+      "Updated the stable git provenance report."
     ],
     "excluded": [
-      "Existing uncommitted move of SKILL_APP_INCORPORATION.md from utility_skills to script_skills; this was not created for this task and is intentionally left uncommitted.",
-      "No product code, runtime config, image, deploy, notebook, or data pipeline changes are included."
+      "No doctrine text changes beyond the relocation.",
+      "No product code, runtime config, notebooks, data, or generated artifacts."
     ],
     "risks": [
-      "Doctrine-only change; downstream agents must read the updated skill before applying the app-form guidance.",
-      "Reactive Manifesto PDF is conceptual background, not a Wielder-specific contract."
-    ],
-    "uncommitted_leftovers": [
-      "foundation/skills/wielder/utility_skills/SKILL_APP_INCORPORATION.md deletion",
-      "foundation/skills/wielder/script_skills/SKILL_APP_INCORPORATION.md addition"
+      "Any catalog links still pointing to utility_skills should be refreshed in a separate doctrine/catalog pass if discovered."
     ]
   },
   "validation": [
     {
-      "command": "test -f foundation/skills/wielder/architecture_skills/the-reactive-manifesto-2.0.pdf",
+      "command": "cd /home/gideon/dev/culture/antifragile && git diff --name-status --find-renames",
       "result": "passed",
-      "notes": "Reactive Manifesto PDF exists at the linked local path."
-    },
-    {
-      "command": "test -f referenced Wielder App Form related skills",
-      "result": "passed",
-      "notes": "Configuration, ecosystem, service deployment, scripting, workflow validation, data ingestion, harmonization, table schema, and Spark validation skill links exist."
-    },
-    {
-      "command": "git diff/status adversarial audit",
-      "result": "passed",
-      "notes": "Commit scope is limited to Wielder App Form/reactive doctrine and provenance; unrelated App Incorporation move is excluded."
+      "notes": "Confirmed scope is the App Incorporation skill relocation plus provenance report."
     }
   ]
 }
