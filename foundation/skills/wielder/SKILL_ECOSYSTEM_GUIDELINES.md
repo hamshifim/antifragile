@@ -70,6 +70,7 @@ Once a shared family ecosystem has been extracted, the remaining concrete ecosys
 - **Guideline:** Strongly suggest consolidating concrete override ecosystems into a single `ecosystem_manifest.conf` when their remaining role is to override a small set of operational facts.
 - **Guideline:** Strongly suggest deleting empty or misleading concrete override fragments once their contents have been centralized, rather than preserving them as ceremonial files.
 - **Guideline:** Strongly suggest keeping deployment-resource ordering and Kubernetes object lists at the deployment layer, not inside ecosystem overlays, even when those ecosystems become very thin.
+- **Guideline:** Thin wrappers should contribute an accumulative `ecosystem_explanation.<key>` leaf and, for active ecosystems, declare the explanation keys required by the resolved contract. Do not let a wrapper explain itself by overriding root Wielder mode selectors.
 
 ### 9. Local WSL GPU Cluster Choice
 For local WSL development of GPU-bound services, the cluster surface should be chosen with image-ingestion behavior in mind, not only conceptual Kubernetes symmetry.

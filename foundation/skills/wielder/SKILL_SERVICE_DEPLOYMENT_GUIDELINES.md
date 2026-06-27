@@ -101,9 +101,13 @@ not as ordinary GUI apply.
 
 - Resolve the service through the canonical app accessor, usually `get_app_conf("<app>")`.
 - Durable behavior belongs in HOCON: selected jobs, provider surfaces, triggers, identities, timeouts, polling, delete flags, and image app names.
-- Kubernetes workload subsets belong in ecosystem HOCON. A workflow should not
-  carry a special "runtime enabled" flag when the active ecosystem can choose
-  the deployment list, prune list, replica counts, and service deploy steps.
+- Kubernetes deploy config is canonical beside the code app it deploys: object
+  HOCON, manifests, service accounts, jobs, statefulsets, and deploy entrypoints
+  live with the app surface. Ecosystems select and modulate those deploy
+  contracts through resolved leaves such as deployment lists, prune lists,
+  replica counts, resources, ports, registry authority, and service deploy
+  steps. Do not move kube config out of the app merely because a future non-kube
+  runtime may exist.
 - CLI arguments should stay at Wielder modulation level: ecosystem, stage tier, context, security, canary, and action.
 - Developer-local choices belong in `context_conf/<name>/developer.conf`, not ad hoc environment variables or private parsers.
 - A service that orchestrates another repo may read that repo through its canonical accessor, but should extract only the fields it needs.
