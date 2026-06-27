@@ -2,6 +2,8 @@
 description: Architectural Testing & Live QA Execution Protocols
 ---
 [Read the package guidelines](SKILL_PACKAGE_GUIDELINES.md) if you haven't recently.
+[Use Wield Documentation](SKILL_WIELD_DOCUMENTATION.md) when a test surface needs
+a durable operator-facing `wield_docs/` handoff.
 
  Testing Constraints & Live QA Protocols
 

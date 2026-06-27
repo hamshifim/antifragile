@@ -3,6 +3,8 @@ description: Wielder-style operator handoffs with config-owned intent, root-safe
 ---
 
 [Read the package guidelines](SKILL_PACKAGE_GUIDELINES.md) if you haven't recently.
+[Use Wield Documentation](SKILL_WIELD_DOCUMENTATION.md) when creating or updating
+project `wield_docs/` operator pages from handoffs.
 
 # Wielder Handoff & Operator Command Reporting
 

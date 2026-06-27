@@ -153,6 +153,9 @@ To ensure architectural alignment across varying Python execution environments a
 40. **[Wielder Handoff & Operator Command Reporting](../../skills/wielder/SKILL_WIELDER_HANDOFF.md)**
    *Scope:* Wielder-style operator handoffs with config-owned intent, root-safe absolute commands, plan/apply/test reporting, and clear separation between agent-internal validation commands and human-run commands.
 
+40.1. **[Wield Documentation](../../skills/wielder/SKILL_WIELD_DOCUMENTATION.md)**
+   *Scope:* Creating and maintaining project `wield_docs/` trees with current-directory-agnostic lifecycle handoffs, `-t` test handoffs, config-owned intent, expected evidence, and links to source tests.
+
 41. **[Consulting Mode](../../skills/wielder/SKILL_CONSULTING_MODE.md)**
    *Scope:* Provisional architectural discussion, conflicting hypotheses, tradeoff exploration, and decision hygiene without turning operator indecision into implementation, config, or downstream handoff residue.
 
