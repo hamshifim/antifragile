@@ -33,10 +33,13 @@ To ensure architectural alignment across varying Python execution environments a
 5.1. **[Capability Surface Extraction](../../skills/wielder/SKILL_CAPABILITY_SURFACE_EXTRACTION.md)**
    *Scope:* Deriving the fullest honest operator-facing capability surface from an app, model, service, or module through typed contracts, config-owned defaults, shared projections, lifecycle events, artifact access, and validation ladders.
 
-5.2. **[Functional Maximization](../../skills/wielder/SKILL_FUNCTIONAL_MAXIMIZATION.md)**
+5.2. **[Code Scope Extraction](../../skills/wielder/SKILL_CODE_SCOPE_EXTRACTION.md)**
+   *Scope:* Moving stable project-local helpers toward reusable Wielder SDK seams only when ownership, typed inputs, and plausible second clients are clear.
+
+5.3. **[Functional Maximization](../../skills/wielder/SKILL_FUNCTIONAL_MAXIMIZATION.md)**
    *Scope:* Maximizing and auditing configurable tools, third-party models, services, and workflows for scenario coverage, advanced options, native output preservation, ecosystem boundaries, scientific honesty, fixture design, and inspectable knowledge extraction.
 
-5.3. **[App Incorporation](../../skills/wielder/SKILL_APP_INCORPORATION.md)**
+5.4. **[App Incorporation](../../skills/wielder/SKILL_APP_INCORPORATION.md)**
    *Scope:* Incorporating, copying, reviving, or adapting an app/tool/model service from another repo or legacy codebase while preserving config ownership, ecosystem boundaries, fixtures, notebooks, and source provenance.
 
 6. **[Local Hybrid Dev Workflow](../../skills/wielder/SKILL_LOCAL_HYBRID_DEV_WORKFLOW.md)**
@@ -163,6 +166,9 @@ To ensure architectural alignment across varying Python execution environments a
    *Scope:* Framed operator-readable logs for long-running workers, Kafka consumers, Spark jobs, and Wielder launchers, including lifecycle events, stable identifiers, busy heartbeats, and failure stack trace preservation.
 
 ## Related Catalogs
+
+- **[Resolved Wielder Config](../configuration/RESOLVED_CONFIG.md)**
+  *Scope:* Forensic guide for inspecting the resolved config contract before changing Python code.
 
 - **[Wieldable Functionalities](WIELDABLE_FUNCTIONALITIES.md)**
   *Scope:* Growing index of reusable operator-facing Wielder capabilities such as Terraform provisioning, Kubernetes workloads, storage cloning, and runtime CLI configuration.

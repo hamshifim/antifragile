@@ -6,6 +6,8 @@ description: Core architectural patterns for writing `Wielder` orchestration and
 [Read the package guidelines](SKILL_PACKAGE_GUIDELINES.md) if you haven't recently.
 [Use Wield Documentation](SKILL_WIELD_DOCUMENTATION.md) when script entrypoints
 need durable operator docs and test handoffs in a project `wield_docs/` tree.
+[Use Code Scope Extraction](SKILL_CODE_SCOPE_EXTRACTION.md) before promoting
+project-local script or service helpers into Wielder.
 
 # Wielder Script Architectural Patterns
 
