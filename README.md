@@ -167,6 +167,7 @@ Then edit the copied local files to match the developer or agent context.
 - [Context Recovery Alignment](foundation/skills/wielder/agent_human_skills/SKILL_CONTEXT_RECOVERY_ALIGNMENT.md)
 - [Ecosystem Guidelines](foundation/skills/wielder/config_skills/SKILL_ECOSYSTEM_GUIDELINES.md)
 - [Einstein Simplicity](foundation/skills/wielder/architecture_skills/SKILL_EINSTEIN_SIMPLICITY.md)
+- [Wielder App Form](foundation/skills/wielder/architecture_skills/SKILL_WIELDER_APP_FORM.md)
 - [Naming Guidelines](foundation/skills/wielder/utility_skills/SKILL_NAMING_GUIDELINES.md)
 - [MCP Browser Bridge](foundation/skills/wielder/utility_skills/SKILL_MCP_BROWSER_BRIDGE.md)
 - [Monday MCP](foundation/skills/wielder/utility_skills/SKILL_MONDAY_MCP.md)

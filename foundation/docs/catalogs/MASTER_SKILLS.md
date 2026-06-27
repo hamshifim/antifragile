@@ -20,7 +20,7 @@ To ensure architectural alignment across varying Python execution environments a
    *Scope:* Front-and-center Wielder doctrine for treating workflow entrypoints as configurable integration, system, load, and production execution surfaces across ecosystems, surfaces, and stage tiers.
 
 4. **[Antifragile Evolution During Live System Tests](../../skills/wielder/architecture_skills/SKILL_ANTIFRAGILE_EVOLUTION.md)**
-   *Scope:* Treating live Wielder system tests as sanctioned engineering workbenches where real failures, operator feedback, and workflow pressure guide small source/config improvements through managed entrypoints.
+   *Scope:* Treating live Wielder system tests as sanctioned engineering workbenches where real failures, operator feedback, reactive-system pressure, and workflow pressure guide small source/config improvements through managed entrypoints, with the local Reactive Manifesto as background vocabulary.
 
 5. **[Wielder Scripting & Evaluation Skills](../../skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md)**
    *Scope:* Thin Wielder orchestration scripts, configuration-driven filesystem operations, local action discipline, long-running handoffs, and backend CLI configuration from resolved HOCON.
@@ -81,6 +81,9 @@ To ensure architectural alignment across varying Python execution environments a
 
 17. **[Einstein Simplicity](../../skills/wielder/architecture_skills/SKILL_EINSTEIN_SIMPLICITY.md)**
    *Scope:* Simplicity discipline for distributed orchestration: thin outer layers, boundary-local branching, responsible-layer ownership, convergence over coordination, and abstraction restraint.
+
+17.1. **[Wielder App Form](../../skills/wielder/architecture_skills/SKILL_WIELDER_APP_FORM.md)**
+   *Scope:* Architectural form doctrine for Wielder apps as domain or subdomain functionality expressed into ecosystem phenotypes through modes, including service, Spark, ingestion, harmonization, materialization, aggregate reactive step mixes, source-transform-sink pipeline form, minimal app config, core ecosystem contracts, aggregated workflows, and thin surface wrappers.
 
 18. **[Naming Doctrine](../../skills/wielder/utility_skills/SKILL_NAMING_GUIDELINES.md)**
    *Scope:* Layer-aware naming for domain, operational, and infrastructure code, with review heuristics for ambiguity, boundary state, and provenance/security-sensitive symbols.

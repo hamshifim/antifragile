@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-27T18:03:47Z",
+  "created_at": "2026-06-27T18:34:59Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -13,25 +13,15 @@
     "branch": "feature/wield_msa/moonshot",
     "paths": [
       "README.md",
-      "docs/antipatterns/style-drift.md",
-      "docs/ephemeral-super-cluster-wielder.md",
-      "foundation/contracts/handoffs/SKILL_HANDOFF_PROTOCOL.md",
       "foundation/docs/catalogs/MASTER_SKILLS.md",
-      "foundation/docs/catalogs/WIELDABLE_FUNCTIONALITIES.md",
-      "foundation/personas/wielder/PERSONA_PLANNER.md",
-      "foundation/skills/pattern-walker/MASTER_SKILLS.md",
-      "foundation/skills/wielder/agent_human_skills/",
-      "foundation/skills/wielder/architecture_skills/",
-      "foundation/skills/wielder/config_skills/",
-      "foundation/skills/wielder/data_skills/",
-      "foundation/skills/wielder/ops_skills/",
-      "foundation/skills/wielder/script_skills/",
-      "foundation/skills/wielder/test_skills/",
-      "foundation/skills/wielder/utility_skills/",
+      "foundation/skills/wielder/architecture_skills/README.md",
+      "foundation/skills/wielder/architecture_skills/SKILL_ANTIFRAGILE_EVOLUTION.md",
+      "foundation/skills/wielder/architecture_skills/SKILL_WIELDER_APP_FORM.md",
+      "foundation/skills/wielder/architecture_skills/the-reactive-manifesto-2.0.pdf",
       "reports/git_provenance/report.json"
     ],
     "modes": {
-      "ecosystem": "wielder_skills",
+      "ecosystem": "wielder_architecture_skills",
       "stage_tier": "dev",
       "context_conf": "not_applicable",
       "security": "standard",
@@ -42,43 +32,47 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Organize Wielder skill doctrine directories",
+      "subject": "Add Wielder app form doctrine",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Grouped Wielder/Antifragile skill doctrine into named directories for config, script, test, agent-human, architecture, ops, utility, and data concerns; removed the thin package-guidelines shell by folding its auth boundary into Security Guidelines; retired Yoda Council into Antifragile Planning approval-boundary text.",
+    "summary": "Added Wielder App Form architecture doctrine for service, Spark, ingestion, harmonization, materialization, aggregate reactive step mixes, source-transform-sink pipeline form, minimal app config, ecosystem contracts, and thin surfaces. Linked Antifragile Evolution to the local Reactive Manifesto PDF and reactive composition guidance.",
     "included": [
-      "Moved skill files into directory routers with README indexes.",
-      "Updated master catalog, Pattern Walker index, README, handoff docs, and related references.",
-      "Added/updated provenance report."
+      "New Wielder App Form architecture skill.",
+      "Reactive Manifesto 2.0 PDF as local architecture background.",
+      "Antifragile Evolution cross-link and reactive composition guidance.",
+      "Architecture README, master catalog, top-level README discoverability updates.",
+      "Submodule provenance report."
     ],
     "excluded": [
-      "No product code or runtime configuration changes are included.",
-      "External Codex skill file C:/Users/Gideon/.codex/skills/culture-connect/SKILL.md is not in this repository and remains to update separately."
+      "Existing uncommitted move of SKILL_APP_INCORPORATION.md from utility_skills to script_skills; this was not created for this task and is intentionally left uncommitted.",
+      "No product code, runtime config, image, deploy, notebook, or data pipeline changes are included."
     ],
     "risks": [
-      "Documentation/skill-path reorganization only; external consumers with hardcoded old paths must update."
+      "Doctrine-only change; downstream agents must read the updated skill before applying the app-form guidance.",
+      "Reactive Manifesto PDF is conceptual background, not a Wielder-specific contract."
     ],
     "uncommitted_leftovers": [
-      "None inside antifragile after this commit is staged."
+      "foundation/skills/wielder/utility_skills/SKILL_APP_INCORPORATION.md deletion",
+      "foundation/skills/wielder/script_skills/SKILL_APP_INCORPORATION.md addition"
     ]
   },
   "validation": [
     {
-      "command": "markdown link check across antifragile markdown files",
+      "command": "test -f foundation/skills/wielder/architecture_skills/the-reactive-manifesto-2.0.pdf",
       "result": "passed",
-      "notes": "All markdown links resolved except known pre-existing hidden/generated README targets intentionally ignored."
+      "notes": "Reactive Manifesto PDF exists at the linked local path."
     },
     {
-      "command": "PYTHONPATH=src /home/gideon/.uvenvs/culture/bin/python -m pytest tests -q",
+      "command": "test -f referenced Wielder App Form related skills",
       "result": "passed",
-      "notes": "8 passed."
+      "notes": "Configuration, ecosystem, service deployment, scripting, workflow validation, data ingestion, harmonization, table schema, and Spark validation skill links exist."
     },
     {
-      "command": "grep for SKILL_PACKAGE_GUIDELINES references",
+      "command": "git diff/status adversarial audit",
       "result": "passed",
-      "notes": "No remaining package-guidelines references."
+      "notes": "Commit scope is limited to Wielder App Form/reactive doctrine and provenance; unrelated App Incorporation move is excluded."
     }
   ]
 }
