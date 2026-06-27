@@ -33,6 +33,32 @@ Use this skill when creating, refactoring, or reviewing a Wielder-managed servic
 - `delete` removes durable resources only when the delete config explicitly allows it.
 - Long-running `apply`, image build/push, sync, or job execution should be handed to the operator unless they explicitly ask the agent to run and wait.
 
+## Service Spec And QA Endpoints
+
+A deployed service often needs a second operator surface that exercises the
+already-defined service contract without provisioning, building images, or
+deploying workloads. Treat this as a service-spec endpoint, not as part of the
+deploy endpoint.
+
+- Use a separate endpoint such as `<service_name>_test.py`, `<service_name>_qa.py`,
+  or `<service_name>_spec.py` when the operator intent is "test the service
+  contract" rather than "reconcile runtime infrastructure".
+- The service-spec endpoint should still use Wielder action/config semantics:
+  `plan` reports the resolved service target, test fixture, topics, bucket keys,
+  and exact test command; `apply` runs the configured tests or probes; `delete`
+  removes only configured test outputs.
+- Do not make service-spec endpoints provision dependencies, build images,
+  deploy services, install Kafka, or create clusters. If dependencies are
+  missing, fail or skip with a clear petition to run the owning deploy/provision
+  endpoint.
+- Put service-spec command shape in HOCON, usually under a tree such as
+  `<service>.service_specs.<spec_key>`. Python should validate and execute the
+  resolved spec, not hardcode test files, fixture UUIDs, or provider endpoints.
+- Test fixtures still belong in `-t` overlays. A service-spec endpoint may
+  require `-t` for destructive or fixture-backed QA, and should say so in plan.
+- Keep cleanup scoped to the spec's configured outputs. A service-spec `delete`
+  should not imply infrastructure teardown.
+
 ## Operator GUI Apply And Version Locks
 
 Operator-facing GUI apply is a deployment operation, not a build operation.

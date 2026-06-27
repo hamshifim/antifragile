@@ -31,6 +31,20 @@ Add a functionality here when it becomes a repeated Workspace operation with a s
 - Doctrine: see [Service Deployment Guidelines](../../skills/wielder/SKILL_SERVICE_DEPLOYMENT_GUIDELINES.md).
 - Operator rule: final handoffs should include absolute one-line commands for image and deploy `plan/apply/run/monitor` actions that actually exist.
 
+### Service Spec QA Surfaces
+
+- Purpose: exercise an already-defined service contract without provisioning,
+  image build, or workload deployment.
+- Shape: service-named `<service_name>_test.py`, `<service_name>_qa.py`, or
+  `<service_name>_spec.py` entrypoints use Wielder `plan/apply/delete` over a
+  config-owned service spec.
+- Contract: test command, fixture identity, expected evidence, topics,
+  endpoints, and cleanup target live in config, usually under
+  `<service>.service_specs.<spec_key>`.
+- Doctrine: see [Service Deployment Guidelines](../../skills/wielder/SKILL_SERVICE_DEPLOYMENT_GUIDELINES.md).
+- Operator rule: `apply` may run the service tests/probes; `delete` must clean
+  only configured test outputs and must not tear down service infrastructure.
+
 ### Storage Cloning
 
 - Purpose: mirror or migrate data between local paths, Google Drive, Google Cloud Storage, and AWS S3.
