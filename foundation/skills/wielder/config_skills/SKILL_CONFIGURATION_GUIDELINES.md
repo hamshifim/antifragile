@@ -17,27 +17,36 @@ Wielder configuration names enduring managed units as `apps`. A deployment is an
 
 To support a distributed super-repo architecture where applications concurrently bridge different sets of bare-metal development workstations, remote K8s clusters, and localized shadow deployments, Wielder enforces a hyper-granular, predictable resolution hierarchy.
 
-### The Resolving Configuration Hierarchy
+### The Actual Resolution Order
 
-The evaluation hierarchy relies on object-tree merging priorities. Overrides elegantly layer across domains, establishing local primacy sequentially against standard defaults. The structure parsed functionally via `wield_conf.py` resolves chronologically from bottom (lowest fallback) to top (absolute primacy):
+The Wielder resolver has two passes: a project/topography pass, then an app pass. List order below is lowest priority to highest priority.
 
-1. **Application Baseline (`app.conf`)**
-   * **Role**: Defines the fundamental configuration limits for an application.
+Project/topography pass (`get_wield_project_conf()`):
 
-2. **Project Base (`project.conf`)**
-   * **Role**: Root topology configuration spanning structural dependencies globally without overriding local `stage_tier` limits.
+1. generated runtime defaults
+2. `conf/project.conf`
+3. super-repo `conf/super_module.conf`, when present
+4. `conf/canary/<canary>/canary.conf`
+5. `conf/ecosystem/**/<ecosystem>/ecosystem_manifest.conf`
+6. `conf/destroy/<destroy>/destroy.conf`
+7. `conf/stage_tier/<stage_tier>/tier.conf`
+8. `conf/security/<security>/security.conf`
+9. context pack overlays from `conf/context_conf/<context_conf>/` and super-repo `context_conf/<context_conf>/`, including `secrets.conf`, `agents.conf`, generated transient `ephemeral.conf`, and operator-local `developer.conf`
+10. `conf/test/**/<ecosystem>/test.conf`, only when `test` is enabled
+11. CLI overrides
+12. loader-injected path metadata such as `conf_root`, `context_conf_root`, `developer_conf_path`, `ephemeral_conf_path`, and `test_conf_path`
 
-3. **Ecosystem & Deployment Triggers (`canary`, `destroy`, `ecosystem`)**
-   * **Role**: Dictates global network routing, architecture maps, and overarching deployment footprint triggers spanning multiple domains.
+Routing note: `ecosystem`, `stage_tier`, `security`, `destroy`, `canary`, `context_conf`, and `test` are selected from CLI first, then already-loaded context packs, then project defaults. The selected ecosystem manifest is loaded after this routing decision.
 
-4. **Domain Modes (`surface`, `stage_tier`, `security`)**
-   * **Role**: The core operational matrix orchestrating exact multidimensional overrides. Defines physical orchestration parameters (`surface`), deployment boundaries (`dev`, `stage`, `prod`), and RBAC compartmentation.
+App pass (`get_wield_app_conf()`):
 
-5. **Context Packs (`context_conf/<name>/developer.conf`)**
-   * **Role**: Centralized developer context packs dictating localized overrides during active development. These packs trump downstream domain boundaries without fragmenting overrides across repo-local `conf/developer/` folders.
+1. `conf/apps/<app>/app.conf`
+2. `conf/apps/<app>/test.conf`, only when `test` is enabled
+3. resolved project/topography config from `get_wield_project_conf(resolve=False)`
+4. explicit `module_paths`, in call order, as the highest app-level overlays
+5. final PyHOCON substitution resolution
 
-6. **CLI Parser (Absolute Primacy)**
-   * **Role**: Natively dictates execution execution, overriding developer configurations implicitly during dynamic pipeline spins without manual parameter passing inside sub-scripts.
+Implication: app baselines declare durable app capability and empty/default contract shape. Runtime ecosystem choices, child app ecosystems, provider surfaces, and local/cloud placement are supplied by ecosystem wrappers, generated transient context, `developer.conf`, test overlays, module paths, or CLI, not by neutral `app.conf`. CLI still trumps transient and developer context.
 
 ### Ecosystem Family Core Before Phenotype Overlays
 
@@ -50,7 +59,7 @@ For ecosystem families and app families, the base configuration should represent
 * **Guideline:** Missing values in a thin overlay usually indicate a missing core contract or a missing physical override. Fix the responsible layer instead of adding a Python fallback or side loader.
 
 ### Architectural Mandates
-* **No Orphaned Variables**: A configuration typically needs to exist natively inside the Application Baseline (Tier 1) before it can be overridden in Tier 4.
+* **No Orphaned Variables**: If app code requires a leaf to exist in every runtime, the neutral app baseline should declare its fail-closed shape. If a leaf exists only to choose a runtime ecosystem, provider surface, local/cloud placement, or child-app handoff, it belongs above the app baseline in ecosystem, context, test, module, or CLI overlays.
 * **Fail-Closed Execution**: If an override requires structural evaluation arrays (`[]`), the Baseline establishes the empty array. Masking empty configurations inside comments to "bypass PyHocon overlays" is an antipattern.
 * **Mock Isolation**: Experimental boundaries ride explicitly on the Domain Modes (`stage_tier`), avoiding pollution of Tier 1.
 * **Baseline vs Fixture Pressure**: Application baselines should express production-grade or best-practice behavior for the app's normal contract. Minimal pressure profiles, tiny model loops, reduced sampling, miniature batches, synthetic row counts, short polling windows, and other "just enough to prove the path" values belong in the `-t` test overlay or an explicit transient context pack, not in neutral app defaults. If a minimal profile is a real supported mode, keep its schema in the app contract, but define or activate the reduced values from the test/developer layer that needs them.
@@ -80,7 +89,7 @@ Configuration dependencies should guide the execution toward immediate awareness
 ### 2. The Evaluation Trump Model (Ingrained CLI Architecture)
 Historically, the Wielder architecture minimized CLI bindings to protect the mathematical purity of the `.conf` file. However, structurally isolating the CLI from the PyHocon loader creates catastrophic Execution Fragmentation (the "Splintering Source of Truth") where scripts evaluate configurations differently depending on how they were executed.
 - **Guideline:** The centralized Antifragile parser (`get_ecosystem_parser()`) MUST be natively ingrained into the absolute bottom of the `get_workspace_conf()` evaluation loop.
-- **Guideline (The Trump Card):** The evaluation hierarchy is mathematically absolute: *Project Base -> Ecosystem -> App -> Developer -> CLI*. By executing the CLI parser internally, terminal arguments natively map onto the configuration ConfigTree, systematically trumping all local developer configurations uniformly across every single orchestrating script without requiring manual `argparse` implementations in leaf files.
+- **Guideline (The Trump Card):** The practical hierarchy is the two-pass order above: project/topography resolves first, then that tree overlays the app baseline, then explicit module paths and final substitution resolution complete the app config. CLI values remain operator trumps for Wielder modes and explicit overrides; neutral `app.conf` is not the place to pin selected ecosystems.
 - **Guideline (CLI Is Modulation, Config Is Configuration):** CLI arguments should exist only for broad Wielder modulation: action/mode selection, topology dimensions, test-fixture selection, and rare operator overrides with a clear cross-script reason. Durable behavior such as polling limits, sync targets, feature toggles, file names, schedules, identities, provider choices, and test behavior belongs in HOCON. Do not add a CLI flag merely because one invocation needs a value; add or override the resolved config instead.
 - **Cross-Reference:** This native PyHocon trump execution is the foundational bridge permitting safe dry-run Sandboxing natively. See the strict Staging Sandbox bounds mapped formally in [Wielder Imager & Staging Sandboxing](../ops_skills/SKILL_WIELDER_IMAGER.md).
 - **Guideline (Workflow Runtime Preference):** For distributed workflow ecosystems, CLI trumps are useful during bootstrap and planning, but runtime components should prefer staged configuration artifacts when native propagation exists. Avoid making container command-line flags the long-term operational source of truth when `context_conf/<name>/developer.conf` or another staged config artifact can be copied into the runtime surface.
@@ -90,7 +99,7 @@ Historically, the Wielder architecture minimized CLI bindings to protect the mat
 - **Guideline (Transient Batch Naming):** Manual transient batch contexts should mirror the GUI batch identity contract: short user token, default target, target tag or protein context, run slug, and autoincrement suffix. Compose these as named HOCON variables and derive `batch_name`, `batch_slug`, CSV paths, sequence-set IDs, run UUID prefixes, and generated search names from that one batch name. Do not hand-type near-duplicate batch strings in several leaves.
 - **Guideline (Mode Values Do Not Belong In Neutral Context):** Wielder modes such as `ecosystem`, `stage_tier`, `security`, `destroy`, `canary`, `context_conf`, `test`, and `action` should normally be supplied by the CLI or the Wielder mode layer. Do not put them in `context_conf/default_conf/developer.conf` to create hidden operator defaults. A context pack may define modes only when it is deliberately named as an operational profile, and that profile intent is visible from the context name.
 - **Guideline (Live Dates Do Not Belong In Neutral Context):** Live calendar leaves such as `year`, `month`, `day`, `date`, or `timestamp` should not be hardcoded in neutral default developer contexts. Pin dates only in `-t` fixtures, replay contexts, or explicitly named historical profiles. For current lookups, compute the date at runtime from a strict config-selected policy or materialize it into ignored ephemeral config so the durable default context does not silently stale.
-- **Guideline (Test Mode Is Overlay Selection, Not Action Selection):** The `-t/--test` mode only selects test overlays. It must not imply, mutate, or default `action`; `-w/--wield` remains the sole operator action selector. In test mode, load `conf/test/<domain>/<ecosystem>/test.conf` above developer and ephemeral context but below CLI so the fixture can pin DAGs, batch identity, validation toggles, scale, expected inputs, timeout policy, capacity bundles, and apply/delete step controls while the operator still chooses `plan`, `apply`, `delete`, `run`, or `monitor`. App-local `conf/apps/<app>/test.conf` may extend the app baseline only when test mode is enabled. Do not use legacy root-level `conf/test.conf` or context packs for system-test fixtures. See [Architectural Testing & Live QA Execution Protocols](../test_skills/SKILL_TEST_GUIDELINES.md) for the test philosophy and [Wielder Scripting & Evaluation Skills](../script_skills/SKILL_WIELDER_SCRIPTS.md) for endpoint propagation.
+- **Guideline (Test Mode Is Overlay Selection, Not Action Selection):** The `-t/--test` mode only selects test overlays. It must not imply, mutate, or default `action`; `-w/--wield` remains the sole operator action selector. In test mode, load `conf/test/**/<ecosystem>/test.conf` above context and below CLI so the fixture can pin DAGs, batch identity, validation toggles, scale, expected inputs, timeout policy, capacity bundles, and apply/delete step controls while the operator still chooses `plan`, `apply`, `delete`, `run`, or `monitor`. App-local `conf/apps/<app>/test.conf` may extend the app baseline only when test mode is enabled. Do not use legacy root-level `conf/test.conf` or context packs for system-test fixtures. See [Architectural Testing & Live QA Execution Protocols](../test_skills/SKILL_TEST_GUIDELINES.md) for the test philosophy and [Wielder Scripting & Evaluation Skills](../script_skills/SKILL_WIELDER_SCRIPTS.md) for endpoint propagation.
 - **Guideline (Reusable Wield Step Sets):** When a workflow owns literal child Wielder operation sequences, keep those reusable step sets in an app-owned `wield_steps.conf` included by `app.conf`. The canonical `test.conf` overlay should select or modulate a named step set, not carry the only copy of the workflow's step inventory. Continue exposing the selected set through typed leaves such as `deploy_steps` and `delete_steps` so scripts can read the resolved contract without inventing a side loader.
 - **Guideline (Test Mode Is Endpoint-Universal):** Any Wielder endpoint that resolves config through the canonical parser/accessor path should become test-scenarioable without adding bespoke CLI flags. Carry `test` through `build_cli_overrides(...)` and `build_cli_overrides_from_conf(...)` alongside `ecosystem`, `stage_tier`, `security`, `destroy`, `canary`, `context_conf`, and `action`. A child app invoked by a parent test endpoint should inherit the same Wielder mode envelope unless the parent intentionally switches a topology dimension through a narrow `cli_overrides` boundary.
 - **Guideline (Transitional Workflow Fallbacks):** A dedicated runtime subtree such as `model_binding_workflow.publisher_job` is cleaner than legacy workflow-owned DAG arrays, but during migration an in-cluster runtime may intentionally fall back to included workflow DAG lists from the active context pack. If that fallback is still part of the working contract, document it explicitly rather than “fixing” it by assumption.

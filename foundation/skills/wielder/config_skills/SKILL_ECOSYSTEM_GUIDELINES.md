@@ -10,6 +10,18 @@ The fundamental architectural principle behind the Wielder `ecosystem` framework
 
 In Wielder, the primary managed noun remains `app`, not `deployment`. An ecosystem phenotypes apps across surfaces and dependencies. Deployment is one operational expression of an app inside that topology, not the whole identity of the configured unit.
 
+## Domain, Surface, Wrapper
+
+Keep the ecosystem stack three-layered:
+
+- `domain/<name>`: functional, scientific, or data contract. Never includes `surface/*`.
+- `surface/<name>`: runtime, platform, provider, or local machine contract. Never includes `domain/*`.
+- `wrapper/<name>`: deployable or app-runtime ecosystem. Includes the needed domain and surface ecosystems.
+
+App entrypoints receive wrapper ecosystems through `-es/--ecosystem`. Do not pass a bare domain or bare surface to an app except for explicit source-style inspection.
+
+A Wielder app may run under one wrapper and invoke a child app under another wrapper through a named leaf such as `mmseq2.app_ecosystem_mmseq2`. Do not use the parent surface name as the child app ecosystem.
+
 ## Core Union And Thin Phenotype Overlays
 
 The front-and-center ecosystem phenotype rule is that an ecosystem family should expose the union set of shared app and dependency contracts as the core. Concrete ecosystems then include that core and add only the minimal physical or operational facts needed to express one runtime phenotype.

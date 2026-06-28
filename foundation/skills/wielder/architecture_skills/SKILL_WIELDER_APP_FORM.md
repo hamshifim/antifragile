@@ -104,6 +104,10 @@ Ecosystem: provider/runtime/storage/event topology that makes it runnable
 Surface: CLI/API/notebook/dashboard wrapper over the same core contract
 ```
 
+At app entrypoints, `-es/--ecosystem` names a wrapper ecosystem: `wrapper/<name>` composes domain functionality with runtime surface. Bare `domain/*` and `surface/*` ecosystems are ingredients, not normal app runtimes.
+
+App profiles may express portable phenotype intent such as GPU, Spark, batch, or reactive behavior. They must not hard-code a named runtime surface such as local Kind, EKS, GKE, EMR, Dataproc, or a child app wrapper; those belong in wrapper/surface ecosystems.
+
 ## Aggregating App Form
 
 An app may aggregate multiple entrypoints when the domain functionality is naturally a mix-and-match capability rather than one fixed route.

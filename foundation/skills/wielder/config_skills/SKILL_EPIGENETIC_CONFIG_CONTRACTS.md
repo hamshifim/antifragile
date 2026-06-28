@@ -27,6 +27,7 @@ If the contract breaks, it is on the caller/config boundary. The library must fa
 - Models should forbid unexpected fields unless extension is explicitly part of the versioned contract.
 - Missing required fields should raise during validation before side effects occur.
 - Transient local artifacts, such as generated browser-readable config files, should materialize from the versioned HOCON contract and remain ignored when developer-local.
+- App-to-app handoffs pass wrapper ecosystem names in explicit leaves such as `app_ecosystem_<app>`. Domain and surface ecosystems are ingredients, not entrypoint ecosystems.
 
 ## Ownership Boundary
 
