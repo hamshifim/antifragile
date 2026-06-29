@@ -347,5 +347,5 @@ Ecosystem config: serving bucket/root, table source locations, compute surface, 
 - Use [Service Deployment Guidelines](../script_skills/SKILL_SERVICE_DEPLOYMENT_GUIDELINES.md) for service/image/deploy entrypoint shape.
 - Use [Wielder Scripting & Evaluation Skills](../script_skills/SKILL_WIELDER_SCRIPTS.md) for thin script and mode propagation discipline.
 - Use [Workflow Validation Doctrine](../test_skills/SKILL_WORKFLOW_VALIDATION_GUIDELINES.md) for phenotype validation through real configured workflows.
-- Use [Data Ingestion Guidelines](../data_skills/SKILL_DATA_INGESTION_GUIDELINES.md), [Harmonization Guidelines](../data_skills/SKILL_HARMONIZATION_GUIDELINES.md), and [Table Schema Guidelines](../data_skills/SKILL_TABLE_SCHEMA_GUIDELINES.md) for source-transform-sink data app contracts.
+- Use [Data Ingestion Guidelines](../data_skills/SKILL_DATA_INGESTION_GUIDELINES.md), [Harmonization Guidelines](../data_skills/SKILL_HARMONIZATION_GUIDELINES.md), [PySpark Guidelines](../data_skills/SKILL_PYSPARK_GUIDELINES.md), and [Table Schema Guidelines](../data_skills/SKILL_TABLE_SCHEMA_GUIDELINES.md) for source-transform-sink data app contracts.
 - Use [Spark Scalable Validation Doctrine](../test_skills/SKILL_SPARK_SCALABLE_VALIDATION_GUIDELINES.md) for Spark phenotype validation.

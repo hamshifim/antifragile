@@ -177,7 +177,8 @@ Harmonization is acceptable only when:
   deposited
 - native outputs remain inspectable after harmonization
 - harmonized records do not hide native meaning
-- Spark table writing, when present, runs through an app-owned Spark wrapper
+- Spark table writing, when present, follows
+  [PySpark Guidelines](SKILL_PYSPARK_GUIDELINES.md)
 - table schemas, URIs, write modes, and deduplication keys resolve from config
 - hot discovery rows avoid bulky derivable manifests and use base-key hydration
   contracts instead

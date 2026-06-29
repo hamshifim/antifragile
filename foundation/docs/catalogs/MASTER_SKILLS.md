@@ -70,6 +70,9 @@ To ensure architectural alignment across varying Python execution environments a
 13. **[Table Schema Guidelines](../../skills/wielder/data_skills/SKILL_TABLE_SCHEMA_GUIDELINES.md)**
    *Scope:* Reusable table schema ownership, mandatory concise table/column descriptions, human-readable preview legends, and column ordering for inspection.
 
+13.1. **[PySpark Guidelines](../../skills/wielder/data_skills/SKILL_PYSPARK_GUIDELINES.md)**
+   *Scope:* PySpark/PySparker artifact jobs, Spark table IO, versioned HOCON job contracts, and Spark-backed ingestion, harmonization, materialization, and backfill boundaries.
+
 14. **[Live Quality Assurance Testing](../../skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md)**
    *Scope:* Mandating live endpoint validations over `unittest.mock` illusions, asserting PySpark O(1) dimensionality querying mathematically, using typed human-readable evidence reports for reactive distributed integration tests, and securely abstracting physical image sink footprints into `/tmp/` or ignored artifacts.
 
