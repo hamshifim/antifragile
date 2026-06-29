@@ -34,6 +34,23 @@ Keep these layers distinct:
 Native rows answer "what did the tool report?" Harmonized rows answer "what can
 be compared across tools, under which mapping and caveats?"
 
+## Native Output Truth Boundary
+
+Do not synthesize native model/tool success. An input package, resolved config
+sidecar, command preview, fixture parser payload, or notebook inspection bundle
+is not a native output and must not be cataloged as one.
+
+Never let a test harness, bypass branch, mock binary, or fixture helper write
+native success markers, native artifact manifests, CIF/PDB structures, MSA
+artifacts, topology rows, score tables, or binding outputs under the real app
+output contract. If the upstream executable/service/model did not run and
+produce the artifact, the harmonization layer should see no ready native output.
+
+Parser-only or schema-only fixtures are allowed only when they live outside the
+native run success contract and are named as fixtures. They may test parsing
+logic, but they do not prove ingestion, harmonization, topology prediction, or
+scientific result production.
+
 ## Experiment Output Catalog Rule
 
 For computational experiment outputs, prefer this operational shape:

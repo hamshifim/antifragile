@@ -69,6 +69,24 @@ resolved HOCON, selected through `-t`, clearly labeled in plan/apply logs as
 synthetic, fixture-backed, or precomputed, and keep the real entrypoint contract
 available for full validation.
 
+## Synthetic Native Success
+
+**Smell:** A fixture branch, mock binary, bypass flag, or hand-authored helper
+writes plausible native outputs, success markers, or harmonized rows under the
+real app output contract, then reports the app as if the configured executable,
+service, worker, or model actually ran.
+
+**Why it is harmful:** It converts absence into false evidence. A prepared input
+package, sidecar, command preview, or parser fixture can masquerade as model
+execution, so downstream notebooks and tests appear to prove science while only
+proving that Codex created convincing paper.
+
+**Preferred move:** Keep preparation and execution statuses separate. Input
+materialization may write sidecars and manifests, but native/domain success must
+remain false until the real configured runtime emits the expected artifact,
+table, or event. Parser fixtures must live outside the app's native success
+contract and be named as fixtures.
+
 ## Corrective Review Questions
 
 - Where does the operator intent live in resolved HOCON?
@@ -82,3 +100,5 @@ available for full validation.
   downstream artifact?
 - If this is synthetic, fixture-backed, or precomputed because reality is too
   heavy, did the operator consent and do the `-t` logs say so plainly?
+- Did any fixture, bypass, or helper write a native-looking success artifact
+  before the configured executable, service, worker, or model ran?

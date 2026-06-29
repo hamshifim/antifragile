@@ -206,6 +206,12 @@ Use the terms distinctly:
 
 These are often adjacent phenotypes in one ecosystem workflow, but they should remain separate app forms when their source-transform-sink contracts, validation expectations, or ownership boundaries differ.
 
+## Functional Success Boundary
+
+A phenotype's success evidence must prove the app's minimum domain output, not merely a nearby nuisance artifact. Input packages, resolved config sidecars, command previews, staged jobs, log roots, and notebook bundles are supporting materializations. They do not prove structure prediction, MSA generation, topology scoring, binding prediction, harmonization, or visualization unless the corresponding configured app entrypoint actually produced the domain artifact or table.
+
+Do not let a test fixture, mock binary, bypass branch, or synthetic artifact write native success markers or plausible domain outputs under the app's real output contract. If an app has a "prepare input" capability, model it as its own entrypoint/status; do not let it masquerade as "prediction succeeded".
+
 ## Ecosystem Shape
 
 Separate ecosystem concerns by durability and ownership.

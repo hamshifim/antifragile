@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-29T12:04:27Z",
+  "created_at": "2026-06-29T12:16:29Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -12,17 +12,17 @@
     "repository": "antifragile",
     "branch": "feature/wield_msa/moonshot",
     "paths": [
-      "foundation/skills/wielder/architecture_skills/SKILL_UNIQUE_NAME_IDENTITY.md",
-      "foundation/skills/wielder/architecture_skills/README.md",
+      "docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md",
       "foundation/skills/wielder/architecture_skills/SKILL_WIELDER_APP_FORM.md",
-      "foundation/skills/wielder/config_skills/README.md",
       "foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md",
-      "foundation/skills/wielder/script_skills/README.md",
+      "foundation/skills/wielder/data_skills/SKILL_HARMONIZATION_GUIDELINES.md",
       "foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md",
+      "foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md",
+      "foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
-      "ecosystem": "antifragile_skills",
+      "ecosystem": "wielder_doctrine",
       "stage_tier": "dev",
       "context_conf": "not_applicable",
       "security": "standard",
@@ -33,37 +33,38 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Document unique name runtime identity",
+      "subject": "Forbid synthetic native success evidence",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Added the Unique Name Identity skill and linked it from architecture, config, and scripting skills so runtime siloing, image/artifact epoch tags, and config-owned staging roots have one doctrine surface.",
+    "summary": "Documented the synthetic native success antipattern across testing, config, app form, scripting, harmonization, notebooks, and known Codex tendencies.",
     "included": [
-      "new unique_name architecture skill",
-      "architecture/config/script skill references",
-      "config guidance pointer for project and unique_name identity",
+      "native output truth boundary in harmonization and notebooks",
+      "synthetic native success warnings in test/config/script doctrine",
+      "functional success boundary in Wielder app form",
+      "known Codex antipattern entry",
       "provenance report"
     ],
     "excluded": [
-      "Existing unrelated antifragile edits in antipattern, data, test, and notebook skills remain uncommitted.",
-      "No product code or runtime config in antifragile."
+      "No IHC/immunohistochemistry task files were staged.",
+      "No runtime code or local developer context was staged in antifragile."
     ],
     "risks": [
-      "Doctrine-only change; downstream callers still need source edits to adopt image_staging_root where applicable."
+      "Doctrine-only change; downstream code must still enforce native success boundaries."
     ],
-    "uncommitted_leftovers": [
-      "docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md",
-      "foundation/skills/wielder/data_skills/SKILL_HARMONIZATION_GUIDELINES.md",
-      "foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md",
-      "foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md"
-    ]
+    "uncommitted_leftovers": []
   },
   "validation": [
     {
-      "command": "grep -R \"SKILL_UNIQUE_NAME_IDENTITY.md\\|Unique Name Identity\" foundation/skills/wielder/architecture_skills foundation/skills/wielder/config_skills foundation/skills/wielder/script_skills",
+      "command": "git diff --check -- docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md foundation/skills/wielder/architecture_skills/SKILL_WIELDER_APP_FORM.md foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md foundation/skills/wielder/data_skills/SKILL_HARMONIZATION_GUIDELINES.md foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md",
       "result": "passed",
-      "notes": "Confirmed unique-name skill routing from architecture, config, and script surfaces."
+      "notes": "Whitespace check passed for doctrine edits."
+    },
+    {
+      "command": "grep -n \"Synthetic Native Success\\|Native Output Truth Boundary\\|Functional Success Boundary\" docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md foundation/skills/wielder/**/*.md",
+      "result": "passed",
+      "notes": "Confirmed doctrine is discoverable by the recurring antipattern names."
     }
   ]
 }

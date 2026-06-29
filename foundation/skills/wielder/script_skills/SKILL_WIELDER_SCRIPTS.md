@@ -165,6 +165,12 @@ for overlay precedence.
   substitute in the `-t` test overlay or owning config, label it as synthetic or
   fixture-backed in plan/apply logs, and keep the real entrypoint contract
   intact. Silent mocks and stale summaries are not acceptable proof surfaces.
+* Antipattern: do not report an app step as `applied`, `ready`, `successful`,
+  or `completed` merely because input sidecars, command previews, staging
+  manifests, or config artifacts were written. Scripts must name input-only work
+  as input materialization or preparation, and must leave native/domain success
+  false until the configured executable, service, worker, or model emits the
+  expected domain artifact, table, or event.
 * `-t/--test` does not select action. A test endpoint should still branch on
   `WieldAction(conf.action)`, and the operator should still use `-w plan`,
   `-w apply`, `-w delete`, `-w run`, or `-w monitor` to choose lifecycle.
