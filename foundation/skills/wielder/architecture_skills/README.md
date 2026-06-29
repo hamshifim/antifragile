@@ -16,6 +16,10 @@ specific to configuration, scripting, testing, or agent/operator communication.
   aggregate reactive step mixes, source-transform-sink pipeline form, minimal
   app config, core ecosystem contracts, aggregated workflows, and thin surface
   wrappers.
+- [Unique Name Identity](SKILL_UNIQUE_NAME_IDENTITY.md): `unique_name` as the
+  runtime silo for Terraform, Kubernetes, images, Spark artifacts, resolved
+  config, and materializations, including context-selected project identity and
+  artifact/image epoch tags.
 - [Parcelling Guidelines](SKILL_PARCELLING_GUIDELINES.md): stepping-stone
   implementation parcels with independent validation gates.
 - [Antifragile Evolution](SKILL_ANTIFRAGILE_EVOLUTION.md): evolving operating

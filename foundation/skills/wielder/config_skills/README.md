@@ -19,3 +19,6 @@ entrypoint rules in `../script_skills/`.
 - [Lifecycle Scope Guidelines](SKILL_LIFECYCLE_SCOPE_GUIDELINES.md): project,
   ecosystem, app, context, and test ownership boundaries for durable and
   ephemeral resources.
+- [Unique Name Identity](../architecture_skills/SKILL_UNIQUE_NAME_IDENTITY.md):
+  cross-cutting runtime identity rules for `unique_name`, context-selected
+  project namespace, and image/artifact epoch tags.

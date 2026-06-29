@@ -5,6 +5,7 @@ description: Wielder PyHocon Configuration Guidelines (Strict Architectural SOP)
 [Read lifecycle scope guidelines](SKILL_LIFECYCLE_SCOPE_GUIDELINES.md) when deciding where a durable resource, ecosystem phenotype, app default, context override, or test fixture belongs.
 [Use the resolved config guide](../../../docs/configuration/RESOLVED_CONFIG.md) when a surprising value appears at runtime.
 [Read Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md) when config names buckets, object keys, table keys, paths, URIs, mounts, artifact roots, or storage providers.
+[Read Unique Name Identity](../architecture_skills/SKILL_UNIQUE_NAME_IDENTITY.md) when config defines `project`, `unique_name`, image tags, artifact versions, resolved-conf roots, Terraform state names, Kubernetes resource names, or context-specific runtime siloing.
 
 # Wielder PyHocon Configuration Guidelines
 
@@ -219,13 +220,19 @@ Deployment environments (`dev`, `int`, `qa`, `stage`, `prod`) must be physically
 - **Guideline:** Use `stage_tier` to define the target environment. This configuration resolves strictly beneath the active `context_conf` pack to guarantee local sandboxes override production defaults.
 
 ### 7.1 Compound Resource Identity (`unique_name`)
-`unique_name` is the concrete identity boundary for provisioned and staged runtime assets. It is not cosmetic. It commonly keys Terraform backend state, cluster names, staged provision roots, Kubernetes contexts, image tags, log roots, and resource names.
-- **Guideline:** The normal `unique_name` should be deterministic and compound, for example `${stage_tier}--${ecosystem}--${owner}--${slug}--${incremental_id}` or the project-sanctioned equivalent. A named context that intentionally diverges from the default infrastructure should receive its own compound identity.
-- **Guideline:** Treat `context_conf` or its explicit `slug` as part of resource identity when the operator needs parallel clusters, parallel Terraform states, parallel staged plans, local hybrid runs, or take-over-safe super-repo clones from the same codebase.
-- **Guideline:** Reusing an existing `unique_name` is an intentional attach operation. Use it only when the operator explicitly wants to target the same live resources, images, and backend state. Document that reuse in the context pack so it is visible during review.
-- **Guideline:** Do not synthesize or override `unique_name` in Python, environment variables, generated shell wrappers, or ad hoc CLI flags. It belongs in resolved configuration and must flow through the canonical accessor chain.
-- **Guideline:** Do not pin `git.commit` or `git.short_commit` in `developer.conf` to select an image. Git provenance is injected by the Wielder config boot path from the super-repo snapshot. If an operator must reuse a previously published image, model that as an explicit image/reference override or rebuild/publish the image for the current provenance.
-- **Guideline:** Stage-tier-permanent resources such as delegated DNS zones, long-lived certificates, and reusable front-door records must be keyed explicitly by their durable stage-tier identity rather than hidden behind a disposable developer `unique_name`. A workflow delete should not accidentally own or destroy permanent shared front-door infrastructure.
+`unique_name` is the concrete identity boundary for provisioned and staged
+runtime assets. Use [Unique Name Identity](../architecture_skills/SKILL_UNIQUE_NAME_IDENTITY.md)
+for the full doctrine.
+
+- **Guideline:** Compose `unique_name` from resolved config leaves such as
+  `stage_tier`, `project`, `owner`, `ecosystem`, `slug`, and `incremental_id`.
+- **Guideline:** Named context packs may intentionally override `project`,
+  `slug`, or `incremental_id` to create a separate runtime silo.
+- **Guideline:** Do not synthesize or override `unique_name`, `git.commit`, or
+  `git.short_commit` in Python, environment variables, generated shell wrappers,
+  or ad hoc CLI flags.
+- **Guideline:** Reusing an existing `unique_name` is an intentional attach
+  operation and must be visible in the active context pack.
 
 ### 7.2 Central Context Packs over Repo-Local Developer Overlays
 - **Guideline:** Standardize developer-local overrides in `context_conf/<name>/` at the super-repo root. Do not keep repo-local `conf/developer/` folders as active peers in the load path.

@@ -343,6 +343,9 @@ Ecosystem config: serving bucket/root, table source locations, compute surface, 
 ## Related Skills
 
 - Use [Configuration Guidelines](../config_skills/SKILL_CONFIGURATION_GUIDELINES.md) for app, ecosystem, context, and test resolution rules.
+- Use [Unique Name Identity](SKILL_UNIQUE_NAME_IDENTITY.md) when app phenotypes
+  provision resources, publish images or Spark/Python artifacts, stage resolved
+  config, or need context-selected runtime siloing.
 - Use [Ecosystem Guidelines](../config_skills/SKILL_ECOSYSTEM_GUIDELINES.md) for ecosystem-family and concrete overlay design.
 - Use [Service Deployment Guidelines](../script_skills/SKILL_SERVICE_DEPLOYMENT_GUIDELINES.md) for service/image/deploy entrypoint shape.
 - Use [Wielder Scripting & Evaluation Skills](../script_skills/SKILL_WIELDER_SCRIPTS.md) for thin script and mode propagation discipline.

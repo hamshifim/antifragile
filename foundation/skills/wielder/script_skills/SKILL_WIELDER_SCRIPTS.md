@@ -8,6 +8,7 @@ need durable operator docs and test handoffs in a project `wield_docs/` tree.
 [Use Code Scope Extraction](../utility_skills/SKILL_CODE_SCOPE_EXTRACTION.md) before promoting
 project-local script or service helpers into Wielder.
 [Read Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md) before changing scripts that touch buckets, object keys, table sinks, artifact roots, URIs, Bucketeer, Spark, or provider storage.
+[Read Unique Name Identity](../architecture_skills/SKILL_UNIQUE_NAME_IDENTITY.md) before changing scripts that construct, propagate, log, or consume `unique_name`, image tags, Spark/Python artifact versions, resolved-conf roots, Terraform state names, or Kubernetes resource names.
 
 # Wielder Script Architectural Patterns
 
@@ -37,6 +38,7 @@ Operational scripts become fragile when they grow a second understanding of conf
 * Strongly suggest keeping the script thin enough that it owns execution sequencing, not config reconstruction.
 * Strongly suggest avoiding local parser inventions that partially duplicate Wielder behavior, because those forks tend to drift exactly when ecosystem naming or family extraction changes.
 * Non-containerized Wielder scripts and integration tests must still be driven by resolved Wielder configuration, not ad hoc environment variables. Operator-local enable flags, timeouts, endpoints, file names, and mutation toggles belong in `context_conf/<name>/developer.conf` or the owning app config. Environment variables are acceptable as container runtime transport when the configured orchestrator materializes them, but they should not become a second human-facing control plane.
+* Runtime identity belongs in resolved config. Scripts must consume `conf.unique_name` and related configured image/artifact identities; they must not reconstruct `unique_name` from flags, environment variables, current directories, or local usernames.
 * When a script must orchestrate a child repo, strongly suggest loading that child repo through the child repo's own canonical accessor rather than inventing a second local reader.
 * Strongly suggest treating such cross-repo access as explicit dependency wiring, not as a generic framework feature. The script should read foreign owned fields, not absorb the foreign app's whole config identity.
 * If the bridge logic is only a few lines, keep it WET and local on purpose. A garden of tiny explicit bridges is healthier than a premature generic loader that hides ownership.

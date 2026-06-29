@@ -20,3 +20,6 @@ command rules here. Keep configuration ownership rules in `../config_skills/`.
   event-triggered job semantics, lifecycle events, and payload target contracts.
 - [Local Hybrid Dev Workflow](SKILL_LOCAL_HYBRID_DEV_WORKFLOW.md): local
   service iteration against full or remote provider-backed ecosystems.
+- [Unique Name Identity](../architecture_skills/SKILL_UNIQUE_NAME_IDENTITY.md):
+  runtime identity rules scripts must respect when provisioning, staging,
+  publishing images/artifacts, or handing off context-specific operations.

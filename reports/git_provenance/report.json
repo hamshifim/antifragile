@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-29T10:50:29Z",
+  "created_at": "2026-06-29T12:04:27Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -12,17 +12,13 @@
     "repository": "antifragile",
     "branch": "feature/wield_msa/moonshot",
     "paths": [
+      "foundation/skills/wielder/architecture_skills/SKILL_UNIQUE_NAME_IDENTITY.md",
+      "foundation/skills/wielder/architecture_skills/README.md",
+      "foundation/skills/wielder/architecture_skills/SKILL_WIELDER_APP_FORM.md",
+      "foundation/skills/wielder/config_skills/README.md",
       "foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md",
-      "foundation/skills/wielder/config_skills/SKILL_EPIGENETIC_CONFIG_CONTRACTS.md",
-      "foundation/skills/wielder/data_skills/README.md",
-      "foundation/skills/wielder/data_skills/SKILL_DATA_INGESTION_GUIDELINES.md",
-      "foundation/skills/wielder/data_skills/SKILL_HARMONIZATION_GUIDELINES.md",
-      "foundation/skills/wielder/data_skills/SKILL_PYSPARK_GUIDELINES.md",
-      "foundation/skills/wielder/data_skills/SKILL_STRICT_FS_AGNOSTICISM.md",
+      "foundation/skills/wielder/script_skills/README.md",
       "foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md",
-      "foundation/skills/wielder/test_skills/SKILL_REACTIVE_DISTRIBUTED_INTEGRATION_TESTS.md",
-      "foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md",
-      "foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
@@ -37,38 +33,37 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Add strict FS agnosticism skill",
+      "subject": "Document unique name runtime identity",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Added a central Strict FS Agnosticism skill and linked it with mandatory read language from storage-touching config, scripting, testing, reactive integration, notebook, ingestion, harmonization, and PySpark skills while keeping local caller warnings in place.",
+    "summary": "Added the Unique Name Identity skill and linked it from architecture, config, and scripting skills so runtime siloing, image/artifact epoch tags, and config-owned staging roots have one doctrine surface.",
     "included": [
-      "new data skill for bucket/key/URI/table boundary doctrine",
-      "data skills README route",
-      "required companion links from relevant caller skills",
-      "local FS-agnostic warnings in config, scripting, testing, notebook, and PySpark guidance",
+      "new unique_name architecture skill",
+      "architecture/config/script skill references",
+      "config guidance pointer for project and unique_name identity",
       "provenance report"
     ],
     "excluded": [
-      "No product code, runtime config, notebooks, generated artifacts, or local task files."
+      "Existing unrelated antifragile edits in antipattern, data, test, and notebook skills remain uncommitted.",
+      "No product code or runtime config in antifragile."
     ],
     "risks": [
-      "Doctrine-only change; no downstream codebase was automatically refactored by this commit.",
-      "Some existing code still needs follow-up accessor-level cleanup for Path(uri) usage."
+      "Doctrine-only change; downstream callers still need source edits to adopt image_staging_root where applicable."
     ],
-    "uncommitted_leftovers": []
+    "uncommitted_leftovers": [
+      "docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md",
+      "foundation/skills/wielder/data_skills/SKILL_HARMONIZATION_GUIDELINES.md",
+      "foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md",
+      "foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md"
+    ]
   },
   "validation": [
     {
-      "command": "cd /home/gideon/dev/culture/antifragile && git diff --check -- foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md foundation/skills/wielder/config_skills/SKILL_EPIGENETIC_CONFIG_CONTRACTS.md foundation/skills/wielder/data_skills/README.md foundation/skills/wielder/data_skills/SKILL_DATA_INGESTION_GUIDELINES.md foundation/skills/wielder/data_skills/SKILL_HARMONIZATION_GUIDELINES.md foundation/skills/wielder/data_skills/SKILL_PYSPARK_GUIDELINES.md foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md foundation/skills/wielder/test_skills/SKILL_REACTIVE_DISTRIBUTED_INTEGRATION_TESTS.md foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md foundation/skills/wielder/data_skills/SKILL_STRICT_FS_AGNOSTICISM.md",
+      "command": "grep -R \"SKILL_UNIQUE_NAME_IDENTITY.md\\|Unique Name Identity\" foundation/skills/wielder/architecture_skills foundation/skills/wielder/config_skills foundation/skills/wielder/script_skills",
       "result": "passed",
-      "notes": "Whitespace check passed."
-    },
-    {
-      "command": "cd /home/gideon/dev/culture/antifragile && grep -R \"Strict FS Agnosticism\" -n foundation/skills/wielder",
-      "result": "passed",
-      "notes": "Confirmed the central skill is linked with active read language from caller skills."
+      "notes": "Confirmed unique-name skill routing from architecture, config, and script surfaces."
     }
   ]
 }
