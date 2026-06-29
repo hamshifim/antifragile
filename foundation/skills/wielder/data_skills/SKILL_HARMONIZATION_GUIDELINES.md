@@ -112,6 +112,42 @@ Use configured accessors, Bucketeers, Spark wrappers, table schemas, table URIs,
 write modes, deduplication keys, and app/runtime configuration. Do not bypass
 storage abstractions with local filesystem assumptions.
 
+## Bucket/Key Path Rule
+
+Human-facing rows, notebooks, ledgers, and plans should prefer `bucket` plus
+stable relative keys over expanded local filesystem paths. A configured
+accessor owns expansion to a physical URI, local path, cloud URI, or signed
+read surface.
+
+Use these forms in hot rows and notebook displays:
+
+```text
+bucket
+native_output_base_key
+artifact_subkey
+table_key
+hydrator_kind
+hydrator_version
+```
+
+Avoid copying `${buckets_root}` or absolute local paths into notebooks, table
+contracts, or durable rows merely to make local inspection convenient. If size,
+existence, or preview information is useful, compute it through a helper that
+accepts the configured accessor and still displays the relative key as the
+semantic reference.
+
+## Scalable Lookup Rule
+
+Once raw inventory, harmonized outputs, or materialized products are tabled,
+perform lookups with Spark predicates and projections. Driver-side loops over
+object names are acceptable only for small raw discovery surfaces that have not
+yet been ingested; if the surface can grow, first materialize raw inventory
+rows, then resolve subsets, identities, joins, and search hits through Spark.
+
+Notebook companions should show at least one bounded Spark-backed lookup when
+the data product is intended to scale. The pandas display is a preview of the
+Spark result, not the lookup engine.
+
 ## Serving Materialization Rule
 
 A materialization is a physically written, reproducible derivative of already

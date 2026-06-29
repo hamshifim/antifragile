@@ -37,6 +37,26 @@ Raw ingestion should preserve information while keeping reusable, transient, and
 Keep an audit table for non-empty cells or records not confidently assigned to the three raw tiers. This is not a fourth data tier; it is ingestion accounting. Derived report outputs can live here during raw ingestion until a later derived-data pass explicitly owns them.
 When recurring leftovers can be explained, add forensic attribution columns rather than silently dropping them or promoting weakly understood helper cells into scientific tables.
 
+## Storage Keys
+
+Raw inventory rows should preserve storage identity as bucket plus relative key
+or base-key plus subkey. The physical URI is an accessor concern. Do not make
+absolute local filesystem paths durable ingestion facts.
+
+Prefer:
+
+- `source_bucket`
+- `native_output_base_key`
+- `artifact_subkey`
+- `source_manifest_key`
+- `hydrator_kind`
+- `hydrator_version`
+
+For table-scale inventory, write raw inventory tables and use Spark for lookup,
+subset matching, joins, and backfill planning. Provider-native object listing is
+only the discovery step; it should not become the long-term query engine for a
+growing dataset.
+
 ## Column Order
 
 Column order should optimize human inspection before storage purity.

@@ -70,6 +70,28 @@ for object-key discovery, small artifacts, sidecars, manifests, ledgers, and
 artifact publication. Do not force Parquet or table-scale Spark writes through
 Bucketeer.
 
+## Spark-Backed Lookup And Discovery
+
+Use Spark for scalable lookup once data has crossed into table form. A lookup
+over harmonized or ingested tables should read configured table URIs with Spark,
+push filters/projections into the Spark plan, and only then materialize a
+bounded preview for notebooks, tests, or reports.
+
+Object stores may still require provider-native listing to discover raw success
+markers or sidecars. Treat that listing as raw inventory ingestion. When the
+inventory can grow, materialize it into a raw inventory table and perform
+downstream joins, subset matching, search resolution, and backfills with Spark
+instead of Python driver loops.
+
+For notebooks, expose two surfaces:
+
+- a Spark lookup or filtered Spark preview proving the scalable table path
+- a bounded pandas display created from that Spark result for human inspection
+
+Do not replace table lookup with `for` loops over local paths, pandas scans of
+whole datasets, or per-object reads when the same question can be answered by a
+configured Spark table predicate.
+
 ## Pipeline Shape
 
 Keep ingestion, harmonization, and materialization separate even when one Spark
@@ -95,6 +117,8 @@ prototype can jump directly to a final serving product.
 - Mixing raw discovery, harmonized records, and materialized serving products
   in one undifferentiated table.
 - Treating local filesystem paths as the source of truth for a Spark job.
+- Pulling a full table into pandas before filtering, joining, or resolving
+  identities that belong in Spark.
 
 ## Validation
 
