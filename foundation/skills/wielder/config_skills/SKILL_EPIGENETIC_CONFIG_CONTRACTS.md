@@ -6,6 +6,7 @@ description: The Wieldering Way for epigenetic configuration contracts: callers 
 # The Wieldering Way: Epigenetic Config Contracts
 
 Use this skill when designing, implementing, or reviewing Wielder functionality where a reusable library, client generator, reverse API, workflow helper, or UI bridge receives operational intent from a caller.
+When that contract includes buckets, object keys, table keys, URIs, artifact roots, or storage accessors, also read [Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md).
 
 ## Wieldering Way
 
@@ -22,6 +23,7 @@ If the contract breaks, it is on the caller/config boundary. The library must fa
 ## Contract Shape
 
 - Durable topology, endpoint lists, feature flags, materialization paths, client config, and behavior selection belong in HOCON.
+- Storage contracts should name provider-neutral buckets, object keys, table/catalog ids, and opaque URIs. Do not make reusable libraries accept or derive local filesystem paths when the same contract may resolve to `s3://`, `gs://`, mounted volume, or another storage surface.
 - Callers pass the resolved owned subtree across the library boundary.
 - Libraries own strict models for the contract they consume.
 - Models should forbid unexpected fields unless extension is explicitly part of the versioned contract.
@@ -43,6 +45,7 @@ If the contract breaks, it is on the caller/config boundary. The library must fa
 - Python fills missing leaves with defaults after config resolution.
 - Environment variables or generated YAML become a second operator control plane.
 - A library silently ignores malformed or unexpected config.
+- A factory, Spark helper, Bucketeer wrapper, or notebook companion converts an opaque object URI into a local `Path`, parent directory, preview server, or cleanup target without an explicitly local-only config contract.
 
 ## Example Pattern
 

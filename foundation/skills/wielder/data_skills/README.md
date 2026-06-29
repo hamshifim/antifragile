@@ -15,5 +15,8 @@ table schema contracts. Keep operational runtime/infrastructure guidance in
 - [PySpark Guidelines](SKILL_PYSPARK_GUIDELINES.md): PySpark/PySparker artifact
   jobs, Spark table IO, and Spark-backed ingestion, harmonization,
   materialization, or backfill boundaries.
+- [Strict FS Agnosticism](SKILL_STRICT_FS_AGNOSTICISM.md): portable storage
+  identity across buckets, keys, URIs, catalogs, Spark, tests, notebooks,
+  scripts, and materializations.
 - [Table Schema Guidelines](SKILL_TABLE_SCHEMA_GUIDELINES.md): reusable table
   schema ownership, column descriptions, preview legends, and column order.

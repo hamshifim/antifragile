@@ -9,6 +9,7 @@ description: Wielder doctrine for raw-to-harmonized data shape, key lineage, hyd
 Use this skill when designing, implementing, reviewing, or testing raw artifact
 discovery, native result indexing, comparable harmonized records, table schemas,
 Spark writes, plan/apply key lineage, or harmonization notebooks.
+Also read [Strict FS Agnosticism](SKILL_STRICT_FS_AGNOSTICISM.md) when harmonization names source buckets, native output base keys, artifact subkeys, table keys, materialization keys, URIs, or storage accessors.
 
 ## Goal
 

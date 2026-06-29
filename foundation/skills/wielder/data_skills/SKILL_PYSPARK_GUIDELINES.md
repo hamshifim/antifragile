@@ -8,6 +8,7 @@ description: Wielder doctrine for PySpark and PySparker artifact jobs, Spark tab
 Use this skill when designing, implementing, reviewing, or testing PySpark,
 PySparker, Spark artifact jobs, table-scale reads/writes, or Spark-backed
 ingestion, harmonization, materialization, and backfill workflows.
+Also read [Strict FS Agnosticism](SKILL_STRICT_FS_AGNOSTICISM.md) whenever the Spark work names buckets, object keys, table keys, sink URIs, catalogs, artifact roots, or local/cloud storage behavior.
 
 ## Core Boundary
 
@@ -127,6 +128,8 @@ source-transform-sink meaning in the domain app. Test Wielder app/workflow
 resolution by proving it resolves the target app contract through the normal
 mode stack and does not carry gnostic path keys.
 
-Integration tests should exercise plan/apply/delete surfaces against temporary
-or local Spark destinations and assert that intermediate tables exist, not only
-that a final file was produced.
+Integration tests should exercise plan/apply/delete surfaces against configured
+dev-tier Spark destinations, never `/tmp` output roots, and assert that
+watermarked intermediate tables exist, not only that a final file was produced.
+The paired delete or plan-delete path should resolve those watermarks through
+the same configured table/accessor contract before removing anything.

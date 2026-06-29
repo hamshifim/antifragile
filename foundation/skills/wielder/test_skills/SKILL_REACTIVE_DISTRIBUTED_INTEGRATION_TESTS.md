@@ -9,6 +9,7 @@ description: Guidance for building live integration tests for any distributed re
 A reactive integration test proves a flow of information across nodes. It is not a unit test, and it is not a log scrape.
 
 Use this skill when work moves through storage, events, queues, jobs, callbacks, services, or downstream ingestion.
+When the flow includes bucket objects, table outputs, storage events, artifact roots, provider URIs, or cleanup, also read [Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md).
 
 ## First Principles
 
@@ -96,7 +97,7 @@ If policy or config prevents a step, mark it `manual` or `skipped` and state the
 
 Cleanup should be explicit and configurable.
 
-If cleanup is testing propagation, it gets its own nodes. If cleanup is just test hygiene, the test should clean its own artifacts directly and report what it removed. Do not let cleanup ambiguity obscure whether the main flow passed.
+If cleanup is testing propagation, it gets its own nodes. If cleanup is just test hygiene, the test should clean its own watermarked artifacts through the configured Wielder/accessor cleanup path and report what it removed. `plan-delete` should show the exact watermarked resources first; `delete` should remove only those resources. Do not let cleanup ambiguity obscure whether the main flow passed, and do not use `/tmp` output roots as a substitute for configured dev-tier cleanup.
 
 ## Minimal Checklist
 

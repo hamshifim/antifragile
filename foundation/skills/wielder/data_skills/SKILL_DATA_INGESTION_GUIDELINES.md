@@ -4,6 +4,8 @@ description: Raw Data Ingestion Tiering and Provenance Discipline
 
  Data Ingestion Guidelines
 
+[Read Strict FS Agnosticism](SKILL_STRICT_FS_AGNOSTICISM.md) when ingestion names source buckets, object keys, native output base keys, artifact subkeys, manifest keys, table destinations, or provider URIs.
+
 Raw ingestion should preserve information while keeping reusable, transient, and measured facts separate.
 
 ## Three Raw Tiers

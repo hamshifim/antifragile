@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-27T20:02:00Z",
+  "created_at": "2026-06-29T10:50:29Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -12,8 +12,17 @@
     "repository": "antifragile",
     "branch": "feature/wield_msa/moonshot",
     "paths": [
-      "foundation/skills/wielder/script_skills/SKILL_APP_INCORPORATION.md",
-      "foundation/skills/wielder/utility_skills/SKILL_APP_INCORPORATION.md",
+      "foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md",
+      "foundation/skills/wielder/config_skills/SKILL_EPIGENETIC_CONFIG_CONTRACTS.md",
+      "foundation/skills/wielder/data_skills/README.md",
+      "foundation/skills/wielder/data_skills/SKILL_DATA_INGESTION_GUIDELINES.md",
+      "foundation/skills/wielder/data_skills/SKILL_HARMONIZATION_GUIDELINES.md",
+      "foundation/skills/wielder/data_skills/SKILL_PYSPARK_GUIDELINES.md",
+      "foundation/skills/wielder/data_skills/SKILL_STRICT_FS_AGNOSTICISM.md",
+      "foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md",
+      "foundation/skills/wielder/test_skills/SKILL_REACTIVE_DISTRIBUTED_INTEGRATION_TESTS.md",
+      "foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md",
+      "foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
@@ -28,29 +37,38 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Move app incorporation skill to scripting",
+      "subject": "Add strict FS agnosticism skill",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Moved the App Incorporation skill from utility_skills to script_skills so incorporation guidance lives with app/script migration doctrine.",
+    "summary": "Added a central Strict FS Agnosticism skill and linked it with mandatory read language from storage-touching config, scripting, testing, reactive integration, notebook, ingestion, harmonization, and PySpark skills while keeping local caller warnings in place.",
     "included": [
-      "Renamed SKILL_APP_INCORPORATION.md into foundation/skills/wielder/script_skills.",
-      "Updated the stable git provenance report."
+      "new data skill for bucket/key/URI/table boundary doctrine",
+      "data skills README route",
+      "required companion links from relevant caller skills",
+      "local FS-agnostic warnings in config, scripting, testing, notebook, and PySpark guidance",
+      "provenance report"
     ],
     "excluded": [
-      "No doctrine text changes beyond the relocation.",
-      "No product code, runtime config, notebooks, data, or generated artifacts."
+      "No product code, runtime config, notebooks, generated artifacts, or local task files."
     ],
     "risks": [
-      "Any catalog links still pointing to utility_skills should be refreshed in a separate doctrine/catalog pass if discovered."
-    ]
+      "Doctrine-only change; no downstream codebase was automatically refactored by this commit.",
+      "Some existing code still needs follow-up accessor-level cleanup for Path(uri) usage."
+    ],
+    "uncommitted_leftovers": []
   },
   "validation": [
     {
-      "command": "cd /home/gideon/dev/culture/antifragile && git diff --name-status --find-renames",
+      "command": "cd /home/gideon/dev/culture/antifragile && git diff --check -- foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md foundation/skills/wielder/config_skills/SKILL_EPIGENETIC_CONFIG_CONTRACTS.md foundation/skills/wielder/data_skills/README.md foundation/skills/wielder/data_skills/SKILL_DATA_INGESTION_GUIDELINES.md foundation/skills/wielder/data_skills/SKILL_HARMONIZATION_GUIDELINES.md foundation/skills/wielder/data_skills/SKILL_PYSPARK_GUIDELINES.md foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md foundation/skills/wielder/test_skills/SKILL_REACTIVE_DISTRIBUTED_INTEGRATION_TESTS.md foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md foundation/skills/wielder/data_skills/SKILL_STRICT_FS_AGNOSTICISM.md",
       "result": "passed",
-      "notes": "Confirmed scope is the App Incorporation skill relocation plus provenance report."
+      "notes": "Whitespace check passed."
+    },
+    {
+      "command": "cd /home/gideon/dev/culture/antifragile && grep -R \"Strict FS Agnosticism\" -n foundation/skills/wielder",
+      "result": "passed",
+      "notes": "Confirmed the central skill is linked with active read language from caller skills."
     }
   ]
 }

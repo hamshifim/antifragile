@@ -7,6 +7,7 @@ description: Core architectural patterns for writing `Wielder` orchestration and
 need durable operator docs and test handoffs in a project `wield_docs/` tree.
 [Use Code Scope Extraction](../utility_skills/SKILL_CODE_SCOPE_EXTRACTION.md) before promoting
 project-local script or service helpers into Wielder.
+[Read Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md) before changing scripts that touch buckets, object keys, table sinks, artifact roots, URIs, Bucketeer, Spark, or provider storage.
 
 # Wielder Script Architectural Patterns
 
@@ -24,6 +25,8 @@ Wielder orchestration scripts shy away from hardcoded directory paths, deeply ne
 
 * The preferred way a script relates to the virtual or physical file system is through the centralized Configuration (PyHocon `.conf` files).
 * Utilize `get_app_conf()` or native Wielder extraction patterns to determine the contextual `staging_root`, `bucket_path`, or `target_database` dynamically.
+* Treat Bucketeer, Spark, catalog, and provider URIs as opaque handles. Do not convert `file://`, `s3://`, `gs://`, or bare object URIs into local `Path` objects, derive parent directories, or print local `serve_command` hints from a generic script. Log `bucket`, `object_key`, table/catalog id, and `object_uri` separately so the same script remains honest on local, remote desktop, S3, and GCS ecosystems.
+* Factory or accessor patterns do not forgive filesystem leakage. If a helper secretly assumes local buckets, local mounted roots, or POSIX path behavior, its name and config contract must say that it is local-only; otherwise repair the generic surface to stay key/URI-based.
 * When local development context matters, scripts should rely on the active central `context_conf/<name>/developer.conf` pack rather than repo-local `conf/developer/` overrides or ad hoc CLI flags.
 * For app-local examples, keep tracked packs under `conf/context_conf_examples/<name>/` and keep `conf/context_conf/<name>/` ignored. The human and agent workflow is always: copy an example pack into `conf/context_conf/`, then edit the copied local pack.
 
