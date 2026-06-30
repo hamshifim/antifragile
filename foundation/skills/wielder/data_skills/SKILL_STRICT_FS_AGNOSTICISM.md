@@ -31,6 +31,10 @@ Storage identity is semantic first and physical second.
   surfaces.
 - Route object discovery, existence checks, reads, writes, and cleanup through
   Bucketeer or a domain accessor layered on Bucketeer.
+- Make storage accessors fail honestly. A missing object, failed download, or
+  incomplete materialization should raise or return a typed failed state that
+  names the bucket and key; it should not print a filename, return a vague
+  boolean, or let downstream code discover the absence later.
 - Route table-scale reads, writes, joins, filters, and lookups through the
   configured table engine such as Spark. Do not force table IO through
   object-file helpers.
@@ -49,6 +53,9 @@ Storage identity is semantic first and physical second.
   a generic Wielder script, test, or notebook companion.
 - Hiding local bucket roots, mounted-root assumptions, or POSIX path behavior
   behind a factory, Spark helper, Bucketeer wrapper, or "portable" accessor.
+- Letting a local Bucketeer/accessor silently succeed on a missing source
+  object, emit stray print output, or behave differently from the remote
+  provider contract it represents.
 - Using `*_path` names for object-store keys or durable table destinations.
   Use `*_key` or `*_uri` according to the contract.
 - Storing `/tmp`, `/home/<user>`, Windows paths, or workstation-only roots in
@@ -67,6 +74,7 @@ Ask these questions before accepting storage-touching work:
 2. Are semantic keys and opaque URIs kept distinct in config, rows, and logs?
 3. Does the code use Bucketeer/domain accessors for object operations and Spark
    or the configured engine for table operations?
-4. Is any local-only behavior named and configured as local-only?
-5. Can cleanup find watermarked outputs through the same accessor/table
+4. Does a missing object fail at the accessor boundary with bucket/key evidence?
+5. Is any local-only behavior named and configured as local-only?
+6. Can cleanup find watermarked outputs through the same accessor/table
    contract that created them?

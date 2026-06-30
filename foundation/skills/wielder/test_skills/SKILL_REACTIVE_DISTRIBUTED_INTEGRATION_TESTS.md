@@ -99,12 +99,34 @@ Cleanup should be explicit and configurable.
 
 If cleanup is testing propagation, it gets its own nodes. If cleanup is just test hygiene, the test should clean its own watermarked artifacts through the configured Wielder/accessor cleanup path and report what it removed. `plan-delete` should show the exact watermarked resources first; `delete` should remove only those resources. Do not let cleanup ambiguity obscure whether the main flow passed, and do not use `/tmp` output roots as a substitute for configured dev-tier cleanup.
 
+## Reactive Fixture Hygiene
+
+Topic, queue, and callback fixtures are part of test state. A fixture-backed
+reactive test should clear the whole message family that can affect the flow:
+request topics, result/update topics, command topics, post-action event topics,
+and any configured callback groups. Do this before seeding fixture artifacts and
+before starting long-lived consumers.
+
+This matters most when consumers use `earliest` replay or explicit
+assign-from-beginning semantics. A stale command from a previous run can mutate
+freshly seeded artifacts and make the failure look like a missing download,
+broken downstream app, or storage race. Treat stale messages as live state, not
+log history.
+
+For reactive cleanup, publish an explicit command and wait for a post-action
+event. Subscribe before publishing when collecting the result. Each service
+should clean only the resources it owns; downstream cleanup should not cascade
+through an upstream service's storage unless the upstream service contract says
+so. The final report should say which transport produced the cleanup evidence
+and which configured keys or records were affected.
+
 ## Minimal Checklist
 
 - One controlled upstream trigger.
 - One provenance nugget.
 - One shared flow/node contract usable by tests, workflow runs, and GUI monitors.
 - One node per observable boundary.
+- Whole reactive fixture family cleared before seeding and starting consumers.
 - A state report accumulated during the run.
 - Meaningful logs that say what is expected next.
 - Clear skipped/no-change behavior.

@@ -108,6 +108,28 @@ At app entrypoints, `-es/--ecosystem` names a wrapper ecosystem: `wrapper/<name>
 
 App profiles may express portable phenotype intent such as GPU, Spark, batch, or reactive behavior. They must not hard-code a named runtime surface such as local Kind, EKS, GKE, EMR, Dataproc, or a child app wrapper; those belong in wrapper/surface ecosystems.
 
+## App Identity And Entrypoints
+
+Keep one app identity when several entrypoints share the same domain contract and
+minimum success artifact, and differ only by lifecycle verb, transport,
+scenario, or runtime phenotype. A local runner, Kubernetes Job, deployed
+service, publisher, service-spec probe, and workflow-triggered run can be
+different entrypoints or configurations of one app when they all operate the
+same capability.
+
+Split app identities when the durable contract changes: a different minimum
+domain output, different cleanup ownership, different resource lifecycle,
+different artifact/table contract, or different operator promise. A deployment
+and a job are both Wielder app phenotypes; Kubernetes shape alone is not a
+reason to merge unrelated capabilities or split one capability into separate
+apps.
+
+An app entrypoint should dispatch one of the app's typed capabilities after
+canonical config resolution. It should not become a private workflow loader, a
+second ecosystem resolver, or a bundle of child-app CLI overrides. Parent
+workflows may choose which app entrypoint to call, but the child app still owns
+its own resolved contract, lifecycle, cleanup, and evidence.
+
 ## Aggregating App Form
 
 An app may aggregate multiple entrypoints when the domain functionality is naturally a mix-and-match capability rather than one fixed route.
@@ -256,6 +278,15 @@ event or operator request
 
 Use event consumer/subscribe language for Pub/Sub-like behavior. Provider polling, queue setup, subscription registration, retry mechanics, and transport-specific details belong behind the configured event consumer boundary.
 
+For cross-app reactive handoffs, the downstream app should ask the upstream
+domain service through the service contract, using either an existing result id
+or a minimal/full identity that the upstream can resolve. The upstream owns
+lookup, materialization, and result/promise semantics. If the result is absent,
+the upstream returns a promise and later emits a completion event; downstream
+callers subscribe for the relevant promise ids and accumulate completions. Do
+not make the downstream app inspect the upstream artifact layout or block a
+service call while waiting for a long-running upstream run.
+
 For aggregate reactive apps, the event payload should identify scientific or operator intent, while the resolved steps config controls which stable app entrypoints run. Prefer a configured step selection over code-level branching when the same app must support ad hoc combinations of entrypoints.
 
 ## Kube Service Instantiation
@@ -356,5 +387,7 @@ Ecosystem config: serving bucket/root, table source locations, compute surface, 
 - Use [Service Deployment Guidelines](../script_skills/SKILL_SERVICE_DEPLOYMENT_GUIDELINES.md) for service/image/deploy entrypoint shape.
 - Use [Wielder Scripting & Evaluation Skills](../script_skills/SKILL_WIELDER_SCRIPTS.md) for thin script and mode propagation discipline.
 - Use [Workflow Validation Doctrine](../test_skills/SKILL_WORKFLOW_VALIDATION_GUIDELINES.md) for phenotype validation through real configured workflows.
+- Use [Reactive Distributed Integration Testing](../test_skills/SKILL_REACTIVE_DISTRIBUTED_INTEGRATION_TESTS.md) when an app phenotype crosses topics, queues, callbacks, or post-action events.
+- Use [Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md) when app handoffs or evidence cross buckets, object keys, table sinks, or opaque URIs.
 - Use [Data Ingestion Guidelines](../data_skills/SKILL_DATA_INGESTION_GUIDELINES.md), [Harmonization Guidelines](../data_skills/SKILL_HARMONIZATION_GUIDELINES.md), [PySpark Guidelines](../data_skills/SKILL_PYSPARK_GUIDELINES.md), and [Table Schema Guidelines](../data_skills/SKILL_TABLE_SCHEMA_GUIDELINES.md) for source-transform-sink data app contracts.
 - Use [Spark Scalable Validation Doctrine](../test_skills/SKILL_SPARK_SCALABLE_VALIDATION_GUIDELINES.md) for Spark phenotype validation.
