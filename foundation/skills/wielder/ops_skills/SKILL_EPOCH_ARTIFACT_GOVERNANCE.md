@@ -106,49 +106,30 @@ require the same HOCON payload hash, which means same content).
 
 ### 4. Python / Spark Code Bundles
 
-**Intended epoch mechanism:** artifacts sourced from the Docker image, not from
-the local filesystem.
+**Epoch mechanism:** Wielder Artifactor/PySparker publishes configured code
+bundles into a configured artifactory surface.
 
-**Current state (gap):** `artifactor.py:91` reads source files directly from
-`repo_root / job_conf.entrypoint` — the live local filesystem. There is no
-staging sandbox, no clean clone, and no snapshot step. Uncommitted dirty changes
-are published to object storage as if they were committed code.
+The artifact identity is the resolved artifact root plus a version derived from
+the execution identity, normally `unique_name + git.commit`. The payload is a
+published bundle manifest containing the entrypoint, py-files, archives, object
+keys, object URIs, and content hashes.
 
-**Root cause:** the artifact publication path lacks the source isolation that
-the other two mechanisms provide structurally:
-- Docker images: `pack_image_antifragile` snapshots required modules into a
-  UUID-isolated staging sandbox via `shutil.copytree` before `docker build` runs.
-  Dirty files cannot enter the build context.
-- Terraform: `config_to_terraform` generates tfvars from the resolved PyHocon
-  config. Terraform never reads application Python source files.
+**Source isolation contract:**
 
-**Intended fix:** adopt the same staging mechanism the imager uses.
+- Python/Spark code bundles must use existing Artifactor source kinds before
+  adding new archive mechanics. For package directories, `artifact_kind = "zip"`
+  already publishes the directory basename as the Python import root.
+- Shared runtime bundles that span several repositories should usually use
+  multiple configured `py_file_sources` under one artifact manifest, not a
+  hand-built assembly archive.
+- Spark entrypoint reuse should be handled through a generic runtime entrypoint
+  plus module args, not by repacking the same package set for every job.
+- Uncommitted source changes are not artifact truth. Commit the owning repo, then
+  commit the super-repo pointer when the artifact version depends on the
+  super-repo SHA.
 
-`pack_image_antifragile` runs a staging step — cloning/copying the required
-modules into a UUID-isolated directory under `conf.stage_root` — before
-`docker build` runs. The epoch guarantee comes from that staging operation, not
-from the image format. The artifact publication path must invoke the same
-staging logic before reading source files.
-
-The staging logic must be extracted into a shared callable so both the imager
-and the artifact wield scripts can invoke it. The artifact wield calls the
-shared staging utility, receives the path to the resulting clean staged clone,
-and passes that as `repo_root` to `PySparkArtifactJob`. The caller cannot
-assume a staged directory already exists or is current — it must trigger the
-staging operation itself.
-
-**Fix scope:** extract the staging utility from `pack_image_antifragile` into a
-shared function; call it from `model_score_artifacts.py` and
-`model_lookup_harmonization_artifacts.py` before constructing
-`PySparkArtifactJob`. No changes to `artifactor.py`, `PythonArtifactBundleSpec`,
-or the storage layout. See `artifact_fixing_stam.md` for the task detail.
-
-**What this is not:** pointing `repo_root` at a pre-existing `conf.stage_root`
-without running the staging step — the directory may be absent or stale.
-Content-addressing the key — that labels dirty content reliably, which is the
-wrong fix. Extracting from the image filesystem — the staged clone is what feeds
-both the image build and artifact publish; the image is downstream of the
-staging step, not the source.
+For implementation detail, read
+[Artifactory Guidelines](SKILL_ARTIFACTORY_GUIDELINES.md).
 
 **Semantic distinction from resolved conf:** Spark artifacts are immutable code
 bundles — they should never be sourced from uncontrolled local state. Resolved
@@ -176,7 +157,7 @@ shared contract, such as `${spark.artifacts}`, rather than redefining
 | Terraform infrastructure | Remote state backend | Backend state | Backend history |
 | Container images | Tag = `unique_name + git.commit` | Registry tag | Tagged images in registry |
 | Resolved conf | `latest.conf` + content-addressed versioned key | `latest.conf` (one per `unique_name`) | `epoch_ms--git_sha--conf_hash` versioned keys |
-| Python/Spark bundles | Artifacts extracted from Docker image (intended) | Latest published bundle | All prior bundles at their versioned keys |
+| Python/Spark bundles | Artifactor bundle + artifact manifest | Latest published bundle | All prior bundles at their versioned keys |
 
 ---
 
@@ -194,3 +175,7 @@ shared contract, such as `${spark.artifacts}`, rather than redefining
 - **Content hash in the image tag:** unnecessary. The OCI registry handles
   content addressing internally. The tag's purpose is human-readable identity
   (`unique_name + commit`), not content deduplication.
+- **Custom worktree packagers:** do not use recursive globbing, local ignore
+  rules, ad hoc `zipfile` writers, stale staging clones, or Docker image
+  extraction to publish Python/Spark code bundles. Use existing Artifactor
+  source kinds through the configured artifactory surface.

@@ -9,6 +9,7 @@ Use this skill when designing, implementing, reviewing, or testing PySpark,
 PySparker, Spark artifact jobs, table-scale reads/writes, or Spark-backed
 ingestion, harmonization, materialization, and backfill workflows.
 Also read [Strict FS Agnosticism](SKILL_STRICT_FS_AGNOSTICISM.md) whenever the Spark work names buckets, object keys, table keys, sink URIs, catalogs, artifact roots, or local/cloud storage behavior.
+Also read [Artifactory Guidelines](../ops_skills/SKILL_ARTIFACTORY_GUIDELINES.md) when the Spark work publishes Python code bundles, py-files, runtime entrypoints, or shared runtime artifacts.
 
 ## Core Boundary
 
@@ -52,6 +53,12 @@ PySparker runtime.
 
 Do not pass gnostic config paths such as `spark_conf_path`. The resolved config
 already contains the contract.
+
+When several Spark jobs share the same Python dependency closure, prefer a
+configured shared runtime artifact and a generic runtime entrypoint that selects
+the concrete job with `--module`. Do not package source trees with ad hoc
+directory walkers; publish configured Artifactor `zip`/`file` py-file sources
+through the PySparker path.
 
 ## Table IO
 

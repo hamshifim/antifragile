@@ -19,6 +19,9 @@ surfaces, security, versioning, artifacts, workstations, images, and cleanup.
 - [Epoch Artifact Governance](SKILL_EPOCH_ARTIFACT_GOVERNANCE.md): immutable
   artifact classes across provisioning, images, resolved config, and code
   bundles.
+- [Artifactory Guidelines](SKILL_ARTIFACTORY_GUIDELINES.md): Python/Spark code
+  bundle publication, WGit source archiving, shared runtime artifacts, and
+  configured artifact bucket/key contracts.
 - [Model Artifact Provisioning](SKILL_MODEL_ARTIFACT_PROVISIONING.md): model
   cache, WClone/rclone, Hugging Face, Ollama, and app-owned model asset setup.
 - [Antifragile Workstation Control Plane](SKILL_ANTIFRAGILE_WORKSTATION_CONTROL_PLANE.md):

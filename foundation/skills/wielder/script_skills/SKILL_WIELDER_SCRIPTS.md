@@ -313,8 +313,10 @@ reads and writes.
   layout across local and cloud surfaces, such as
   `spark/python/<job>/<version>/...`, and let the ecosystem choose the concrete
   cloud artifactory bucket. See
-  [`Epoch Artifact Governance`](../ops_skills/SKILL_EPOCH_ARTIFACT_GOVERNANCE.md) for the
-  full Spark artifact storage contract.
+  [`Artifactory Guidelines`](../ops_skills/SKILL_ARTIFACTORY_GUIDELINES.md) for
+  Python/Spark code bundle publication and
+  [`Epoch Artifact Governance`](../ops_skills/SKILL_EPOCH_ARTIFACT_GOVERNANCE.md)
+  for artifact immutability semantics.
 * Keep scripts thin: they should resolve config, validate the selected engine
   surface, and call the engine adapter. They should not hand-build Spark paths,
   branch on `s3` versus `gs`, or route dataframe writes through object-storage
