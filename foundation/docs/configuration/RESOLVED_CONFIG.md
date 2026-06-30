@@ -38,9 +38,10 @@ or an ignored generated ephemeral config file.
 
 ## Runtime Polymorphism
 
-Some apps have one domain contract with several valid runtime expressions. MSA
-services are the current example: workstation, hybrid Kubernetes, CPU, GPU,
-inner Kafka, outer Kafka, and mounted bucket roots are runtime phenotypes.
+Some apps have one domain contract with several valid runtime expressions. A
+service may run from workstation source, in Kubernetes, as a CPU or accelerator
+profile, against an inner or outer broker endpoint, or through different mounted
+bucket roots. Those are runtime phenotypes, not different domain contracts.
 
 The app may branch on resolved typed leaves, but the branch selector must still
 come from config. If the selector becomes useful to another app, move it toward

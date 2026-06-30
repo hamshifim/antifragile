@@ -97,7 +97,7 @@ did not get imported without reading the whole diff.
 During incorporation, remove or replace:
 
 - old project/repo names from user-facing identifiers, bucket names, fixtures, notebooks, and tests;
-- molecule, target, customer, or private fixture names that do not belong in the destination project;
+- source entity, target, customer, or private fixture names that do not belong in the destination project;
 - repo-specific filesystem paths such as `/home/<user>` unless they flow from resolved config;
 - legacy CLIs or env vars that duplicate Wielder modes or HOCON;
 - copied config leaves whose true owner is project, ecosystem, provider, or test mode.

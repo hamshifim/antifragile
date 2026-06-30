@@ -87,7 +87,7 @@ available at the correct layer:
 - GUI/API: operator projection over the typed contract
 
 Do not rename native metrics into product semantics prematurely. For example, a
-structure-confidence metric is not a binding score unless a downstream science
+native confidence metric is not an outcome score unless a downstream domain
 contract explicitly derives such a score.
 
 ## One Capability, Many Projections

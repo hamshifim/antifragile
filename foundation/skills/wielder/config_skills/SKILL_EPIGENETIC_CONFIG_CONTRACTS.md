@@ -29,7 +29,8 @@ If the contract breaks, it is on the caller/config boundary. The library must fa
 - Models should forbid unexpected fields unless extension is explicitly part of the versioned contract.
 - Missing required fields should raise during validation before side effects occur.
 - Transient local artifacts, such as generated browser-readable config files, should materialize from the versioned HOCON contract and remain ignored when developer-local.
-- App-to-app handoffs pass wrapper ecosystem names in explicit leaves such as `app_ecosystem_<app>`. Domain and surface ecosystems are ingredients, not entrypoint ecosystems.
+- App-to-app handoffs pass wrapper ecosystem names in explicit leaves such as `app_ecosystem_<app>`. Domain ecosystems own reusable functional contracts; surface ecosystems own physical runtime facts; aggregating wrapper ecosystems include the needed domain and surface ecosystems and are the normal app entrypoint ecosystems.
+- Hybrid wrapper ecosystems express service placement per service. A service may resolve as local source, Kubernetes Deployment/StatefulSet/Job, Spark job, or provider-managed runtime while sibling services resolve differently under the same wrapper. The library or service entrypoint should consume the resolved placement contract rather than inventing a parallel launch/config channel.
 
 ## Ownership Boundary
 
@@ -46,6 +47,7 @@ If the contract breaks, it is on the caller/config boundary. The library must fa
 - Environment variables or generated YAML become a second operator control plane.
 - A library silently ignores malformed or unexpected config.
 - A factory, Spark helper, Bucketeer wrapper, or notebook companion converts an opaque object URI into a local `Path`, parent directory, preview server, or cleanup target without an explicitly local-only config contract.
+- A service entrypoint adds a leaf-level CLI tunnel such as `--config_override key=value` for facts that should be resolved by ecosystem, context, developer, test, module, or normal Wielder mode overlays.
 
 ## Example Pattern
 

@@ -28,7 +28,7 @@ Recommended families:
 - `clis/` for installed tools such as `pan`, `merc`, and `nabu`.
 - `third_party/` for Helm charts, external runtimes, and shared dependency
   standards.
-- Domain folders such as `msa/`, `topological_predictions/`, `ingestion/`, or
+- Domain folders such as `preparation/`, `inference/`, `ingestion/`, or
   `runtime_stack/` for project-owned workflows.
 
 ## Page Contents
@@ -51,9 +51,9 @@ Each app/tool page should include:
 
 Service pages may name downstream consumers in prose, but must not own
 downstream lifecycle commands. Put cross-service commands in the workflow page
-that actually orchestrates those services. For example, an MSA service page may
-say that Protenix consumes MSA outputs, while the topological-predictions
-workflow page owns the command that runs MSA and Protenix together.
+that actually orchestrates those services. For example, an upstream preparation
+service page may say which downstream service consumes its outputs, while the
+workflow page owns the command that runs both services together.
 
 ## Command Rules
 

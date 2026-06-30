@@ -74,9 +74,9 @@ selection should still enter config before execution, usually through
 ### 2.1.0.1 Runtime-Polymorphic App Shape
 
 Some apps have one stable domain contract but several valid runtime phenotypes.
-MSA/MMSeqs is a representative shape: the service can run inside Kubernetes or
-on the workstation, use inner or outer Kafka, select CPU or GPU profiles, and
-read the same bucket keys through different mounted roots.
+A preparation, indexing, API, or model service may run inside Kubernetes or on
+the workstation, use inner or outer broker endpoints, select CPU or accelerator
+profiles, and read the same bucket keys through different mounted roots.
 
 Use this app shape when the polymorphism is real:
 
@@ -89,6 +89,11 @@ Use this app shape when the polymorphism is real:
 * Put physical facts in thin wrapper ecosystems or context packs: kube context,
   service hostnames, bind/access ports, local bucket roots, mounted bucket roots,
   registry authority, scheduling, and CPU/GPU capacity expression.
+* In hybrid workflows, model placement per service. A workflow may run one
+  service locally from source, another as an in-cluster Deployment, another as a
+  Kubernetes Job, and another as a Spark/provider runtime, all under one wrapper
+  ecosystem. The script should read each service's resolved placement contract
+  instead of assuming the whole workflow is local or the whole workflow is kube.
 * Let runtime code branch only on resolved, typed config leaves such as
   `service_target`, `kafka.endpoint`, `use_gpu`, or `bucket_mount.root`. Do not
   branch by rereading HOCON files, probing the current machine to infer intent,
@@ -97,7 +102,7 @@ Use this app shape when the polymorphism is real:
   a config-selected artifact such as a ConfigMap file or generated ephemeral
   context pack. Do not pass domain payloads through environment variables or
   hidden CLI strings.
-* For tests, put reduced databases, tiny sequences, fast polling, and fixture
+* For tests, put reduced databases, tiny fixture records, fast polling, and fixture
   payloads under `-t` overlays. The same endpoint should still exercise the real
   service boundary, Kafka topics, bucket paths, and gRPC/API surface.
 
@@ -108,6 +113,9 @@ Scripts should treat local, hybrid, and cloud expressions as phenotypes of the s
 * Strongly suggest designing local and hybrid Wielder entrypoints as thin wrappers over the full ecosystem they are exercising. For example, a local webapp that drives AWS EKS, Kafka, S3, and EMR should resolve an AWS-hybrid ecosystem that includes the full AWS runtime ecosystem and overrides only the local API/web and bridge facts.
 * Strongly suggest avoiding scripts that reconstruct a partial version of a remote ecosystem by hand. If the remote runtime already owns topics, buckets, readiness, or workflow target facts, the local wrapper should inherit those facts through config.
 * Strongly suggest keeping port-forward setup, local API bind addresses, local Python executable paths, and workstation credential behavior in the concrete hybrid ecosystem or its context pack. Do not smuggle these through bespoke CLI flags or subprocess environment patches.
+* Strongly suggest making per-service local/kube/provider placement visible in
+  plan output. This lets an operator see, for example, that one service is local
+  while another is in Kubernetes, without reading Python branches.
 * Strongly suggest using Wielder entrypoints to operate the hybrid phenotype exactly as the cloud phenotype would be operated, with only the source surface changed.
 
 ## 2.2 Local Script Actions vs Wielder Modes
@@ -335,7 +343,7 @@ For workload-facing Wielder scripts, prefer the Kubernetes-style filename patter
 
 * `<service_name>_image.py` builds or ensures the image for that service.
 * `<service_name>_deploy.py` deploys, plans, deletes, runs, or monitors that service.
-* The service name should be the workload identity a human recognizes, such as `model_binding_monitor`, `provider_ingestion_dispatcher`, or `data_ingestion_job_runner`.
+* The service name should be the workload identity a human recognizes, such as `model_serving_monitor`, `provider_ingestion_dispatcher`, or `data_ingestion_job_runner`.
 * Keep provider names out of service identity unless the service is truly provider-specific. Prefer `provider_ingestion_dispatcher` over `provider_s3_ingestion_dispatcher` when the active ecosystem can select AWS S3, GCS, local object storage, Azure, or another storage-event listener.
 * Do not name operator-facing entrypoints after the helper framework unless the framework is the workload. Avoid filenames such as `<app>_wjobbard.py`, `<app>_wjobbard_image.py`, or `<app>_terraform.py` for service operations.
 * Framework concepts may remain in implementation details and config blocks. The file and command surface should answer: "which service am I operating?" before "which mechanism operates it?"

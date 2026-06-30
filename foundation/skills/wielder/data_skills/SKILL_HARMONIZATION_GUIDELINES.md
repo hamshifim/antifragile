@@ -41,15 +41,15 @@ sidecar, command preview, fixture parser payload, or notebook inspection bundle
 is not a native output and must not be cataloged as one.
 
 Never let a test harness, bypass branch, mock binary, or fixture helper write
-native success markers, native artifact manifests, CIF/PDB structures, MSA
-artifacts, topology rows, score tables, or binding outputs under the real app
-output contract. If the upstream executable/service/model did not run and
+native success markers, native artifact manifests, native result files,
+prepared feature artifacts, score tables, prediction rows, or report outputs
+under the real app output contract. If the upstream executable/service/model did not run and
 produce the artifact, the harmonization layer should see no ready native output.
 
 Parser-only or schema-only fixtures are allowed only when they live outside the
 native run success contract and are named as fixtures. They may test parsing
-logic, but they do not prove ingestion, harmonization, topology prediction, or
-scientific result production.
+logic, but they do not prove ingestion, harmonization, prediction, scoring, or
+domain result production.
 
 ## Experiment Output Catalog Rule
 
@@ -65,14 +65,14 @@ experiment_runs
 
 Use `experiment_runs` for what was attempted or executed. Use
 `experiment_outputs` for logical outputs produced by a run, such as a complex
-structure set, trajectory set, binding-energy profile, or score table. Use
+result set, trajectory set, event profile, or score table. Use
 `output_artifacts` only for native/source files produced by the upstream tool.
 Use `output_materializations` only for Culture-derived physical products such
-as Parquet tables, serving bundles, notebook bundles, or Pattern Viewer
+as Parquet tables, serving bundles, notebook bundles, or inspection-viewer
 payloads.
 
 Do not let a domain object become the root operational catalog. For example,
-`ComplexStructureSet` should own molecular structure facts and source-reported
+`DomainResultSet` should own domain facts and source-reported
 measurements, not run status, artifact storage layout, or lake materialization
 bookkeeping.
 
@@ -108,9 +108,9 @@ is not necessarily a local filesystem directory. A concrete hydrator/accessor
 owns how subkeys are appended, such as:
 
 ```text
-<native_output_base_key>/molecular_topology_result.json
-<native_output_base_key>/prediction/<artifact>.cif
-<native_output_base_key>/prediction/<artifact>_mmcif.cif
+<native_output_base_key>/native_result.json
+<native_output_base_key>/prediction/<artifact>.<native_extension>
+<native_output_base_key>/prediction/<artifact>_metadata.json
 ```
 
 Keep detailed artifact roles in one of these places:
@@ -121,7 +121,7 @@ Keep detailed artifact roles in one of these places:
   too useful to derive
 
 Do not put bulky or derivable artifact maps into human-facing or paginated
-discovery tables merely for convenience. This keeps Pattern Viewer, notebooks,
+discovery tables merely for convenience. This keeps viewers, notebooks,
 and lake scans light while preserving replay through the hydrator.
 
 ## Ecosystem Boundaries
@@ -174,12 +174,12 @@ and warehouse meaning of a materialized view: the semantic source remains the
 harmonized table or native artifact, while the materialized product is optimized
 for a target consumer, lookup pattern, or service-level objective.
 
-Use materialization for products such as Pattern Viewer bundles, Arrow stream
+Use materialization for products such as viewer bundles, Arrow stream
 pages, notebook-ready payloads, or other serving/detail layouts. Do not call
 these products harmonization unless they change the canonical comparable data
-model. A Pattern Viewer serving materialization, for example, may project
-ComplexStructureSet tables into manifests, lookup pages, visual buffers,
-trajectory buffers, and layer streams without rerunning the source model or
+model. A viewer serving materialization, for example, may project
+harmonized domain tables into manifests, lookup pages, visual buffers,
+detail buffers, and layer streams without rerunning the source model or
 rewriting the harmonized lake tables.
 
 Every serving materialization should expose the normal Wielder lifecycle:

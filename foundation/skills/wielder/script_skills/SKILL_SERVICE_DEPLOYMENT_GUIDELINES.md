@@ -100,6 +100,11 @@ not as ordinary GUI apply.
 
 - Resolve the service through the canonical app accessor, usually `get_app_conf("<app>")`.
 - Durable behavior belongs in HOCON: selected jobs, provider surfaces, triggers, identities, timeouts, polling, delete flags, and image app names.
+- In hybrid ecosystems, service placement is per service. The deploy surface
+  should read its own resolved placement contract, such as local process,
+  Kubernetes Deployment/StatefulSet/Job, Spark job, or provider-managed runtime.
+  Do not infer placement from the parent workflow name or assume every sibling
+  service shares the same local/kube state.
 - Kubernetes deploy config is canonical beside the code app it deploys: object
   HOCON, manifests, service accounts, jobs, statefulsets, and deploy entrypoints
   live with the app surface. Ecosystems select and modulate those deploy

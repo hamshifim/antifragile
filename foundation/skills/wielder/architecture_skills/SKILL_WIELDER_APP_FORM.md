@@ -97,9 +97,9 @@ The phenotype is the running shape. The app is the capability.
 When designing a phenotype, name the app first, then the ecosystem expression:
 
 ```text
-App: protenix_prediction
-Functionality: structure or complex prediction
-Phenotype: GPU-backed reactive Kube worker
+App: model_inference
+Functionality: configured model prediction
+Phenotype: accelerator-backed reactive Kube worker
 Ecosystem: provider/runtime/storage/event topology that makes it runnable
 Surface: CLI/API/notebook/dashboard wrapper over the same core contract
 ```
@@ -208,7 +208,7 @@ These are often adjacent phenotypes in one ecosystem workflow, but they should r
 
 ## Functional Success Boundary
 
-A phenotype's success evidence must prove the app's minimum domain output, not merely a nearby nuisance artifact. Input packages, resolved config sidecars, command previews, staged jobs, log roots, and notebook bundles are supporting materializations. They do not prove structure prediction, MSA generation, topology scoring, binding prediction, harmonization, or visualization unless the corresponding configured app entrypoint actually produced the domain artifact or table.
+A phenotype's success evidence must prove the app's minimum domain output, not merely a nearby nuisance artifact. Input packages, resolved config sidecars, command previews, staged jobs, log roots, and notebook bundles are supporting materializations. They do not prove preparation, prediction, scoring, harmonization, reporting, or visualization unless the corresponding configured app entrypoint actually produced the domain artifact or table.
 
 Do not let a test fixture, mock binary, bypass branch, or synthetic artifact write native success markers or plausible domain outputs under the app's real output contract. If an app has a "prepare input" capability, model it as its own entrypoint/status; do not let it masquerade as "prediction succeeded".
 
@@ -296,40 +296,40 @@ The deploy/resource layer expresses the app into Kube using resolved configurati
 
 ## Examples
 
-MMseqs:
+Data preparation:
 
 ```text
-App: mmseqs_sequence_alignment
-Functionality: sequence search, alignment, clustering, or MSA preparation
-Phenotypes: local SDK runner, batch job, reactive MSA worker, Kube service
-Core app config: databases consumed, input sequence contract, output MSA/hit schema, validation expectations
+App: data_preparation
+Functionality: search, normalization, clustering, or feature preparation
+Phenotypes: local SDK runner, batch job, reactive worker, Kube service
+Core app config: datasets consumed, input contract, output feature/result schema, validation expectations
 Ecosystem config: database storage, image, CPU/memory shape, event topic, artifact bucket, workflow placement
 ```
 
-Protenix:
+Model inference:
 
 ```text
-App: protenix_prediction
-Functionality: structure or complex prediction
-Phenotypes: local GPU runner, batch prediction job, reactive worker, visualization/report surface
-Core app config: model version, input package schema, prediction parameters, output structure/score contract
-Ecosystem config: GPU class, model artifact mount, image, queue/topic, bucket roots, downstream topology scoring workflow
+App: model_inference
+Functionality: configured prediction or scoring
+Phenotypes: local accelerator runner, batch prediction job, reactive worker, visualization/report surface
+Core app config: model version, input package schema, prediction parameters, output artifact/score contract
+Ecosystem config: accelerator class, model artifact mount, image, queue/topic, bucket roots, downstream reporting workflow
 ```
 
-Complex structure harmonization:
+Result harmonization:
 
 ```text
-App: complex_structure_harmonization
-Functionality: map native prediction outputs into comparable structure/result tables
+App: result_harmonization
+Functionality: map native prediction outputs into comparable result tables
 Phenotypes: local dataframe proof, Spark harmonization job, workflow step, notebook review surface
 Core app config: source output kind, hydrator version, output schemas, deduplication keys, validation expectations
 Ecosystem config: raw artifact roots, table/catalog destinations, Spark surface, write mode, materialization consumers
 ```
 
-Pattern Walker materialization:
+Viewer materialization:
 
 ```text
-App: pattern_walker_materialization
+App: viewer_materialization
 Functionality: project harmonized tables into serving bundles and visual lookup artifacts
 Phenotypes: batch materialization, reactive rebuild worker, Kube/Spark job, dashboard-fed artifact producer
 Core app config: source table contract, materialization kind, output bundle schema, replacement strategy, validation expectations

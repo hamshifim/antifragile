@@ -71,18 +71,18 @@ config.
 A named context pack can intentionally choose a runtime project namespace:
 
 ```hocon
-# context_conf/vona/developer.conf
-project = "vona"
+# context_conf/project_alpha/developer.conf
+project = "project_alpha"
 unique_name = ${stage_tier}"--"${project}"--"${owner}"--"${ecosystem}"--"${slug}"--"${incremental_id}
 ```
 
 That is enough for runtime siloing when the resource, artifact, image, and
-workflow code already keys from `unique_name`. Do not add Vona-specific Python
+workflow code already keys from `unique_name`. Do not add project-specific Python
 branches, environment variables, or CLI flags to recreate what `unique_name`
 already provides.
 
 Bucket names may also derive from the same `project` when the bucket contract
-supports project-scoped buckets, for example `vona-biochem-dev`. Keep that as a
+supports project-scoped buckets, for example `project-alpha-dev`. Keep that as a
 config expression, not a code branch.
 
 ## Runtime Identity vs Data Lineage
@@ -90,10 +90,10 @@ config expression, not a code branch.
 Keep these concepts distinct:
 
 ```text
-project            = context/runtime namespace, for example "vona"
+project            = context/runtime namespace, for example "project_alpha"
 unique_name        = concrete execution namespace derived from project and run axes
 project_partition  = table/query partition for fast data lookup
-project_id         = project-input or campaign lineage, for example "vona_vdx111"
+project_id         = project-input or campaign lineage, for example "project_alpha_campaign_01"
 ```
 
 `project_partition` belongs in tables, harmonized rows, and lookup indexes. It
@@ -114,8 +114,8 @@ Use:
 Examples:
 
 ```text
-dev--vona--gideon--hybrid-local--msa-smoke--0--391e2448
-dev--biocontext--mmseq2--0--391e2448
+dev--workspace--gideon--hybrid-local--service-smoke--0--391e2448
+dev--platform--data-preparation--0--391e2448
 ```
 
 The super-repo git SHA must come from the Wielder config boot path, normally
@@ -161,7 +161,7 @@ durable stage or project identity and delete policy.
 
 - Adding a special-case project branch in Python when a named context pack can
   override `project`.
-- Creating a second naming channel such as `vona_unique_name` or
+- Creating a second naming channel such as `project_alpha_unique_name` or
   `artifact_namespace`.
 - Building images with one identity and publishing Spark/Python artifacts under
   another.

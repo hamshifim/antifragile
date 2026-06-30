@@ -46,8 +46,8 @@ absorbing the first app's domain vocabulary.
 - Helpers that hide an app's topology by rereading HOCON files.
 - Helpers that move domain policy into Wielder because one app currently needs
   fewer lines.
-- Helpers that require Wielder to know project vocabulary such as MSA, Protenix,
-  Pattern Walker, or BioContext bucket names.
+- Helpers that require Wielder to know project-specific service names, model
+  names, viewer names, bucket names, or domain vocabulary.
 
 ## Review Gate
 

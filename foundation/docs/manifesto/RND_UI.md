@@ -67,7 +67,7 @@ The UI must make this lifecycle legible without pretending the client owns the w
 
 Weak clients are first-class.
 
-The browser must not require local GPUs, powerful CPUs, WebGPU support, local molecular rendering, local repository checkout, local Terraform, local Spark, or local scientific execution.
+The browser must not require local GPUs, powerful CPUs, WebGPU support, domain-specific heavy rendering, local repository checkout, local Terraform, local Spark, or local scientific execution.
 
 The browser may handle:
 

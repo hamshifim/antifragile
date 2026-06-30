@@ -23,6 +23,9 @@ runtime phenotype while the rest of the ecosystem remains provider-backed.
   ports, proxy targets, port-forwards, workstation credential boundary, local
   source tree, local hardware/runtime capabilities, and image-skip behavior for
   services deliberately served from the workstation.
+- Treat hybrid placement as per-service. One service can run as edited local
+  source while sibling services remain Kubernetes deployments, provider
+  services, Spark jobs, or cluster workers under the same wrapper ecosystem.
 - Use the canonical app/config accessor. Do not reconstruct config layers, add
   ad hoc CLI flags, or inject local overlays in Python.
 
@@ -42,6 +45,9 @@ Common local participants include:
 
 Do not make a separate partial ecosystem for each shape. Start from the full
 ecosystem family and override only the local participant and bridge facts.
+The development payoff is a fast, honest inner loop: edit one service locally,
+keep the real Kafka topics, buckets, service APIs, GPU nodes, and downstream
+workers in place, and swap only the service placement being investigated.
 
 ## Local Iteration Loop
 
@@ -94,6 +100,10 @@ Use concrete local probes instead of relying on browser appearance:
   phenotype unless the change also affects the hosted runtime.
 - Do not hide local routing in shell-only environment variables. Put durable
   developer-local routing in `context_conf/<name>/developer.conf`.
+- When handing off a hybrid workflow, state which services are local and which
+  remain kube/provider/Spark-backed. The command should still be the normal
+  wrapper ecosystem command; the per-service placement is visible in resolved
+  config or plan output.
 
 ## Failure Triage
 

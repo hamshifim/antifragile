@@ -34,7 +34,7 @@ When working inside a Wielder/Antifragile project, read:
 - the app/task markdown for the target tool;
 - relevant Wielder skills for config, tests, notebooks, handoff, and versioning;
 - relevant domain ontology or schema guidance before changing scientific,
-  business, molecular, protein, project, or score semantics.
+  business, entity, project, or score semantics.
 
 Use [Capability Surface Extraction](SKILL_CAPABILITY_SURFACE_EXTRACTION.md) when
 the maximized function must become an operator-facing GUI, API, CLI, Wielder
@@ -51,9 +51,9 @@ ledger to expose anything not imported.
 
 1. Name the tool and the truth boundary.
    State what the tool natively does, what it does not do, and what would be an
-   overclaim. Example: a structure predictor predicts protein topology; it does
-   not natively score ligand binding. A ranking model emits native confidence
-   or ranking metrics; those are not automatically binding truth.
+   overclaim. Example: a forecasting model predicts a configured horizon; it
+   does not natively explain causality. A ranking model emits native confidence
+   or ranking metrics; those are not automatically truth labels.
 
 2. Build scenario coverage before optimizing internals.
    Include positive cases, unsupported cases, edge cases, multi-entity cases,
@@ -77,9 +77,9 @@ ledger to expose anything not imported.
    harmonization skill when downstream comparable records are needed.
 
 6. Keep classification flexible.
-   Treat roles such as protein, peptide, ligand, target, binder, substrate,
-   hormone-like actor, search hit, project molecule, or workflow artifact as
-   context-scoped observations unless the source truly asserts identity.
+   Treat roles such as candidate, target, actor, search hit, source entity, or
+   workflow artifact as context-scoped observations unless the source truly
+   asserts identity.
    Capture observable features and provenance instead of forcing permanent
    classes.
 
@@ -110,19 +110,19 @@ Functional maximization is acceptable only when:
 
 ## Generic Examples
 
-For a structure-prediction model:
+For a native prediction model:
 
-- molecule-only rows should be explicit unsupported cases, not fake structure
+- unsupported rows should be explicit unsupported cases, not fake native
   files;
-- protein-containing rows should produce real native structure artifacts plus
-  native confidence and inference summaries;
-- search, MSA, prompt, or provenance inputs should be preserved while the native
+- supported rows should produce real native artifacts plus native confidence
+  and inference summaries;
+- search, preparation, prompt, or provenance inputs should be preserved while the native
   model settings remain honest about which inputs were actually consumed.
 
-For a ranking or binding-adjacent model:
+For a ranking or scoring model:
 
 - native confidence, ranking, interface, and timing metrics should remain under
   native names;
-- any harmonized binding score should be versioned and caveated;
-- multi-payload behavior, success markers, project parsing, and molecular role
+- any harmonized score should be versioned and caveated;
+- multi-payload behavior, success markers, project parsing, and source role
   labels should be audited for overclaim and forced-classification traps.

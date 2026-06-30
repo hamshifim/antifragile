@@ -103,8 +103,8 @@ The service name should match the runtime service, job runner, or deployable wor
 When an image supports a deployable workload, pair it with a sibling `<service_name>_deploy.py` entrypoint. This mirrors the Kubernetes practice already used in `workflow-wielder`, where the command surface names the workload first and the operation second.
 
 Examples:
-- `model_binding_monitor_image.py`
-- `model_binding_monitor_deploy.py`
+- `model_serving_monitor_image.py`
+- `model_serving_monitor_deploy.py`
 - `provider_ingestion_dispatcher_deploy.py`
 - `data_ingestion_job_runner_image.py`
 

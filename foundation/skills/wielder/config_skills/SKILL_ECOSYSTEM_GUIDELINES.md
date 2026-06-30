@@ -14,13 +14,25 @@ In Wielder, the primary managed noun remains `app`, not `deployment`. An ecosyst
 
 Keep the ecosystem stack three-layered:
 
-- `domain/<name>`: functional, scientific, or data contract. Never includes `surface/*`.
-- `surface/<name>`: runtime, platform, provider, or local machine contract. Never includes `domain/*`.
-- `wrapper/<name>`: deployable or app-runtime ecosystem. Includes the needed domain and surface ecosystems.
+- `domain/<name>`: reusable functional, scientific, service, or data contract. Domain ecosystems own terminology, service topic names, consumer groups, schemas, artifact contracts, table contracts, shared workflow semantics, and app/domain defaults that should survive a move between local, Kind, EKS, GKE, EMR, Dataproc, or other surfaces. Never include `surface/*` from a domain ecosystem, and do not put kube contexts, hostnames, ports, registry authority, or workstation facts here.
+- `surface/<name>`: physical runtime, platform, provider, or local machine contract. Surface ecosystems own local workstation facts, Kubernetes flavor, cloud/provider surface, Spark surface, bucket roots, registry authority, kube context, endpoints, mounts, credentials boundary, ports, and capacity/runtime facts. Never include `domain/*` from a surface ecosystem, and do not put scientific workflow contracts here.
+- `wrapper/<name>`: aggregating deployable or app-runtime ecosystem. Wrapper ecosystems include the needed domain and surface ecosystems, then add only the narrow glue required to phenotype apps in that environment.
 
 App entrypoints receive wrapper ecosystems through `-es/--ecosystem`. Do not pass a bare domain or bare surface to an app except for explicit source-style inspection.
 
-A Wielder app may run under one wrapper and invoke a child app under another wrapper through a named leaf such as `mmseq2.app_ecosystem_mmseq2`. Do not use the parent surface name as the child app ecosystem.
+A Wielder app may run under one wrapper and invoke a child app under another wrapper through a named leaf such as `app_ecosystem_<child_app>`. Do not use the parent surface name as the child app ecosystem.
+
+Messaging contracts follow the same rule. A reusable service API such as Kafka topics and consumer groups belongs in the service/domain ecosystem; a broker endpoint, port-forward, or in-cluster vs host-local address belongs in the surface or wrapper runtime contract. Wrappers compose those two facts without teaching the domain which surface it is running on.
+
+## Per-Service Hybrid Placement
+
+Hybrid wrapper ecosystems phenotype services individually. The wrapper is allowed to say "this service runs locally from source, that service runs as a Kubernetes Deployment, that workload runs as a Job, that table stage runs as Spark, and that dependency remains provider-managed" while preserving one shared domain contract.
+
+- **Guideline:** Model local/kube/provider/Spark placement per service through resolved leaves such as `run_locally`, `placement`, `local_service`, `runtime_app.ecosystem`, resources, ports, and readiness.
+- **Guideline:** Default production-like services can remain Kubernetes/provider-backed while a single edited service runs locally for fast development.
+- **Guideline:** The same wrapper family should support diagnostic permutations such as service A local/service B kube and service A kube/service B local when those permutations are real development needs.
+- **Guideline:** Per-service placement should change the runtime surface, not the domain contract. Topics, schemas, bucket keys, artifact contracts, and workflow semantics should remain shared.
+- **Guideline:** Local developer placement belongs in wrapper/context/test HOCON. It should not be smuggled through service-specific CLI flags, environment-variable control planes, or Python branches that infer intent from the machine.
 
 ## Core Union And Thin Phenotype Overlays
 
@@ -62,14 +74,14 @@ Messaging topics, consumer groups, and similar workflow orchestration contracts 
 
 ### 6. Naming App-Specific Ecosystem Overrides
 Cross-project orchestration may need to tell multiple downstream apps which ecosystem they should run under. A generic field name can become ambiguous once one config modulates more than one app.
-- **Guideline:** Strongly suggest using app-specific override names such as `app_ecosystem_mmseqs_sequence_alignment` when a config may route multiple downstream apps.
+- **Guideline:** Strongly suggest using app-specific override names such as `app_ecosystem_<service_name>` when a config may route multiple downstream apps.
 - **Guideline:** Strongly suggest avoiding generic names such as `app_ecosystem` in multi-app orchestration layers, because they tend to hide which downstream runtime is being modulated.
 - **Guideline:** Strongly suggest avoiding self-referential assignments where an ecosystem overlay redundantly sets an app-specific ecosystem field to the exact same ecosystem name as the containing overlay, unless that duplication is deliberately carrying review signal.
 - **Guideline (No Cross-Ecosystem Band-Aids):** Strongly suggest avoiding app-specific ecosystem overrides as a patch for incomplete concrete ecosystems. If a concrete ecosystem is the bootable runtime, the downstream app should run under that same concrete ecosystem, not be silently redirected into some other local surface just to compensate for a missing port, host, or probe fact.
 
 ### 7. Family Ecosystems vs Bootable Runtime Ecosystems
 Thin reusable ecosystem families and concrete bootable ecosystems are related, but they are not the same thing.
-- **Guideline:** Strongly suggest treating a shared family ecosystem such as `model_binding` as a reusable semantic base first, not as an automatic downstream runtime target.
+- **Guideline:** Strongly suggest treating a shared family ecosystem such as `model_serving` as a reusable semantic base first, not as an automatic downstream runtime target.
 - **Guideline:** Strongly suggest using `app_ecosystem_<app_name>` as the explicit bridge when a concrete deploy ecosystem needs to adapt a downstream app onto a different bootable runtime ecosystem.
 - **Guideline:** Strongly suggest avoiding the temptation to point a downstream runtime directly at an abstract family ecosystem unless that family has intentionally been made bootable and verified end to end.
 - **Guideline:** When a family ecosystem exists alongside thin concrete ecosystems, strongly suggest keeping the concrete ecosystems responsible for operational facts such as registry authority, kube context, pull behavior, and downstream runtime bridging.
