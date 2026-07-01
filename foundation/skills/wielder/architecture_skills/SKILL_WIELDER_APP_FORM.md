@@ -174,6 +174,33 @@ second ecosystem resolver, or a bundle of child-app CLI overrides. Parent
 workflows may choose which app entrypoint to call, but the child app still owns
 its own resolved contract, lifecycle, cleanup, and evidence.
 
+## Monitoring Entrypoints
+
+Long-running apps and DAG-shaped wielders should expose typed monitoring
+entrypoints whenever they own services, jobs, event channels, retained logs, or
+human-observable runtime state.
+
+Monitoring entrypoints are observation surfaces. They should resolve config
+canonically, report what they will observe in `plan`, attach or subscribe in
+`monitor`, and clean up only their own observer state in `delete`. They must not
+silently start, stop, or reshape the underlying workload unless the entrypoint
+is explicitly a lifecycle entrypoint for that workload.
+
+Common monitoring entrypoint families:
+
+```text
+monitor          # domain or ecosystem event traffic
+kube_logs        # Kubernetes workload logs
+local_services   # local process pid/log state
+spark_jobs       # durable Spark job/service logs
+monitor_tmux     # operator dashboard composed from the typed monitors above
+```
+
+An aggregate monitor dashboard, such as a tmux session, should compose the
+app's existing monitor entrypoints. It should not reconstruct topic names,
+Kubernetes selectors, local pid files, or Spark log paths itself. Those details
+belong to the child app's resolved monitor contract.
+
 ## Aggregating Wielder App Form
 
 An app may aggregate multiple entrypoints when the domain functionality is naturally a mix-and-match capability rather than one fixed route.
