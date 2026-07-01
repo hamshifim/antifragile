@@ -174,6 +174,25 @@ Recommended config shape:
   artifact, keep the aggregate `artifacts` class distinct from the specific
   artifact leaf. Singletons grow, and the class/leaf pattern prevents future
   reshaping from becoming a config migration.
+- **Reactive apply order:** For reactive DAGs, the normal production-like
+  `apply` family should start shared messaging/storage surfaces, ensure
+  app-owned topics or queues, start durable streaming harmonization/listener
+  jobs, then start services or workers that emit normal work traffic. This lets
+  downstream observations exist before publishers run.
+- **Publisher/test traffic rule:** Publisher and `-t` scenario configs should
+  describe normal work messages, not topic-emptying, delete messages, or hidden
+  cleanup. If a test needs fixture data removed, configure a separate cleanup
+  app or cleanup step with `plan-delete`/`delete` semantics.
+- **Cleanup class rule:** Model cleanup as its own class or sibling app when it
+  removes durable data. Cleanup config should name watermarks, UUIDs, table
+  partitions, bucket/key roots, and allowed ownership boundaries. It should use
+  Bucketeer/Spark/table accessors, not reactive delete topics, as the default
+  storage cleanup path.
+- **Monitor placement rule:** Monitor configs should reflect the resolved
+  runtime placement. Kube log monitors attach only to Kube-deployed apps; local
+  service monitors tail only configured local processes; Spark monitors attach
+  to durable Spark job services; Kafka monitors subscribe to event surfaces.
+  Aggregate dashboards compose those surfaces rather than inventing selectors.
 
 ### Ecosystem Family Core Before Phenotype Overlays
 

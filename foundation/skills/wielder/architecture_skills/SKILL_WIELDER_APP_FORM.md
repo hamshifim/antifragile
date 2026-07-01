@@ -289,8 +289,8 @@ Use the aggregate DAG to order those resources before workers:
 ```text
 provision broker/surface
   -> provision app-owned topics/queues
+  -> start durable streaming jobs/monitors
   -> deploy workers/services
-  -> start streaming jobs/monitors
 ```
 
 On delete, stop consumers before deleting their message resources:
@@ -307,12 +307,18 @@ Each app should own small lifecycle functions for its own reactive resources:
 plan_<app>_topics
 ensure_<app>_topics
 delete_<app>_topics
-empty_<app>_fixture_topics
 ```
 
 The aggregate app may sequence these functions, but it should not reconstruct
 topic names, endpoints, consumer groups, or retry policy itself. Those remain
 resolved config consumed by the child app's typed contract.
+
+Publisher, runner, and test entrypoints should emit normal work traffic. They
+should not empty topics, publish delete messages, or perform hidden cleanup as a
+precondition for a scenario. Topic lifecycle belongs to a topic class entrypoint;
+data cleanup belongs to an explicit cleanup/backfill-style app that can
+`plan-delete` exact owned records, keys, watermarks, and materialized products
+before deleting them through configured storage/table access.
 
 It is good practice for services to retain a self-healing startup path, such as
 `ensure_topics_on_start`, when the ecosystem contract allows mutation. This is a
@@ -329,6 +335,13 @@ orders topic/queue preflight first; the consumer-side repair handles races,
 operator interruption, stale local bridges, or topic deletion between workflow
 apply and runtime startup.
 
+Streaming jobs should publish or expose readiness evidence before downstream
+publishers run. A useful small-scale pattern is a malformed warmup/canary
+message: the stream consumes it, routes it to the configured error/escalation
+channel, and the publisher or monitor waits for the matching canary key. This
+proves source connectivity, parser failure handling, and sink publication
+before real work messages arrive.
+
 Do not confuse consumer self-repair with durable listening. A one-shot trigger
 such as "available now" can finish successfully before a publisher emits later
 messages; that is useful for replay/backfill, not for a standing reactive app.
@@ -342,6 +355,12 @@ such as `harmonization`, the same way an app exposes `images`, `artifacts`,
 full DAG, while operators can invoke it directly for diagnosis or restart. The
 child harmonization apps still own their Spark source, transform, sink,
 checkpoint, and cleanup contracts.
+
+Use streaming-first harmonization for reactive systems. Durable `apply` should
+bring the streaming harmonizers online before the services that will emit work
+traffic. Backfill remains a deterministic reconciliation path for replay,
+repair, comparison, and cleanup discovery; it is not the default substitute for
+a standing reactive listener.
 
 Class entrypoint scripts should be stable, thin wrappers over a shared CLI
 support module. Avoid copy-pasting source bootstrap logic into every `images`,
@@ -360,6 +379,13 @@ streaming source is resolved. In a Kafka shape this means the app validates the
 resolved bootstrap endpoint, source topic, error/escalation topic, and
 app-owned topic preflight report before creating the streaming reader. Do not
 allow an inert Spark query to count as a successful harmonization listener.
+
+Monitoring surfaces should be honest about runtime placement. A DAG-level
+monitor may compose Kafka/event monitors, Spark job log attachers, Kubernetes
+log attachers, and local service log tails, but it should only attach Kube logs
+for services resolved to Kubernetes and only attach local logs for services
+resolved to a local process. A dashboard such as tmux should compose these typed
+monitor entrypoints, not rediscover pods, pid files, topics, or Spark log paths.
 
 ## Data Pipeline Form
 

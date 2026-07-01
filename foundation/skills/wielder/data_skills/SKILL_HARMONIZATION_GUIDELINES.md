@@ -130,6 +130,25 @@ Use configured accessors, Bucketeers, Spark wrappers, table schemas, table URIs,
 write modes, deduplication keys, and app/runtime configuration. Do not bypass
 storage abstractions with local filesystem assumptions.
 
+## Streaming-First Reactive Harmonization
+
+For reactive systems, harmonization should normally be a durable streaming
+listener started by the Wielder `apply` DAG before services or publishers emit
+work traffic. Backfill is still required, but its role is deterministic
+reconciliation: replay missed events, compare stream results with source
+artifacts, repair tables, and plan cleanup from watermarks or UUIDs.
+
+A streaming harmonizer must fail loudly if no streaming source is configured.
+In a Kafka shape, validate the resolved bootstrap endpoint, source topic,
+checkpoint key, error/escalation topic, and topic preflight before creating the
+Spark reader. A query that starts without a real source is not a listener.
+
+Small-message test runs may need warmup/canary traffic so micro-batches flush
+and error handling is observable. Prefer a deliberately malformed canary that
+the stream routes to the configured error/escalation channel, then wait for the
+matching canary key before publishing real work. Do not use topic emptying or
+delete messages as a readiness mechanism.
+
 ## Bucket/Key Path Rule
 
 Human-facing rows, notebooks, ledgers, and plans should prefer `bucket` plus
@@ -165,6 +184,14 @@ rows, then resolve subsets, identities, joins, and search hits through Spark.
 Notebook companions should show at least one bounded Spark-backed lookup when
 the data product is intended to scale. The pandas display is a preview of the
 Spark result, not the lookup engine.
+
+## Cleanup And Reconciliation
+
+Cleanup for harmonized or materialized data is a data operation, not an event
+cleanup side effect. Expose `plan-delete` and `delete` surfaces that discover
+owned UUIDs, watermarks, table partitions, and key prefixes through the same
+Bucketeer/Spark/table accessors used for ingestion and backfill. `plan-delete`
+prints the exact resources; `delete` removes only those resources.
 
 ## Serving Materialization Rule
 

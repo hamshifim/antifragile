@@ -235,6 +235,18 @@ decisions in one generic loop.
 * Report class steps and leaf steps separately in plan/apply output so the
   operator can see both the class-level intent and the exact image/artifact
   surfaces selected.
+* For reactive DAGs, order `apply` so shared surfaces and app-owned topics are
+  ready before durable streaming jobs, and durable streaming jobs are ready
+  before services or publishers emit normal work traffic.
+* Keep publisher/test entrypoints focused on normal work messages. Do not empty
+  topics, publish delete commands, or perform hidden storage cleanup inside a
+  publisher just to make a scenario pass.
+* Expose cleanup as its own typed entrypoint or class family. `plan-delete`
+  should list exact owned UUIDs, watermarks, table partitions, and key prefixes;
+  `delete` should remove them through configured Bucketeer/Spark/table access.
+* Monitoring entrypoints should attach only to surfaces that are actually
+  resolved for the child app: Kafka/event traffic, Spark job logs, Kubernetes
+  logs for Kube placement, and local process log tails for local placement.
 
 ## 2.4 Long-Running Operator Handoff
 Some Wielder actions are expected to run for minutes or hours, especially bucket mirrors, storage syncs, image builds, Terraform applies, large data ingestion jobs, and cloud workflow executions.

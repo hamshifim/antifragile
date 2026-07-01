@@ -101,24 +101,32 @@ If cleanup is testing propagation, it gets its own nodes. If cleanup is just tes
 
 ## Reactive Fixture Hygiene
 
-Topic, queue, and callback fixtures are part of test state. A fixture-backed
-reactive test should clear the whole message family that can affect the flow:
-request topics, result/update topics, command topics, post-action event topics,
-and any configured callback groups. Do this before seeding fixture artifacts and
-before starting long-lived consumers.
+Topic, queue, and callback fixtures are part of test state, but publisher/test
+setup should not empty topics or publish delete messages as fixture hygiene.
+Those mutations make stale traffic, offset replay, and cleanup side effects
+hard to distinguish from the flow under test.
 
-This matters most when consumers use `earliest` replay or explicit
-assign-from-beginning semantics. A stale command from a previous run can mutate
-freshly seeded artifacts and make the failure look like a missing download,
-broken downstream app, or storage race. Treat stale messages as live state, not
-log history.
+A fixture-backed reactive test should:
 
-For reactive cleanup, publish an explicit command and wait for a post-action
-event. Subscribe before publishing when collecting the result. Each service
-should clean only the resources it owns; downstream cleanup should not cascade
-through an upstream service's storage unless the upstream service contract says
-so. The final report should say which transport produced the cleanup evidence
-and which configured keys or records were affected.
+- seed configured input or existing-output artifacts through the owning app
+  contract;
+- start or verify durable listeners before publishing work;
+- emit normal work messages with a provenance nugget;
+- optionally emit a malformed warmup/canary message that the stream must route
+  to its configured error/escalation channel, and wait for the matching canary
+  key when readiness is required;
+- assert outputs through configured storage/table accessors.
+
+If stale messages exist, treat them as state to observe or as a reason to use a
+fresh consumer group, bounded test identity, or explicit topic lifecycle
+entrypoint. Do not hide them with ad hoc topic emptying inside the publisher.
+
+Cleanup is a separate test node. `plan-delete -t` should list exact watermarked
+keys, UUIDs, table partitions, and materializations through the same
+Bucketeer/Spark/backfill accessors used to create or catalog them. `delete -t`
+should remove only those owned resources. Cleanup should not cascade through
+Kafka delete commands unless that is the specific behavior under test and the
+service contract explicitly names it.
 
 ## Minimal Checklist
 
@@ -126,8 +134,12 @@ and which configured keys or records were affected.
 - One provenance nugget.
 - One shared flow/node contract usable by tests, workflow runs, and GUI monitors.
 - One node per observable boundary.
-- Whole reactive fixture family cleared before seeding and starting consumers.
+- Durable listeners started or verified before work traffic is published.
+- Warmup/canary traffic routed to an observable error/escalation channel when
+  small message volumes need a micro-batch nudge.
 - A state report accumulated during the run.
 - Meaningful logs that say what is expected next.
+- Separate cleanup/backfill node for watermarked outputs; no hidden topic
+  emptying or delete messages in publisher setup.
 - Clear skipped/no-change behavior.
 - Final human report plus machine-readable JSON/JSONL when useful.
