@@ -41,6 +41,11 @@ Storage identity is semantic first and physical second.
 - Let ecosystems choose physical roots, mounts, providers, catalogs,
   credential modes, and local/cloud expression. App and test code consume the
   resolved contract.
+- Treat POSIX ownership as a physical-storage concern. If a Kube workload writes
+  to local `hostPath`, local PV, mounted bucket, or NFS-like storage, the
+  surface or wrapper ecosystem should provide the workload security context
+  needed for future writes. Object stores such as S3 and GCS should stay in
+  credential/IAM vocabulary, not Unix uid/gid vocabulary.
 - Let local preview behavior live only in clearly local-only notebook cells,
   local developer docs, or local-only helper names. Generic surfaces should
   expose the opaque URI or provider view URL instead.
@@ -53,6 +58,8 @@ Storage identity is semantic first and physical second.
   a generic Wielder script, test, or notebook companion.
 - Hiding local bucket roots, mounted-root assumptions, or POSIX path behavior
   behind a factory, Spark helper, Bucketeer wrapper, or "portable" accessor.
+- Treating a local `runAsUser`, `runAsGroup`, or `fsGroup` value as a domain
+  storage fact rather than as a local POSIX surface/wrapper phenotype.
 - Letting a local Bucketeer/accessor silently succeed on a missing source
   object, emit stray print output, or behave differently from the remote
   provider contract it represents.

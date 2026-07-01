@@ -553,6 +553,29 @@ The Kube phenotype may use:
 
 The deploy/resource layer expresses the app into Kube using resolved configuration and Wielder deployment guidelines.
 
+### Kube Runtime Identity and Storage Form
+
+Kube workload identity is part of the Kube app phenotype, not an ad hoc pod
+patch.
+
+- Kube app templates should expose and render `pod_security_context` and
+  `container_security_context` for every workload form they own:
+  `Deployment`, `StatefulSet`, and `Job`.
+- The exact values for `runAsUser`, `runAsGroup`, `fsGroup`, and related
+  container security leaves belong to the active surface or wrapper ecosystem
+  when they reflect physical storage or cluster policy.
+- Reusable domain app config may declare these leaves as empty defaults so the
+  workload form is stable while concrete ecosystems provide the phenotype.
+- Fixed Unix ids such as `1000:1000` are local POSIX facts, typical of
+  workstation `hostPath`, local PV, mounted bucket, or NFS-like storage. They
+  are not generic domain facts and should not be treated as universal cloud
+  Kubernetes defaults.
+- Object stores such as S3 or GCS are credential/IAM surfaces, not POSIX owner
+  surfaces. Do not solve object-store access with Unix ids.
+- Changing a pod security context only fixes future writes. Existing
+  root-owned or otherwise mis-owned local files need an explicit cleanup or
+  ownership repair step that is scoped to the local filesystem surface.
+
 ## Examples
 
 Data preparation:

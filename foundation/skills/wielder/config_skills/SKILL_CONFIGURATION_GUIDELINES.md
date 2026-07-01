@@ -361,6 +361,29 @@ Filesystem discovery and storage materialization must not leak into DAG logic, b
 - **Guideline:** `os.path.join`, `dirname`, and similar functions are prohibited for storage key construction. Parsing a resolved filename token via `basename` or `splitext` is acceptable, but storage lookup and routing are not.
 - **Guideline:** Looking up code paths or configuration paths is still path-boundary logic. If code is deciding where config, parquet, images, or outputs live, that resolution belongs in the configuration bootloader, Bucketeer, or a centralized accessor layer.
 
+### 6.1 Kube Workload Identity and Local POSIX Storage
+Kubernetes workload identity is a resolved deployment contract. It is not a
+domain shortcut for making local files deletable.
+
+- **Guideline (Kube App Form):** Kube app/deploy templates should expose and
+  render `pod_security_context` and `container_security_context` for
+  Deployments, StatefulSets, and Jobs. App/domain defaults may leave these
+  subtrees empty; concrete ecosystems fill them when the runtime surface needs
+  them.
+- **Guideline (Surface-Owned Unix Identity):** Concrete Unix ids such as
+  `runAsUser = 1000`, `runAsGroup = 1000`, or `fsGroup = 1000` belong in the
+  surface or aggregating wrapper ecosystem when they are required by
+  workstation `hostPath`, local PV, mounted bucket, or NFS-like POSIX storage.
+  Do not put workstation uid/gid facts in a reusable domain ecosystem.
+- **Guideline (Object Store Boundary):** S3, GCS, and similar object stores use
+  credentials, service accounts, IAM, or provider ACLs. Do not model their
+  access with POSIX ownership leaves merely because one local development
+  surface uses mounted buckets.
+- **Guideline (Migration Boundary):** Security context changes affect future
+  writes. Existing root-owned local artifacts require an explicit local
+  cleanup or ownership migration step. Do not let cleanup code report success
+  unless it verifies that the targeted keys or files are actually gone.
+
 ### 7. Global Stage Tier Nomenclature (`stage_tier`)
 Deployment environments (`dev`, `int`, `qa`, `stage`, `prod`) must be physically segregated to prevent data collisions.
 - **Guideline:** Use `stage_tier` to define the target environment. This configuration resolves strictly beneath the active `context_conf` pack to guarantee local sandboxes override production defaults.

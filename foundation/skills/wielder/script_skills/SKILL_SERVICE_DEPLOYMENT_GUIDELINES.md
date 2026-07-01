@@ -114,6 +114,16 @@ not as ordinary GUI apply.
   replica counts, resources, ports, registry authority, and service deploy
   steps. Do not move kube config out of the app merely because a future non-kube
   runtime may exist.
+- Kube workload identity belongs in the deploy contract. Deployment,
+  StatefulSet, and Job templates should render `pod_security_context` and
+  `container_security_context` from resolved config. Keep exact Unix uid/gid
+  values in the surface or wrapper ecosystem when they are needed for local
+  POSIX storage such as `hostPath`, local PV, mounted buckets, or NFS-like
+  volumes.
+- Do not generalize local filesystem write fixes into cloud storage doctrine.
+  Object stores are credential surfaces; local POSIX storage is an ownership
+  surface. A service deploy change may need both a future-write security
+  context and a separate local cleanup or ownership repair for old files.
 - CLI arguments should stay at Wielder modulation level: ecosystem, stage tier, context, security, canary, and action.
 - Developer-local choices belong in `context_conf/<name>/developer.conf`, not ad hoc environment variables or private parsers.
 - A service that orchestrates another repo may read that repo through its canonical accessor, but should extract only the fields it needs.
