@@ -143,6 +143,12 @@ Recommended config shape:
   resources. This fails quickly on Docker/artifact problems rather than leaving
   idle clusters, brokers, GPUs, or cloud resources waiting for a late build
   failure.
+- **Publication substrate rule:** If an image/artifact class requires a
+  lightweight local publication substrate, such as a local registry or staging
+  surface, make that prerequisite an explicit class step such as
+  `image_substrate`. It may initialize the publication surface, but it should
+  not smuggle full runtime deployment into the image class. The normal
+  `provision` step still owns the runtime substrate.
 - **Idempotency boundary:** A service, job, or deploy entrypoint called later by
   the wielder may call its own image or artifact materializer again. That helper
   should be idempotent or reuse-aware. Do not thread ad hoc `preflighted`,
