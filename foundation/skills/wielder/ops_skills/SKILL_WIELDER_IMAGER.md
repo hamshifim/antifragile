@@ -26,22 +26,25 @@ To resolve this, the `Wielder` Imager (`pack_image_antifragile`) strictly mandat
 6. **Live Runtime Verification over Assumption:** A successful config render or `kubectl apply` is not proof that the new image behavior is live. If the image tag is unchanged or the staged content still points at committed state, the running container may still reflect older code. Verify with live pod logs and rollout state rather than assuming the workspace diff reached the container.
 7. **Dirty Staging Clone Policy:** If an already-existing staging clone is dirty, emit a warning and leave it alone. Do not hard-reset or clean the staging clone automatically. The contract is that uncommitted source-repo changes do not reach staging; staging is not a place to silently destroy local state.
 
-## Workflow-Driven Image Verification
-For workflow entrypoints that both build images and deploy them, the most reliable integration check is the exact workflow itself rather than a disconnected sequence of helper invocations.
+## Wielder-Driven Image Verification
+For DAG-shaped wielder entrypoints that both build images and deploy them, the most reliable integration check is the exact wielder itself rather than a disconnected sequence of helper invocations.
 
-For the broader doctrine that treats Wielder workflows as configurable integration, system, load, and production execution surfaces across ecosystems and stage tiers, see [Workflow Validation Guidelines](../test_skills/SKILL_WORKFLOW_VALIDATION_GUIDELINES.md).
+For the broader doctrine that treats DAG-shaped Wielder apps as configurable integration, system, load, and production execution surfaces across ecosystems and stage tiers, see [Workflow Validation Guidelines](../test_skills/SKILL_WORKFLOW_VALIDATION_GUIDELINES.md).
 
 - **Rule:** Distinguish CI/dev image or artifact production from
   operator-facing deploy. A GUI or ordinary operator `apply` consumes an
   immutable version lock and validates that required images and runtime
   artifacts already exist; it does not pack images or synthesize missing
   artifacts from the local checkout.
-- **Rule:** The workflow's own `delete -> apply` cycle is the correct integration harness when validating image-bearing changes.
+- **Rule:** The wielder's own `delete -> apply` cycle is the correct integration harness when validating image-bearing changes.
+- **Rule:** A wielder that owns image production should run an early image materialization pass before provisioning expensive dependencies. Put an `images` class step above per-image leaves, then call each service-named image helper separately.
+- **Rule:** Call image helpers as app-owned leaves with Wielder mode overrides. Do not have the parent wielder load and mutate a child service config just to force image behavior.
+- **Rule:** The service deploy path may call the same service-named image helper later. Let the helper's registry/image reuse policy make the second call cheap; do not invent wielder-local skip flags as a second state channel.
 - **Rule:** The deployment identity is the final committed super-repo SHA. Build, push, and deploy must all resolve against that same SHA.
 - **Rule:** If a thin deploy-orchestrator repository is not itself part of the baked image, treat its local diff as deployment wiring rather than image truth, and do not confuse those two roles during validation.
-- **Rule:** Keep `imagePullPolicy: Always` on these workflow-managed integration deployments so the deployment actually tests the image that was just baked and pushed.
-- **Rule:** When a workflow `apply` both bakes and deploys, a successful end-to-end `apply` is the primary integration and system proof for that image delta.
-- **Rule:** When a workflow `apply` is being used as the operator-facing GUI
+- **Rule:** Keep `imagePullPolicy: Always` on these wielder-managed integration deployments so the deployment actually tests the image that was just baked and pushed.
+- **Rule:** When a wielder `apply` both bakes and deploys, a successful end-to-end `apply` is the primary integration and system proof for that image delta.
+- **Rule:** When a wielder `apply` is being used as the operator-facing GUI
   path, it must not also bake. Split image/artifact production into an explicit
   image or CI/CD surface, publish the artifact manifest, then deploy from that
   manifest.

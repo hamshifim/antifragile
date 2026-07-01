@@ -85,6 +85,19 @@ several Spark jobs need the same code closure.
 - Let the ecosystem choose the concrete artifactory bucket/provider.
 - Use resolved config bootstraps for runtime config payloads; do not rely on
   local files being present beside the Spark driver.
+- In DAG-shaped wielder step config, keep a class step such as
+  `steps.<set>.artifacts` above per-artifact leaf entrypoints such as
+  `<runtime>_artifacts`. Even one shared Python runtime artifact should use the
+  class/leaf pattern so later artifacts can join without changing the wielder
+  shape.
+- A wielder may publish runtime artifacts before provisioning services or
+  submitting jobs. The job/app submit path may still call the same artifact
+  publication helper; Artifactor/PySparker reuse should make that call cheap
+  when the bundle already exists.
+- The wielder should call app-owned artifact publication entrypoints, not
+  prepare Spark runtime artifacts by reaching into the child app's lower-level
+  context. The artifact app owns config resolution, bootstrap publication, and
+  versioned skip/reuse behavior.
 
 ## Anti-Patterns
 
@@ -103,6 +116,9 @@ several Spark jobs need the same code closure.
   job code.
 - Rebuilding the same source closure separately for each app when a shared
   runtime artifact plus module selector is the intended shape.
+- Folding artifact publication into a vague wielder "preflight" flag that
+  cannot distinguish image builds, artifact publication, config staging, and
+  fixture generation.
 
 ## Validation
 

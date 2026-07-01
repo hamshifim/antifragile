@@ -92,6 +92,8 @@ not as ordinary GUI apply.
 - If hosted runtime code or Docker assets changed, commit the owning submodule before relying on a rebuilt hosted image.
 - Image ensure may check registry state and build when configured, but it must not pretend uncommitted local code exists inside an already published image.
 - Image scripts may compose shared base images, but the service image name should remain workload-oriented.
+- Service image materialization should be exposed as a small reusable leaf helper. Parent wielders may call it in an early `images` class pass, and the service deploy path may call it again before deployment. Do not add wielder-only "preflighted" state to suppress a second call.
+- Keep image build and image publication as separate image-entrypoint concerns where the backend supports that distinction. If the current helper performs build-and-publish together, the config should still preserve an explicit image class step so the contract can grow without changing the wielder shape.
 - For operator-facing deploy/apply, image ensure should validate that the locked
   image reference exists and is usable. It should not build or push images
   unless the active surface is explicitly an image/artifact production surface.

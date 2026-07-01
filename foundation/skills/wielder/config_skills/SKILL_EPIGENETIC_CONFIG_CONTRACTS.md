@@ -1,11 +1,11 @@
 ---
-description: The Wieldering Way for epigenetic configuration contracts: callers provide versioned HOCON and libraries validate strict typed contracts without hand-built descriptors or defensive defaults. Use when Wielder functionality crosses app, library, workflow, client-generation, reverse API, or UI-config boundaries.
+description: The Wieldering Way for epigenetic configuration contracts: callers provide versioned HOCON and libraries validate strict typed contracts without hand-built descriptors or defensive defaults. Use when Wielder functionality crosses app, library, DAG-shaped wielder, client-generation, reverse API, or UI-config boundaries.
 ---
 
 
 # The Wieldering Way: Epigenetic Config Contracts
 
-Use this skill when designing, implementing, or reviewing Wielder functionality where a reusable library, client generator, reverse API, workflow helper, or UI bridge receives operational intent from a caller.
+Use this skill when designing, implementing, or reviewing Wielder functionality where a reusable library, client generator, reverse API, DAG-shaped wielder helper, or UI bridge receives operational intent from a caller.
 When that contract includes buckets, object keys, table keys, URIs, artifact roots, or storage accessors, also read [Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md).
 
 ## Wieldering Way
@@ -31,6 +31,7 @@ If the contract breaks, it is on the caller/config boundary. The library must fa
 - Transient local artifacts, such as generated browser-readable config files, should materialize from the versioned HOCON contract and remain ignored when developer-local.
 - App-to-app handoffs pass wrapper ecosystem names in explicit leaves such as `app_ecosystem_<app>`. Domain ecosystems own reusable functional contracts; surface ecosystems own physical runtime facts; aggregating wrapper ecosystems include the needed domain and surface ecosystems and are the normal app entrypoint ecosystems.
 - Hybrid wrapper ecosystems express service placement per service. A service may resolve as local source, Kubernetes Deployment/StatefulSet/Job, Spark job, or provider-managed runtime while sibling services resolve differently under the same wrapper. The library or service entrypoint should consume the resolved placement contract rather than inventing a parallel launch/config channel.
+- DAG-shaped wielder materialization controls should have class steps and leaf entrypoints. Use class leaves such as `steps.<set>.images`, `steps.<set>.artifacts`, and `steps.<set>.provision` for app-level DAG intent, plus specific typed entrypoints such as `<service>_image` or `<runtime>_artifacts` for each materializable surface. Wielder code acts as a switchboard: it calls app-owned leaf materializers with Wielder mode overrides, and those app leaves resolve their own config, reuse versioned artifacts/images, and may be called again by the owning service/job path.
 
 ## Ownership Boundary
 

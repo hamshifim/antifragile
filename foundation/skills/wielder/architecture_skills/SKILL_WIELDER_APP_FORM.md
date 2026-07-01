@@ -1,5 +1,5 @@
 ---
-description: Architectural form doctrine for Wielder apps as domain functionality expressed into ecosystem phenotypes through Wielder modes, including service, Spark, ingestion, harmonization, materialization, workflow, minimal app config, core ecosystem contracts, aggregated workflows, and thin surface wrappers.
+description: Architectural form doctrine for Wielder apps as domain functionality expressed into ecosystem phenotypes through Wielder modes, including service, Spark, ingestion, harmonization, materialization, DAG-shaped wielders, minimal app config, core ecosystem contracts, aggregated app composition, and thin surface wrappers.
 ---
 
 # Wielder App Form
@@ -17,7 +17,7 @@ domain functionality
   + minimal app config
   + mode-guided phenotype expression
   + ecosystem contracts
-  + workflow composition
+  + optional DAG-shaped wielder composition
   + thin operator surfaces
   + evidence/provenance
 = Wielder app phenotype
@@ -130,9 +130,15 @@ second ecosystem resolver, or a bundle of child-app CLI overrides. Parent
 workflows may choose which app entrypoint to call, but the child app still owns
 its own resolved contract, lifecycle, cleanup, and evidence.
 
-## Aggregating App Form
+## Aggregating Wielder App Form
 
 An app may aggregate multiple entrypoints when the domain functionality is naturally a mix-and-match capability rather than one fixed route.
+
+When the aggregate's durable job is to compose a bounded set of Wielder-managed
+apps into one ecosystem capability, prefer the `<domain>_wielder` convention.
+This names the app as a concrete DAG-shaped switchboard: it selects a configured
+set of sibling apps or typed entrypoints, passes the Wielder modes each sibling
+needs, preserves ordering, and records evidence for what actually happened.
 
 This form is useful when an operator, workflow, event, or downstream service needs to choose a transient subset of actions such as:
 
@@ -150,14 +156,56 @@ The aggregate app should keep each entrypoint thin and typed. The app-level cont
 Use steps config for transient control:
 
 ```text
-app capabilities: stable available entrypoints
-steps config: selected run sequence for this phenotype, test, context, or workflow
-workflow: orchestrates selected steps and evidence
+app capabilities: stable sibling apps and typed entrypoints
+steps config: selected DAG sequence for this phenotype, test, context, or operator run
+wielder: orchestrates selected steps and evidence
 ```
 
-The steps config may live as an app-owned reusable step set, a test overlay selection, an ephemeral workflow intent, or an ecosystem/workflow concern depending on durability. The important boundary is that transient step choice belongs in configuration, while the entrypoint implementations remain stable typed capabilities.
+The steps config should be app-owned when the aggregate owns the reusable DAG.
+Use `steps.conf` included by `app.conf` for durable step sets, and let test,
+context, or developer overlays select or modulate those step sets. The important
+boundary is that transient step choice belongs in configuration, while entrypoint
+implementations remain stable typed capabilities.
 
 This gives reactive systems an ad hoc composition surface without turning the app into a pile of one-off scripts. A reactive event can select "search only", "search plus prediction", "prediction plus materialization", or "full workflow" by resolving a configured step set and then emitting evidence for the actual steps executed.
+
+For a `wielder` app, organize steps by verb family first, then by app:
+
+```text
+steps.<set>.apply
+steps.<set>.delete
+steps.<set>.run
+steps.<set>.provision
+steps.<set>.images
+steps.<set>.artifacts
+```
+
+The main entrypoint branches by verb family first. `plan`, `apply`, `show`,
+`probe`, and `init` normally use the `apply` sequence; `delete` and
+`plan-delete` use the `delete` sequence; `run` uses the `run` sequence. Class
+entrypoints such as `<domain>_wielder_provision.py`,
+`<domain>_wielder_images.py`, and `<domain>_wielder_artifacts.py` expose the
+corresponding configured class sequence through normal Wielder actions. Do not
+invent global pseudo-actions such as `--images` or `--artifacts` when a typed
+entrypoint can use `-w plan/apply/delete`.
+
+The selected step set should name sibling apps or typed sibling entrypoints,
+not private implementation chores. It is acceptable to have class steps named
+`images`, `artifacts`, and `provision`, and leaf typed entrypoints such as
+`model_image` or `runtime_artifacts`; avoid private verbs such as
+`build_model_image` or `publish_runtime_artifact` in the top-level DAG. The
+aggregate app decides order and mode. Each child app decides its own image,
+artifact, deployment, cleanup, runtime behavior, and evidence from its resolved
+config.
+
+For Wielder materialization, use the DAG as a switchboard, not as an owner of
+child internals. The wielder may call an `images` class entrypoint before
+provisioning so image failures appear before scarce resources are allocated;
+that class entrypoint then delegates to app-owned image materializers. The same
+rule applies to artifact publication and infrastructure provisioning. If a
+service deploy path calls its own image or artifact helper again, the helper
+should be reuse-aware and idempotent rather than relying on a Python
+`already_built` side channel.
 
 ## Data Pipeline Form
 
@@ -238,8 +286,8 @@ Do not let a test fixture, mock binary, bypass branch, or synthetic artifact wri
 
 Separate ecosystem concerns by durability and ownership.
 
-- Core ecosystems own shared contracts: buckets, topics, registries, table schemas, artifact roots, app relationships, workflow contracts, and default cross-app behavior.
-- Aggregated ecosystem workflows own how several apps compose into a larger capability.
+- Core ecosystems own shared contracts: buckets, topics, registries, table schemas, artifact roots, app relationships, reusable communication contracts, and default cross-app behavior.
+- DAG-shaped wielder apps own reusable app composition and step ordering; wrapper ecosystems select the domain and surface ingredients that make that composition runnable.
 - Concrete ecosystem overlays own physical expression: surface, provider, Kube context, registry authority, credential boundary, mount topology, node groups, service routes, and readiness checks.
 - Context packs own developer-local or operator-local modulation.
 - Test overlays own fixture pressure and proof-specific constraints.

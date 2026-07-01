@@ -66,6 +66,92 @@ Hybrid wrapper ecosystems express per-service placement, not one global local-vs
 
 This serves development by preserving the real ecosystem substrate while shortening the inner loop for the service under edit. The developer can run changed source locally, keep Kafka, buckets, GPU nodes, downstream services, and workflow contracts real, and test local/kube permutations without inventing alternate app behavior. `plan`, `apply`, `delete`, `run`, and `-t` should still flow through the same entrypoints and resolved HOCON; only the per-service placement leaves change.
 
+### DAG-Shaped Wielder Apps And Materialization Gates
+
+A `<domain>_wielder` app is a configured DAG switchboard for a bounded domain
+capability. Its config owns order and mode handoff; child apps own their own
+image, artifact, deploy, delete, run, validation, and evidence behavior.
+
+Recommended config shape:
+
+```hocon
+<domain>_wielder {
+  selected_steps = "default"
+
+  wielded_apps = [
+    "provision"
+    "images"
+    "artifacts"
+    "service_a"
+    "service_b"
+  ]
+
+  wielded_entrypoints {
+    provision = "<domain>_wielder_provision"
+    images = "<domain>_wielder_images"
+    artifacts = "<domain>_wielder_artifacts"
+    service_a_image = "<family>/service_a_image"
+    runtime_artifacts = "<family>/runtime_artifacts"
+  }
+
+  app_modes {
+    default {
+      ecosystem = ${ecosystem}
+      context_conf = ${context_conf}
+    }
+  }
+
+  steps {
+    default {
+      apply = ["images", "artifacts", "provision", "service_a", "service_b"]
+      delete = ["service_b", "service_a", "provision"]
+      run = ["service_b"]
+      provision = ["resource_workflow"]
+      images = ["service_a_image"]
+      artifacts = ["runtime_artifacts"]
+    }
+  }
+}
+```
+
+- **App-owned steps:** Durable reusable DAG step sets live in app-owned config,
+  normally `steps.conf` included by `app.conf`. Test, context, or developer
+  overlays may select or modulate those sets; they should not be the only place
+  the DAG inventory exists.
+- **Verb-family order:** The main entrypoint branches by action family first.
+  `plan`, `apply`, `show`, `probe`, and `init` use the `apply` family;
+  `delete` and `plan-delete` use the `delete` family; `run` uses the `run`
+  family. Separate class entrypoints may expose `provision`, `images`, and
+  `artifacts` through the same normal Wielder action verbs.
+- **Switchboard rule:** The wielder delegates to app-owned sibling entrypoints
+  with Wielder mode overrides. It should not load child app configs merely to
+  rewrite their deploy/artifact leaves, prepare child Spark artifacts directly,
+  or carry Python state about what a child already did.
+- **Step naming rule:** Step arrays should name sibling apps or typed sibling
+  entrypoints. Use class names such as `images`, `artifacts`, and `provision`
+  for the top-level DAG, and workload/runtime names such as `service_a_image`
+  or `runtime_artifacts` for leaf entrypoints. Avoid private implementation
+  chores such as `build_*`, `publish_*`, or child-specific deploy internals in
+  the main DAG.
+- **Mode handoff rule:** Aggregate app config may provide per-child `app_modes`
+  for Wielder dimensions such as `ecosystem`, `context_conf`, `stage_tier`, and
+  `test`. It should not carry child app runtime leaves directly. The child app
+  must resolve its own app config and decide its own image, artifact,
+  deployment, cleanup, runtime behavior, and evidence.
+- **Materialization order:** Production-like DAGs should build/publish images
+  and publish runtime artifacts before provisioning scarce or long-lived
+  resources. This fails quickly on Docker/artifact problems rather than leaving
+  idle clusters, brokers, GPUs, or cloud resources waiting for a late build
+  failure.
+- **Idempotency boundary:** A service, job, or deploy entrypoint called later by
+  the wielder may call its own image or artifact materializer again. That helper
+  should be idempotent or reuse-aware. Do not thread ad hoc `preflighted`,
+  `already_built`, or similar bypass flags through the DAG.
+- **Artifact rule:** Even when a wielder currently has only one shared runtime
+  artifact, keep the aggregate `artifacts` class distinct from the specific
+  artifact leaf. Singletons grow, and the class/leaf pattern prevents future
+  reshaping from becoming a config migration.
+
 ### Ecosystem Family Core Before Phenotype Overlays
 
 For ecosystem families and app families, the base configuration should represent the union set of shared contracts. Thin concrete ecosystems should include that core and override only the facts that make the runtime phenotype different.
@@ -120,7 +206,7 @@ Historically, the Wielder architecture minimized CLI bindings to protect the mat
 - **Guideline (Mode Values Do Not Belong In Neutral Context):** Wielder modes such as `ecosystem`, `stage_tier`, `security`, `destroy`, `canary`, `context_conf`, `test`, and `action` should normally be supplied by the CLI or the Wielder mode layer. Do not put them in `context_conf/default_conf/developer.conf` to create hidden operator defaults. A context pack may define modes only when it is deliberately named as an operational profile, and that profile intent is visible from the context name.
 - **Guideline (Live Dates Do Not Belong In Neutral Context):** Live calendar leaves such as `year`, `month`, `day`, `date`, or `timestamp` should not be hardcoded in neutral default developer contexts. Pin dates only in `-t` fixtures, replay contexts, or explicitly named historical profiles. For current lookups, compute the date at runtime from a strict config-selected policy or materialize it into ignored ephemeral config so the durable default context does not silently stale.
 - **Guideline (Test Mode Is Overlay Selection, Not Action Selection):** The `-t/--test` mode only selects test overlays. It must not imply, mutate, or default `action`; `-w/--wield` remains the sole operator action selector. In test mode, load `conf/test/**/<ecosystem>/test.conf` above context and below CLI so the fixture can pin DAGs, batch identity, validation toggles, scale, expected inputs, timeout policy, capacity bundles, and apply/delete step controls while the operator still chooses `plan`, `apply`, `delete`, `run`, or `monitor`. App-local `conf/apps/<app>/test.conf` may extend the app baseline only when test mode is enabled. Do not use legacy root-level `conf/test.conf` or context packs for system-test fixtures. See [Architectural Testing & Live QA Execution Protocols](../test_skills/SKILL_TEST_GUIDELINES.md) for the test philosophy and [Wielder Scripting & Evaluation Skills](../script_skills/SKILL_WIELDER_SCRIPTS.md) for endpoint propagation.
-- **Guideline (Reusable Wield Step Sets):** When a workflow owns literal child Wielder operation sequences, keep those reusable step sets in an app-owned `wield_steps.conf` included by `app.conf`. The canonical `test.conf` overlay should select or modulate a named step set, not carry the only copy of the workflow's step inventory. Continue exposing the selected set through typed leaves such as `deploy_steps` and `delete_steps` so scripts can read the resolved contract without inventing a side loader.
+- **Guideline (Reusable Wielder Step Sets):** When a `<domain>_wielder` owns literal child Wielder operation sequences, keep those reusable step sets in an app-owned `steps.conf` included by `app.conf`. The canonical `test.conf` overlay should select or modulate a named step set, not carry the only copy of the DAG inventory. Prefer typed leaves such as `steps.<set>.apply`, `steps.<set>.delete`, `steps.<set>.run`, `steps.<set>.provision`, `steps.<set>.images`, and `steps.<set>.artifacts` so scripts can read the resolved contract without inventing a side loader. Do not introduce parallel `deploy_steps`/`delete_steps` inventories for new DAG-shaped wielder apps.
 - **Guideline (Test Mode Is Endpoint-Universal):** Any Wielder endpoint that resolves config through the canonical parser/accessor path should become test-scenarioable without adding bespoke CLI flags. Carry `test` through `build_cli_overrides(...)` and `build_cli_overrides_from_conf(...)` alongside `ecosystem`, `stage_tier`, `security`, `destroy`, `canary`, `context_conf`, and `action`. A child app invoked by a parent test endpoint should inherit the same Wielder mode envelope unless the parent intentionally switches a topology dimension through a narrow `cli_overrides` boundary.
 - **Guideline (Transitional Workflow Fallbacks):** A dedicated runtime subtree such as `model_workflow.publisher_job` is cleaner than legacy workflow-owned DAG arrays, but during migration an in-cluster runtime may intentionally fall back to included workflow DAG lists from the active context pack. If that fallback is still part of the working contract, document it explicitly rather than “fixing” it by assumption.
 - **Guideline (Accessor Preference):** Strongly suggest resolving application or service configuration through the canonical accessor (`get_app_conf()`, `get_service_conf()`, or peer helpers) rather than manually reconstructing HOCON layers inside leaf scripts.

@@ -9,7 +9,7 @@ description: Create and maintain Wielder operator documentation trees such as `w
 # Wield Documentation
 
 Use this skill when creating or updating a project `wield_docs/` tree for
-Wielder apps, workflows, third-party services, or installed CLIs.
+Wielder apps, DAG-shaped wielder apps, third-party services, or installed CLIs.
 
 ## Goal
 
@@ -29,7 +29,7 @@ Recommended families:
 - `third_party/` for Helm charts, external runtimes, and shared dependency
   standards.
 - Domain folders such as `preparation/`, `inference/`, `ingestion/`, or
-  `runtime_stack/` for project-owned workflows.
+  `runtime_stack/` for project-owned apps and DAG-shaped wielders.
 
 ## Page Contents
 
@@ -50,10 +50,20 @@ Each app/tool page should include:
 - Cautions: only risks that change the next operator decision.
 
 Service pages may name downstream consumers in prose, but must not own
-downstream lifecycle commands. Put cross-service commands in the workflow page
+downstream lifecycle commands. Put cross-service commands in the wielder page
 that actually orchestrates those services. For example, an upstream preparation
 service page may say which downstream service consumes its outputs, while the
-workflow page owns the command that runs both services together.
+wielder page owns the command that runs both services together.
+
+DAG-shaped wielder pages should additionally include:
+
+- The aggregate app identity and the selected default step set.
+- The main DAG handoffs for `plan`, `apply`, `delete`, and `run`.
+- Split class handoffs for provision, images, and artifacts when those
+  entrypoints exist.
+- The boundary that child apps still own their images, artifacts, deploys,
+  deletes, runs, and evidence.
+- The test handoff, with `-t`, when the wielder has configured test scenarios.
 
 ## Command Rules
 
@@ -88,7 +98,7 @@ Use `-s` when the test intentionally emits a human-readable evidence report.
 
 ## Maintenance Loop
 
-When an app, workflow, or CLI changes:
+When an app, DAG-shaped wielder, or CLI changes:
 
 1. Run the lightest safe validation surface, usually `-w plan` or focused
    pytest.

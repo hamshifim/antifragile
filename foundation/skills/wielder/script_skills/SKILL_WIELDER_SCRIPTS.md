@@ -155,11 +155,12 @@ for overlay precedence.
   typed test subtrees such as `deploy_steps`, `delete_steps`, `validation`,
   `foreign_apps`, `cleanup`, `capacity_profiles`, or scenario DAG lists from
   `conf`; they should not synthesize those decisions in Python.
-* Workflow child-operation inventories that are reusable across modes should
-  live in an app-owned `wield_steps.conf` included by `app.conf`. Mode overlays
-  such as `test.conf` should select or modulate named wield step sets while the
-  script continues to consume resolved `deploy_steps`, `delete_steps`, or an
-  equivalently typed subtree through the canonical accessor.
+* DAG-shaped wielder app inventories that are reusable across modes should
+  live in an app-owned `steps.conf` included by `app.conf`. Mode overlays such
+  as `test.conf` should select or modulate named step sets while the script
+  consumes typed leaves such as `steps.<set>.apply`, `steps.<set>.delete`,
+  `steps.<set>.run`, `steps.<set>.provision`, `steps.<set>.images`, and
+  `steps.<set>.artifacts` through the canonical accessor.
 * App defaults should remain best-practice or production-grade for the normal
   contract. Scripts should not quietly downgrade model loops, sample counts,
   batch sizes, polling windows, data limits, or cleanup behavior to make an
@@ -195,6 +196,45 @@ Deployment workflows frequently need asymmetric behavior between `apply` and `de
 * Strongly suggest making delete behavior explicitly voidable at the config layer. If a workflow should preserve third-party services, topics, port-forwards, or infrastructure during delete, that decision should be expressed in `delete_steps`, not hardcoded in the script.
 * Strongly suggest letting the script branch on `WieldAction` and then read the matching config family, rather than treating `delete` as a blind inversion of `apply`.
 * When a deploy script orchestrates several resources, strongly suggest exposing delete granularity per resource class such as third-party services, topics, local port-forwards, workload services, and infrastructure.
+
+### 2.3.1 DAG-Shaped Wielder Dispatch
+
+DAG-shaped `<domain>_wielder` scripts should materialize cheap, deterministic
+runtime payloads before provisioning expensive or scarce resources.
+
+For aggregate `<domain>_wielder` apps, branch by Wielder verb family before
+dispatching children:
+
+* `apply` family: `apply`, `plan`, `show`, `probe`, and `init`
+* `delete` family: `delete` and `plan-delete`
+* `run` family: `run`
+
+After that first branch, iterate the configured step list for that family and
+dispatch by sibling app name or typed sibling entrypoint. Do not start by
+loading every child config, inspecting child internals, or mixing apply/delete
+decisions in one generic loop.
+
+* Expose class entrypoints such as `<domain>_wielder_provision.py`,
+  `<domain>_wielder_images.py`, and `<domain>_wielder_artifacts.py` when those
+  classes deserve independent `plan/apply/delete` handoffs.
+* Keep the class entrypoint thin: it resolves the same app config, selects the
+  matching step family such as `images` or `artifacts`, and delegates to typed
+  leaf entrypoints.
+* Treat the wielder as a switchboard. It passes mode overrides to app-owned
+  materializers; it does not rewrite child deploy leaves, prepare child Spark
+  artifacts directly, or thread "already did it" Python state between steps.
+* Service, job, or deploy steps later in the same DAG may call the same leaf
+  functions when they need to ensure their own image or artifact. Do not
+  introduce a parallel service-only implementation.
+* Do not pass `preflighted`, `already_built`, `skip_because_wielder_did_it`, or
+  similar Python state through the DAG. Reuse-aware image/artifact helpers are
+  the idempotency boundary; config is the control boundary.
+* Keep image build/publish and artifact publish as separate class controls even
+  when the current DAG publishes only one artifact. The wielder shape should not
+  need a rewrite when the second artifact appears.
+* Report class steps and leaf steps separately in plan/apply output so the
+  operator can see both the class-level intent and the exact image/artifact
+  surfaces selected.
 
 ## 2.4 Long-Running Operator Handoff
 Some Wielder actions are expected to run for minutes or hours, especially bucket mirrors, storage syncs, image builds, Terraform applies, large data ingestion jobs, and cloud workflow executions.
@@ -345,6 +385,11 @@ For workload-facing Wielder scripts, prefer the Kubernetes-style filename patter
 
 * `<service_name>_image.py` builds or ensures the image for that service.
 * `<service_name>_deploy.py` deploys, plans, deletes, runs, or monitors that service.
+* `<domain>_wielder.py` runs the configured DAG-shaped aggregate app.
+* `<domain>_wielder_provision.py`, `<domain>_wielder_images.py`, and
+  `<domain>_wielder_artifacts.py` expose provision, image, and artifact class
+  sequences as independent Wielder entrypoints when the operator needs to plan
+  or apply those classes separately.
 * The service name should be the workload identity a human recognizes, such as `model_serving_monitor`, `provider_ingestion_dispatcher`, or `data_ingestion_job_runner`.
 * Keep provider names out of service identity unless the service is truly provider-specific. Prefer `provider_ingestion_dispatcher` over `provider_s3_ingestion_dispatcher` when the active ecosystem can select AWS S3, GCS, local object storage, Azure, or another storage-event listener.
 * Do not name operator-facing entrypoints after the helper framework unless the framework is the workload. Avoid filenames such as `<app>_wjobbard.py`, `<app>_wjobbard_image.py`, or `<app>_terraform.py` for service operations.
