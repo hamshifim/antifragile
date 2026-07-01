@@ -34,7 +34,7 @@ When an agent falls into Style Drift, the changes often bypass human review beca
 Because Style Drift is a relentless statistical force, defending against it requires explicit, aggressive structural mechanics rather than simple prompt admonitions:
 
 ### 4.1. Ubiquitous Skill WETting
-The idiosyncratic rules of the framework cannot exist merely in documentation—they must be explicitly and repeatedly loaded into the AI's immediate context window. Artifacts like [SKILL_CONFIGURATION_GUIDELINES.md](../../foundation/skills/wielder/SKILL_CONFIGURATION_GUIDELINES.md) are designed precisely to artificially overweight the OOD context, countering the baseline training distribution.
+The idiosyncratic rules of the framework cannot exist merely in documentation—they must be explicitly and repeatedly loaded into the AI's immediate context window. Artifacts like [SKILL_CONFIGURATION_GUIDELINES.md](../../foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md) are designed precisely to artificially overweight the OOD context, countering the baseline training distribution.
 
 ### 4.2. The Agentic Adversarial Workflow
 Humans unrelaibly detect Style Drift because of attention limitations and because the generated code looks highly professional and conventionally correct. The defense must be delegated to the **Red Team QA Architect** (defined in [AGENTIC_ADVERSARIAL_WORKFLOW.md](../../foundation/workflows/adversarial/AGENTIC_ADVERSARIAL_WORKFLOW.md)). 

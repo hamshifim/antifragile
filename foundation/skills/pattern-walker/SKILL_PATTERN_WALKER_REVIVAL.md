@@ -82,7 +82,7 @@ Useful sources include:
 - `/home/gideon/dev/culture/pattern-walker/webgpu_data_architecture.md`
 - `src/pattern_walker_lib/protocol/schemas.py`
 - `src/pattern_walker_lib/protocol/server.py`
-- Existing domain servers such as `culture-proteins` and `culture-astronomy`.
+- Existing domain servers such as `domain-inventory` and `domain-analytics`.
 
 ## Antipatterns
 

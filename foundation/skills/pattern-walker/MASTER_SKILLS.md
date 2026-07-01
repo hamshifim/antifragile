@@ -10,14 +10,14 @@ revival workflow.
 
 Read these upstream skills when they apply:
 
-- `../wielder/SKILL_CONTEXT_INITIATION_ALIGNMENT.md`
-- `../wielder/SKILL_EPIGENETIC_CONFIG_CONTRACTS.md`
-- `../wielder/SKILL_CONFIGURATION_GUIDELINES.md`
-- `../wielder/SKILL_WIELDER_SCRIPTS.md`
-- `../wielder/SKILL_TEST_GUIDELINES.md`
-- `../wielder/SKILL_NOTEBOOK_GUIDELINES.md`
-- `../wielder/SKILL_WORKFLOW_VALIDATION_GUIDELINES.md`
-- `../wielder/SKILL_GIT_VERSIONING.md`
+- `../wielder/agent_human_skills/SKILL_CONTEXT_INITIATION_ALIGNMENT.md`
+- `../wielder/config_skills/SKILL_EPIGENETIC_CONFIG_CONTRACTS.md`
+- `../wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md`
+- `../wielder/script_skills/SKILL_WIELDER_SCRIPTS.md`
+- `../wielder/test_skills/SKILL_TEST_GUIDELINES.md`
+- `../wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md`
+- `../wielder/test_skills/SKILL_WORKFLOW_VALIDATION_GUIDELINES.md`
+- `../wielder/ops_skills/SKILL_GIT_VERSIONING.md`
 
 Pattern Walker-specific guidance should compose with those skills. If a local
 skill and the upstream doctrine appear to conflict, prefer the upstream doctrine

@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-22T08:09:59Z",
+  "created_at": "2026-07-01T08:47:47Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -10,46 +10,66 @@
   "scope": {
     "super_repo": "/home/gideon/dev/culture",
     "repository": "antifragile",
-    "branch": "dev",
+    "branch": "feature/wield_msa/moonshot",
     "paths": [
-      "foundation/skills/wielder/SKILL_WIELDER_HANDOFF.md",
+      "foundation/skills/wielder/ops_skills/SKILL_WSL_CLEANUP.md",
+      "foundation/skills/wielder/ops_skills/README.md",
+      "foundation/docs/catalogs/MASTER_SKILLS.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
-      "ecosystem": "wielder_skills",
+      "ecosystem": "wielder_doctrine",
       "stage_tier": "dev",
-      "context_conf": "default_conf",
+      "context_conf": "not_applicable",
       "security": "standard",
-      "canary": "standard"
+      "canary": "not_applicable"
     }
   },
   "commits": [
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Clarify Wielder handoff default selectors",
+      "subject": "Add WSL cleanup protocol skill",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Scoped to the handoff skill rule that Wielder handoffs should not restate default selectors unless explicitly requested or needed for disambiguation.",
+    "summary": "Added a WSL cleanup protocol skill covering audit-first disk recovery, active unique_name preservation, cache cleanup, fstrim, Windows VHDX compaction, and post-restart verification.",
     "included": [
-      "Updated direct Wielder script handoff guidance.",
-      "Aligned installed CLI handoff guidance with the default-minimal rule.",
-      "Added the redundant selector restatement anti-pattern."
+      "new WSL cleanup ops skill",
+      "ops skill routing index update",
+      "master skill catalog entry",
+      "provenance report"
     ],
     "excluded": [
-      "No other antifragile skills or docs are included."
+      "biocontext-biochem IHC/VLM draft files are intentionally uncommitted and out of scope.",
+      "No runtime code, secrets, local developer context, caches, or data files were staged."
     ],
     "risks": [
-      "Documentation/skill instruction change only."
+      "Doctrine-only change; operators must still choose exact deletion targets and approve WSL shutdown/compaction."
+    ],
+    "uncommitted_leftovers": [
+      "biocontext-biochem: conf/ecosystem/domain/ihc/analysis/analysis.conf",
+      "biocontext-biochem: conf/ecosystem/wrapper/local_hybrid_gpu_ihc/ihc.conf",
+      "biocontext-biochem: src/biocontext_biochem/apps/ihc/analysis/vlm_poc.py",
+      "biocontext-biochem: tests/unit/test_ihc_analysis.py"
     ]
   },
   "validation": [
     {
-      "command": "git -C /home/gideon/dev/culture/antifragile diff -- foundation/skills/wielder/SKILL_WIELDER_HANDOFF.md",
+      "command": "sed -n '1,260p' foundation/skills/wielder/ops_skills/SKILL_WSL_CLEANUP.md",
       "result": "passed",
-      "notes": "Scoped diff reviewed before staging."
+      "notes": "Read-back confirmed the new skill content is present."
+    },
+    {
+      "command": "grep -R 'WSL Cleanup' -n foundation/skills/wielder/ops_skills/README.md foundation/docs/catalogs/MASTER_SKILLS.md",
+      "result": "passed",
+      "notes": "Confirmed the new skill is routed from the ops index and master catalog."
+    },
+    {
+      "command": "git status --short and git diff --stat",
+      "result": "passed",
+      "notes": "Confirmed scoped Antifragile documentation/provenance changes before staging."
     }
   ]
 }

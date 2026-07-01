@@ -9,8 +9,8 @@ Use this when you need to look, understand, and act quickly.
 
 ```bash
 k9s
-k9s -n model-binding
-k9s --context dev--aws_model_binding--gid--default_conf--0
+k9s -n model-serving
+k9s --context dev--aws_model_serving--gid--default_conf--0
 k9s --readonly
 k9s -c pod
 ```
@@ -72,7 +72,7 @@ Type `:` then one of these.
 You can also jump straight in:
 
 ```text
-:pod model-binding
+:pod model-serving
 :pod /workspace
 :pod app=workflow-wielder
 :pod @my-context
@@ -181,8 +181,8 @@ Unschedulable
 For the AWS bootstrap POC:
 
 ```text
-:ctx      dev--aws_model_binding--gid--default_conf--0
-:ns       model-binding
+:ctx      dev--aws_model_serving--gid--default_conf--0
+:ns       model-serving
 :po       /workflow-wielder
 :svc      /workflow-wielder
 :ing      /workflow-wielder

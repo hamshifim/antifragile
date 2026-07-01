@@ -13,7 +13,7 @@ Add a functionality here when it becomes a repeated Workspace operation with a s
 - Purpose: provision long-lived cloud assets and project resources.
 - Shape: app-owned Wielder entrypoints wrap Terraform `plan`, `apply`, and `delete`.
 - Contract: environment-specific values originate in HOCON and render into Terraform variables.
-- Doctrine: see [Provisioning Guidelines](../../skills/wielder/SKILL_PROVISIONING_GUIDELINES.md) for ecosystem-level ordering, completeness checks, and cross-cloud fact wiring.
+- Doctrine: see [Provisioning Guidelines](../../skills/wielder/ops_skills/SKILL_PROVISIONING_GUIDELINES.md) for ecosystem-level ordering, completeness checks, and cross-cloud fact wiring.
 - Operator rule: run `plan` in-agent when lightweight; hand off long `apply` to the operator terminal unless explicitly asked to wait.
 
 ### Kubernetes Workloads
@@ -28,8 +28,22 @@ Add a functionality here when it becomes a repeated Workspace operation with a s
 - Purpose: provide stable human-facing image, deploy, run, monitor, and delete commands for Wielder-managed services.
 - Shape: service-named `<service_name>_image.py` and `<service_name>_deploy.py` entrypoints compose Wielder primitives such as WJobBard, WCloner, imager, provisioning, and monitors.
 - Contract: image app, selected jobs/workflows, runtime identity, provider surfaces, action gates, and delete behavior live in config.
-- Doctrine: see [Service Deployment Guidelines](../../skills/wielder/SKILL_SERVICE_DEPLOYMENT_GUIDELINES.md).
+- Doctrine: see [Service Deployment Guidelines](../../skills/wielder/script_skills/SKILL_SERVICE_DEPLOYMENT_GUIDELINES.md).
 - Operator rule: final handoffs should include absolute one-line commands for image and deploy `plan/apply/run/monitor` actions that actually exist.
+
+### Service Spec QA Surfaces
+
+- Purpose: exercise an already-defined service contract without provisioning,
+  image build, or workload deployment.
+- Shape: service-named `<service_name>_test.py`, `<service_name>_qa.py`, or
+  `<service_name>_spec.py` entrypoints use Wielder `plan/apply/delete` over a
+  config-owned service spec.
+- Contract: test command, fixture identity, expected evidence, topics,
+  endpoints, and cleanup target live in config, usually under
+  `<service>.service_specs.<spec_key>`.
+- Doctrine: see [Service Deployment Guidelines](../../skills/wielder/script_skills/SKILL_SERVICE_DEPLOYMENT_GUIDELINES.md).
+- Operator rule: `apply` may run the service tests/probes; `delete` must clean
+  only configured test outputs and must not tear down service infrastructure.
 
 ### Storage Cloning
 
@@ -63,7 +77,7 @@ Add a functionality here when it becomes a repeated Workspace operation with a s
 - Purpose: describe and operate jobs triggered by schedules or event topics that execute a configured payload and emit lifecycle/result events.
 - Shape: `WJobBard` receives typed jobs, triggers, workflows, and target references from HOCON; provider implementations map that contract to local, GCP, or AWS surfaces.
 - Contract: job identity, stage tier, trigger list, event types, lifecycle topic, and payload target reference live in config. Payload internals stay with the target abstraction such as `WCloner`.
-- Provisioning boundary: durable schedules, topics, service accounts, and hosted job resources are created by the owning provisioning app; WJobBard scripts select and orchestrate those resources. See [Provisioning Guidelines](../../skills/wielder/SKILL_PROVISIONING_GUIDELINES.md) for cross-cloud ordering and runtime contract visibility.
+- Provisioning boundary: durable schedules, topics, service accounts, and hosted job resources are created by the owning provisioning app; WJobBard scripts select and orchestrate those resources. See [Provisioning Guidelines](../../skills/wielder/ops_skills/SKILL_PROVISIONING_GUIDELINES.md) for cross-cloud ordering and runtime contract visibility.
 - Operator rule: use `show` and `plan` for agent validation; hand off long hosted job applies or clone runs to the operator terminal unless explicitly asked to run them.
 
 ### Wielding Provision Flow
@@ -72,7 +86,7 @@ Add a functionality here when it becomes a repeated Workspace operation with a s
 - Shape: provider-specific resources stay in provider modules, while the ecosystem provisioner owns ordering and completeness checks.
 - Contract: cross-provider facts are resolved from config or previous module outputs, never copied manually between clouds.
 - Security rule: prefer workload federation; static keys and expiring session tokens are not steady-state auth for infrastructure jobs.
-- Related skills: [Provisioning Guidelines](../../skills/wielder/SKILL_PROVISIONING_GUIDELINES.md), [Security Guidelines](../../skills/wielder/SKILL_SECURITY_GUIDELINES.md), [WJobBard Guidelines](../../skills/wielder/SKILL_WJOBBARD_GUIDELINES.md), [Wielder Imager](../../skills/wielder/SKILL_WIELDER_IMAGER.md), and Kubernetes workload guidance.
+- Related skills: [Provisioning Guidelines](../../skills/wielder/ops_skills/SKILL_PROVISIONING_GUIDELINES.md), [Security Guidelines](../../skills/wielder/ops_skills/SKILL_SECURITY_GUIDELINES.md), [WJobBard Guidelines](../../skills/wielder/script_skills/SKILL_WJOBBARD_GUIDELINES.md), [Wielder Imager](../../skills/wielder/ops_skills/SKILL_WIELDER_IMAGER.md), and Kubernetes workload guidance.
 
 ## Candidate Functionalities
 
