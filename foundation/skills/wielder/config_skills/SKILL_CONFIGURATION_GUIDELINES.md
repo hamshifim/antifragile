@@ -60,6 +60,23 @@ Every ecosystem file belongs to one of three families. Treat this as a hard owne
 
 App entrypoints should receive wrapper ecosystems, not bare domain or bare surface ecosystems, except for explicit source-style inspection. A parent Wielder may route a child app through a leaf such as `app_ecosystem_<app>`, but that leaf should name a wrapper ecosystem. If a service topic contract is reusable for multiple wrappers, keep it in the service/domain ecosystem and include it from each wrapper; if a broker endpoint changes because the service runs locally vs in cluster, keep that endpoint selection in the resolved runtime/surface/wrapper layer.
 
+### Operator Command Transcript Capture
+
+Local command transcript capture is developer scratch, not project evidence.
+When a context pack exposes it, keep it under a clearly named subtree such as:
+
+```hocon
+operator_command_transcripts {
+  enabled = false
+  root = "/tmp/culture-command-transcripts"
+}
+```
+
+The default should be off. `Tasks/` must not be used as a raw log sink; it is
+for plans, prompts, handoffs, and concise reports. If a transcript proves
+something durable, promote the conclusion into versioned docs or a short report
+and keep the raw capture in scratch storage.
+
 ### Hybrid Ecosystems Are Per-Service Phenotypes
 
 Hybrid wrapper ecosystems express per-service placement, not one global local-vs-kube switch. In one wrapper, a preparation service may run as a Kubernetes accelerator-backed service while a model service runs as a workstation process; in another, the model service may be in-cluster while the preparation service is local; a third service may be a Spark job or provider-managed dependency. Each service owns a resolved runtime/deploy contract such as `run_locally`, `placement`, `local_service`, `runtime_app.ecosystem`, resources, ports, and readiness, and those leaves are set by wrapper/context/test overlays rather than Python side channels.

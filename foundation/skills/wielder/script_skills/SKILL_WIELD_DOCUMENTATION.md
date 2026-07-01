@@ -76,6 +76,9 @@ DAG-shaped wielder pages should additionally include:
   project entrypoints.
 - Do not require `cd`, virtualenv activation, `python`, `python -m`, shell
   aliases, or environment variables for normal handoff commands.
+- Do not document `tee`, shell redirection, or raw transcript capture into
+  `Tasks/*.log`. Optional temporary captures belong under the configured
+  `/tmp` transcript root and should stay out of normal handoff commands.
 - If the documented script is not executable, fix the executable bit instead of
   documenting a wrapper command.
 - Do not restate default Wielder modes unless they change intent.
@@ -119,5 +122,6 @@ When an app, DAG-shaped wielder, or CLI changes:
 - Test docs that omit `-t` even though the scenario lives in a test overlay.
 - Duplicating large plan output instead of naming the command and expected
   evidence.
+- Treating `Tasks/` as a transcript sink for raw command logs.
 - A service page that hands off downstream workflow commands, blurring service
   lifecycle with consumer orchestration.

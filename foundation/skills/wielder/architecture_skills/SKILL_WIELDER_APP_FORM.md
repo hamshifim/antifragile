@@ -23,6 +23,50 @@ domain functionality
 = Wielder app phenotype
 ```
 
+## Four App Forms
+
+Use four app forms to keep domain meaning separate from runtime expression:
+
+| Form | Orchestrates | Owns |
+| --- | --- | --- |
+| **Domain app** | One bounded domain function | Domain logic, request/result contracts, state machine, evidence, and owned artifacts |
+| **Domain DAG app** | Multiple domain functions in meaningful order | Dataflow, analysis flow, map/reduce shape, harmonization semantics, and domain-level success criteria |
+| **Wielding app** | One app's runtime phenotype | Build, deploy, run, delete, test, observe, local/Kube/artifact expression, and owned lifecycle evidence |
+| **Wielding DAG app** | Multiple wielding apps as one ecosystem | Provisioning, images, artifacts, topics, services, jobs, tests, monitoring, teardown, and ordered app delegation |
+
+A domain DAG composes domain functions because the data or analysis has
+meaningful internal stages. A wielding DAG composes runtime lifecycles because
+several apps must be built, provisioned, deployed, tested, run, or deleted in
+order.
+
+A domain DAG may contain local map/reduce, streaming, batch, or harmonization
+stages, but those are domain execution shapes. The wielding layer decides
+whether the same capability runs in-process, as Spark, as a container job, as a
+deployed service, or as a hybrid ecosystem.
+
+### Archetype Genetics Example
+
+Use vivid examples when teaching the boundary, but keep the doctrine generic.
+
+- **Domain app:** `archetype_gene_extractor` reads one character dossier and
+  extracts fictional phenotype genes such as `BEND_REALITY_XF2A`,
+  `LUCK_FIELD_DOMINANT`, or `MONOLOGUE_ARMOR`.
+- **Domain DAG app:** `trickster_archetype_research` starts with Bugs Bunny, the
+  family hero, then compares neighboring archetype expressions such as Road
+  Runner, Loki, and Hermes. It researches traits, extracts candidate genes, maps
+  evidence, reduces conflicting observations, and harmonizes the result into
+  phenotype tables.
+- **Wielding app:** `archetype_gene_extractor_wielder` gives the extractor a
+  runtime body: build artifact or image, run locally or as a job/service,
+  provision topics, apply fixtures, monitor output, and delete owned outputs.
+- **Wielding DAG app:** `scaled_trickster_research_wielder` provisions storage
+  and messaging, builds extractors and harmonizers, runs the Bugs Bunny / Road
+  Runner / Loki / Hermes research pipeline, trains a phenotype prediction model
+  on harmonized data, monitors progress, and tears the ecosystem down.
+
+Domain apps describe what the world means. Wielding apps decide how that
+meaning gets a body, runs, scales, heals, and disappears.
+
 ## App Layer
 
 The app layer should stay close to the domain functionality.

@@ -56,6 +56,23 @@ Commands shown to the operator must be root-safe and current-directory agnostic.
   executable bit according to `SKILL_WIELDER_SCRIPTS.md`; do not normalize the
   bad boundary by handing off `python path/to/script.py`.
 
+## Command Transcript Hygiene
+
+Raw terminal captures are scratch evidence, not task artifacts.
+
+- Do not write command transcripts, `tee` output, or `.log` captures into
+  `Tasks/`. `Tasks/` is for plans, prompts, handoffs, and concise reports.
+- If a temporary transcript is explicitly useful, use the active context's
+  `operator_command_transcripts` contract when present. It should default to
+  `enabled = false` with a local scratch root such as
+  `/tmp/culture-command-transcripts`.
+- Do not include transcript capture in normal handoff commands. If capture is
+  needed, present it as an optional diagnostic action and keep it outside
+  durable task directories.
+- If a transcript becomes durable evidence, summarize the important facts in
+  versioned docs or a concise report and link the canonical command that
+  reproduces them. Do not promote whole raw logs by dragging them into `Tasks/`.
+
 ### Installed Operator CLI Tools
 
 Some Wielder surfaces are deliberately installed as operator CLI tools rather
@@ -234,6 +251,9 @@ the operator to reconstruct a command.
   of using root-safe command-native options such as `--prefix`, `--cwd`,
   `--project`, or absolute file paths.
 - Creating bespoke CLI flags or env vars instead of adding config-owned intent.
+- Writing raw command logs, `tee` captures, or terminal transcripts into
+  `Tasks/` instead of leaving optional scratch captures under the configured
+  `/tmp` transcript root.
 - Reporting "tests passed" without naming the tests or materially summarizing
   failures.
 - Treating plan output as decorative instead of as the first forensic report.

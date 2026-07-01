@@ -244,6 +244,10 @@ Some Wielder actions are expected to run for minutes or hours, especially bucket
 * Agents should run short validation actions themselves, such as `show`, `plan`, `probe`, linting, focused tests, and command construction checks.
 * Agents should not start long-running `apply`, sync, mirror, clone, build, or migration jobs unless the operator explicitly asks the agent to run them and wait.
 * For long-running jobs, provide the exact absolute one-line command for the operator's terminal, including the repository-root-safe script path and required Wielder modes. Do not require a preceding `cd`.
+* Do not add `tee`, redirection, or transcript capture into `Tasks/*.log` for
+  long-running handoffs. If the operator explicitly wants a raw capture, use
+  the configured `operator_command_transcripts` scratch root, normally under
+  `/tmp`, and keep it out of the normal handoff command.
 * If an agent wants to avoid a long apply by using a mock, precomputed summary,
   or synthetic fixture, it must stop and ask first. Approved substitutes must
   run only through `-t`, be config-owned, and print clear logs identifying the
