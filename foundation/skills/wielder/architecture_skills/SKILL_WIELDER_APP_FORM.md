@@ -272,6 +272,18 @@ full DAG, while operators can invoke it directly for diagnosis or restart. The
 child harmonization apps still own their Spark source, transform, sink,
 checkpoint, and cleanup contracts.
 
+Class entrypoint scripts should be stable, thin wrappers over a shared CLI
+support module. Avoid copy-pasting source bootstrap logic into every `images`,
+`artifacts`, `topics`, `provision`, or `harmonization` file. Keep the old
+callable names and paths stable for operators, but centralize the step-family
+selection and direct-script bootstrap mechanics.
+
+When a child step fails, the aggregate DAG should record the failed app, family,
+action, and exception type/message in the parent report before re-raising. This
+is not a retry policy and should not swallow failure. It is an operator
+continuity pattern: a failed workflow leaves a crisp breadcrumb about where the
+DAG stopped.
+
 A streaming harmonization job must fail loudly before Spark starts if no
 streaming source is resolved. In a Kafka shape this means the app validates the
 resolved bootstrap endpoint, source topic, error/escalation topic, and
