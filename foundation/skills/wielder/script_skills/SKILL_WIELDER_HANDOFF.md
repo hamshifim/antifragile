@@ -4,6 +4,9 @@ description: Wielder-style operator handoffs with config-owned intent, root-safe
 
 [Use Wield Documentation](SKILL_WIELD_DOCUMENTATION.md) when creating or updating
 project `wield_docs/` operator pages from handoffs.
+[Use Agent Uvenv Accessibility](../utility_skills/SKILL_AGENT_UVENV_ACCESSIBILITY.md)
+when an agent needs uvenv access for internal checks without leaking interpreter
+paths into operator handoffs.
 
 # Wielder Handoff & Operator Command Reporting
 
@@ -206,6 +209,9 @@ For mixed local/AWS hybrid ecosystems:
 Agents may use internal validation commands while working, including direct
 Python compilation, focused shell probes, git inspection, and other local checks.
 Those internal commands are not automatically the operator handoff commands.
+If a non-interactive agent shell needs the workspace uvenv, use the agent-only
+uvenv accessibility skill and translate the result back into clean operator
+command shape before reporting.
 
 When reporting internal validation:
 

@@ -9,6 +9,9 @@ but they support many of those workflows.
 
 - [Uvenv Guidelines](SKILL_UVENV_GUIDELINES.md): uv-managed project Python
   environments, interpreter binding, shell activation, and workspace isolation.
+- [Agent Uvenv Accessibility](SKILL_AGENT_UVENV_ACCESSIBILITY.md): agent-only
+  uvenv access for internal validation without leaking interpreter paths into
+  operator handoffs.
 - [Zshrc Guidelines](SKILL_ZSHRC_GUIDELINES.md): shell startup templates,
   project-local uvenv precedence, prompt labels, and VSCode terminal isolation.
 - [MCP Browser Bridge](SKILL_MCP_BROWSER_BRIDGE.md): WSL-hosted Codex to Windows

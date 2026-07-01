@@ -6,6 +6,10 @@ description: Wielder uvenv environment guidelines for uv-managed workspace Pytho
 
 # Uvenv Guidelines
 
+[Use Agent Uvenv Accessibility](SKILL_AGENT_UVENV_ACCESSIBILITY.md) when an
+agent needs a scoped uvenv invocation for internal validation while preserving
+clean operator handoffs.
+
 Use this skill when creating, repairing, reviewing, or documenting Wielder `uvenv`
 behavior: workspace `.venv` creation, shell activation, VSCode/Pyright binding,
 package scripts, or bugs where one workspace accidentally inherits another

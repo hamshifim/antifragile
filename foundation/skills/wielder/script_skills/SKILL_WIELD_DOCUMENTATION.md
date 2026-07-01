@@ -5,6 +5,8 @@ description: Create and maintain Wielder operator documentation trees such as `w
 [Use Wielder Handoff & Operator Command Reporting](SKILL_WIELDER_HANDOFF.md) for command formatting.
 [Use Architectural Testing & Live QA Execution Protocols](../test_skills/SKILL_TEST_GUIDELINES.md) for test handoffs.
 [Use Wielder Scripting & Evaluation Skills](SKILL_WIELDER_SCRIPTS.md) for executable entrypoint boundaries.
+[Use Agent Uvenv Accessibility](../utility_skills/SKILL_AGENT_UVENV_ACCESSIBILITY.md) only for
+agent-internal validation commands, not for `wield_docs/` operator commands.
 
 # Wield Documentation
 
@@ -76,6 +78,9 @@ DAG-shaped wielder pages should additionally include:
   project entrypoints.
 - Do not require `cd`, virtualenv activation, `python`, `python -m`, shell
   aliases, or environment variables for normal handoff commands.
+- Do not copy an agent's scoped uvenv access command, such as
+  `PATH=$HOME/.uvenvs/culture/bin:$PATH ...`, into `wield_docs/`. Use the direct
+  executable entrypoint and fix the script boundary if needed.
 - Do not document `tee`, shell redirection, or raw transcript capture into
   `Tasks/*.log`. Optional temporary captures belong under the configured
   `/tmp` transcript root and should stay out of normal handoff commands.
