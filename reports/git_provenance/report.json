@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-06-29T12:16:29Z",
+  "created_at": "2026-07-01T08:47:47Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -12,13 +12,9 @@
     "repository": "antifragile",
     "branch": "feature/wield_msa/moonshot",
     "paths": [
-      "docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md",
-      "foundation/skills/wielder/architecture_skills/SKILL_WIELDER_APP_FORM.md",
-      "foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md",
-      "foundation/skills/wielder/data_skills/SKILL_HARMONIZATION_GUIDELINES.md",
-      "foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md",
-      "foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md",
-      "foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md",
+      "foundation/skills/wielder/ops_skills/SKILL_WSL_CLEANUP.md",
+      "foundation/skills/wielder/ops_skills/README.md",
+      "foundation/docs/catalogs/MASTER_SKILLS.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
@@ -33,38 +29,47 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Forbid synthetic native success evidence",
+      "subject": "Add WSL cleanup protocol skill",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Documented the synthetic native success antipattern across testing, config, app form, scripting, harmonization, notebooks, and known Codex tendencies.",
+    "summary": "Added a WSL cleanup protocol skill covering audit-first disk recovery, active unique_name preservation, cache cleanup, fstrim, Windows VHDX compaction, and post-restart verification.",
     "included": [
-      "native output truth boundary in harmonization and notebooks",
-      "synthetic native success warnings in test/config/script doctrine",
-      "functional success boundary in Wielder app form",
-      "known Codex antipattern entry",
+      "new WSL cleanup ops skill",
+      "ops skill routing index update",
+      "master skill catalog entry",
       "provenance report"
     ],
     "excluded": [
-      "No IHC/immunohistochemistry task files were staged.",
-      "No runtime code or local developer context was staged in antifragile."
+      "biocontext-biochem IHC/VLM draft files are intentionally uncommitted and out of scope.",
+      "No runtime code, secrets, local developer context, caches, or data files were staged."
     ],
     "risks": [
-      "Doctrine-only change; downstream code must still enforce native success boundaries."
+      "Doctrine-only change; operators must still choose exact deletion targets and approve WSL shutdown/compaction."
     ],
-    "uncommitted_leftovers": []
+    "uncommitted_leftovers": [
+      "biocontext-biochem: conf/ecosystem/domain/ihc/analysis/analysis.conf",
+      "biocontext-biochem: conf/ecosystem/wrapper/local_hybrid_gpu_ihc/ihc.conf",
+      "biocontext-biochem: src/biocontext_biochem/apps/ihc/analysis/vlm_poc.py",
+      "biocontext-biochem: tests/unit/test_ihc_analysis.py"
+    ]
   },
   "validation": [
     {
-      "command": "git diff --check -- docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md foundation/skills/wielder/architecture_skills/SKILL_WIELDER_APP_FORM.md foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md foundation/skills/wielder/data_skills/SKILL_HARMONIZATION_GUIDELINES.md foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md foundation/skills/wielder/test_skills/SKILL_TEST_GUIDELINES.md foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md",
+      "command": "sed -n '1,260p' foundation/skills/wielder/ops_skills/SKILL_WSL_CLEANUP.md",
       "result": "passed",
-      "notes": "Whitespace check passed for doctrine edits."
+      "notes": "Read-back confirmed the new skill content is present."
     },
     {
-      "command": "grep -n \"Synthetic Native Success\\|Native Output Truth Boundary\\|Functional Success Boundary\" docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md foundation/skills/wielder/**/*.md",
+      "command": "grep -R 'WSL Cleanup' -n foundation/skills/wielder/ops_skills/README.md foundation/docs/catalogs/MASTER_SKILLS.md",
       "result": "passed",
-      "notes": "Confirmed doctrine is discoverable by the recurring antipattern names."
+      "notes": "Confirmed the new skill is routed from the ops index and master catalog."
+    },
+    {
+      "command": "git status --short and git diff --stat",
+      "result": "passed",
+      "notes": "Confirmed scoped Antifragile documentation/provenance changes before staging."
     }
   ]
 }

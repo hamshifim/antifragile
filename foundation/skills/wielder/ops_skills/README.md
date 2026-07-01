@@ -33,5 +33,8 @@ surfaces, security, versioning, artifacts, workstations, images, and cleanup.
   pressure, VHD compaction, and safe prune levels.
 - [Disk Cleanup](SKILL_DISK_CLEANUP.md): safe disk-pressure cleanup order across
   Docker, staging sandboxes, provisioning clones, and local buckets.
+- [WSL Cleanup](SKILL_WSL_CLEANUP.md): WSL disk-pressure recovery, cache
+  pruning, active `unique_name` preservation, `fstrim`, VHDX compaction, and
+  post-restart verification.
 - [Runtime Event Logging](SKILL_RUNTIME_EVENT_LOGGING.md): operator-readable
   lifecycle logs, stable identifiers, heartbeats, and failure traces.

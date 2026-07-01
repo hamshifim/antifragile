@@ -58,6 +58,9 @@ To ensure architectural alignment across varying Python execution environments a
 9. **[Disk Cleanup](../../skills/wielder/ops_skills/SKILL_DISK_CLEANUP.md)**
    *Scope:* Safe local disk pressure triage across Docker build cache, unused images, Wielder staging sandboxes, Terraform provisioning clones, local buckets, and workstation caches.
 
+9.1. **[WSL Cleanup](../../skills/wielder/ops_skills/SKILL_WSL_CLEANUP.md)**
+   *Scope:* WSL disk-pressure recovery across Linux caches, Docker storage, active `unique_name` staging roots, `fstrim`, Windows-side VHDX compaction, and post-restart verification.
+
 10. **[Spark Scalable Validation Doctrine](../../skills/wielder/test_skills/SKILL_SPARK_SCALABLE_VALIDATION_GUIDELINES.md)**
    *Scope:* Spark-specific doctrine for treating unit, integration, system, and load execution as one configurable validation family driven by the same pipeline core, source/sink contracts, and pressure settings.
 
