@@ -207,6 +207,77 @@ service deploy path calls its own image or artifact helper again, the helper
 should be reuse-aware and idempotent rather than relying on a Python
 `already_built` side channel.
 
+## Reactive Resource Preflight And Self-Healing
+
+Reactive apps should expose explicit lifecycle entrypoints for the message
+resources they own, such as topics, queues, subscriptions, callback groups, or
+dead-letter channels.
+
+Use the aggregate DAG to order those resources before workers:
+
+```text
+provision broker/surface
+  -> provision app-owned topics/queues
+  -> deploy workers/services
+  -> start streaming jobs/monitors
+```
+
+On delete, stop consumers before deleting their message resources:
+
+```text
+stop publishers/workers/streaming jobs
+  -> delete or empty app-owned topics/queues
+  -> delete broker/surface if selected
+```
+
+Each app should own small lifecycle functions for its own reactive resources:
+
+```text
+plan_<app>_topics
+ensure_<app>_topics
+delete_<app>_topics
+empty_<app>_fixture_topics
+```
+
+The aggregate app may sequence these functions, but it should not reconstruct
+topic names, endpoints, consumer groups, or retry policy itself. Those remain
+resolved config consumed by the child app's typed contract.
+
+It is good practice for services to retain a self-healing startup path, such as
+`ensure_topics_on_start`, when the ecosystem contract allows mutation. This is a
+fault-tolerance fallback: it lets a worker recover from a missing topic or a
+partial operator run. It is not a substitute for the explicit DAG preflight,
+because relying only on lazy startup makes ordering, delete semantics, and test
+evidence ambiguous.
+
+Streaming and long-running consumers should use the same pattern. A Spark
+streaming job, queue consumer, monitor, or callback listener should verify or
+repair its app-owned message resources immediately before subscribing, and
+again before writing to error/dead-letter channels. The aggregate DAG still
+orders topic/queue preflight first; the consumer-side repair handles races,
+operator interruption, stale local bridges, or topic deletion between workflow
+apply and runtime startup.
+
+Do not confuse consumer self-repair with durable listening. A one-shot trigger
+such as "available now" can finish successfully before a publisher emits later
+messages; that is useful for replay/backfill, not for a standing reactive app.
+Default workflow phenotypes that are meant to receive future traffic should run
+as durable services/jobs with processing-time or equivalent continuous triggers,
+and transient test config can select bounded replay behavior when needed.
+
+For data-pipeline aggregates, expose a class entrypoint for the pipeline stage,
+such as `harmonization`, the same way an app exposes `images`, `artifacts`,
+`topics`, or `provision`. The aggregate may call the class entrypoint inside the
+full DAG, while operators can invoke it directly for diagnosis or restart. The
+child harmonization apps still own their Spark source, transform, sink,
+checkpoint, and cleanup contracts.
+
+A streaming harmonization job must fail loudly before Spark starts if no
+streaming source is resolved. In a Kafka shape this means the app validates the
+resolved bootstrap endpoint, source topic, error/escalation topic, and
+app-owned topic preflight report before creating the streaming reader. Do not
+allow an inert Spark query to count as a successful harmonization listener.
+
 ## Data Pipeline Form
 
 Some apps materialize as data jobs or pipelines rather than request/response services.
