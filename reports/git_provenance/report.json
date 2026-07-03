@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-07-01T08:47:47Z",
+  "created_at": "2026-07-03T19:16:04Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -10,11 +10,9 @@
   "scope": {
     "super_repo": "/home/gideon/dev/culture",
     "repository": "antifragile",
-    "branch": "feature/wield_msa/moonshot",
+    "branch": "feature/project_input/main",
     "paths": [
-      "foundation/skills/wielder/ops_skills/SKILL_WSL_CLEANUP.md",
-      "foundation/skills/wielder/ops_skills/README.md",
-      "foundation/docs/catalogs/MASTER_SKILLS.md",
+      "foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
@@ -29,47 +27,34 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Add WSL cleanup protocol skill",
+      "subject": "Document Topology Lens notebook convention",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Added a WSL cleanup protocol skill covering audit-first disk recovery, active unique_name preservation, cache cleanup, fstrim, Windows VHDX compaction, and post-restart verification.",
+    "summary": "Extended notebook guidance with the BioContext Biochem Topology Lens convention: relevant molecular-topology notebooks should surface one canonical picker, embed, or handoff high in the notebook.",
     "included": [
-      "new WSL cleanup ops skill",
-      "ops skill routing index update",
-      "master skill catalog entry",
-      "provenance report"
+      "Notebook skill guidance for high-up Topology Lens picker/embed/handoff cells",
+      "Provenance report"
     ],
     "excluded": [
-      "biocontext-biochem IHC/VLM draft files are intentionally uncommitted and out of scope.",
-      "No runtime code, secrets, local developer context, caches, or data files were staged."
+      "No runtime code, secrets, local configs, notebook outputs, or generated artifacts staged."
     ],
     "risks": [
-      "Doctrine-only change; operators must still choose exact deletion targets and approve WSL shutdown/compaction."
+      "Doctrine-only change; enforcement depends on future notebook authors following the skill."
     ],
-    "uncommitted_leftovers": [
-      "biocontext-biochem: conf/ecosystem/domain/ihc/analysis/analysis.conf",
-      "biocontext-biochem: conf/ecosystem/wrapper/local_hybrid_gpu_ihc/ihc.conf",
-      "biocontext-biochem: src/biocontext_biochem/apps/ihc/analysis/vlm_poc.py",
-      "biocontext-biochem: tests/unit/test_ihc_analysis.py"
-    ]
+    "uncommitted_leftovers": []
   },
   "validation": [
     {
-      "command": "sed -n '1,260p' foundation/skills/wielder/ops_skills/SKILL_WSL_CLEANUP.md",
+      "command": "git diff --check",
       "result": "passed",
-      "notes": "Read-back confirmed the new skill content is present."
+      "notes": "Whitespace check passed in antifragile."
     },
     {
-      "command": "grep -R 'WSL Cleanup' -n foundation/skills/wielder/ops_skills/README.md foundation/docs/catalogs/MASTER_SKILLS.md",
+      "command": "sed -n '1,260p' foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md",
       "result": "passed",
-      "notes": "Confirmed the new skill is routed from the ops index and master catalog."
-    },
-    {
-      "command": "git status --short and git diff --stat",
-      "result": "passed",
-      "notes": "Confirmed scoped Antifragile documentation/provenance changes before staging."
+      "notes": "Read-back confirmed the Topology Lens extension is present."
     }
   ]
 }
