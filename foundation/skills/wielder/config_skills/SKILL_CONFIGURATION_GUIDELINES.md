@@ -410,6 +410,16 @@ for the full doctrine.
 - **Guideline:** The sanctioned operator flow is: copy one example pack, then edit it locally.
   - Example: `cp -r conf/context_conf_examples/default_conf conf/context_conf/default_conf`
 - **Guideline:** App-scoped service-shape toggles such as `debug_mode` and `local_mount` should remain app-level config values and be overridden from the active `context_conf` pack, not promoted into a global topological tier.
+- **Guideline (Commented Inverse Developer Toggles):** When a local `developer.conf` or `context_conf_examples/<name>/developer.conf` exposes lifecycle step booleans for operator convenience, keep the app/ecosystem default as the inherited behavior and place the opposite value next to it as a commented override. Commented means "inherit the canonical default"; uncommented means "activate this local inverse." To return to the inherited default, re-comment the line rather than writing the default value explicitly. This keeps local toggles visible without making `developer.conf` a stale copy of app/domain defaults.
+  ```hocon
+  protenix_topological_predictions {
+    deploy_steps {
+      # App/domain default is true; uncomment locally to disable the step.
+      # build_protenix_topological_predictions_image = false
+      # deploy_protenix_topological_predictions = false
+    }
+  }
+  ```
 - **Guideline:** Map physical bucket roots via `stage_tier` (e.g., `workspace-<domain>-<stage_tier>`) rather than routing environments manually.
 - **Guideline:** Store environment-specific configuration in `domain-data/conf/stage_tier/<stage>/tier.conf` to enforce uniform fallback inheritance.
 
