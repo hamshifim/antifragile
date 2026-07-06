@@ -44,6 +44,12 @@ finish. Stats are diagnostic context, not domain truth. The collector should
 live in Wielder or another shared upstream utility so each model app does not
 grow its own `nvidia-smi`, `/proc`, or OS-specific probing code.
 
+Use `wielder.util.runtime_stats.collect_runtime_stats` for local CPU, memory,
+swap, disk, GPU, heat, platform, and process diagnostics. It accepts the
+resolved `runtime_stats` HOCON subtree through its typed
+`RuntimeStatsConfig`, returns a JSON-safe `RuntimeStatsSnapshot`, and returns
+`None` when disabled or when the current phase is not included.
+
 Collect stats best-effort:
 
 - CPU load and process CPU where available
