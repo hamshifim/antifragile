@@ -183,6 +183,20 @@ Recommended config shape:
   describe normal work messages, not topic-emptying, delete messages, or hidden
   cleanup. If a test needs fixture data removed, configure a separate cleanup
   app or cleanup step with `plan-delete`/`delete` semantics.
+- **Selected-config apply rule:** `apply` means "realize the selected resolved
+  configuration." If the selected `steps` profile contains only images,
+  artifacts, substrate, topics, durable consumers/harmonizers, and services,
+  then `apply` produces a ready system slice. If a test or transient project
+  profile includes concrete run/publisher steps, then `apply` should run those
+  workloads as part of realizing that selected config. The `run` family is a
+  narrower convenience for re-triggering the configured workload phase against
+  an already-ready system; it is not a replacement meaning for `apply`.
+- **Publisher naming rule:** Step profiles that emit work should name the exact
+  dispatcher or publisher entrypoints they call, such as
+  `research_pack_workload_dispatch` and `protenix_predictions_publisher`.
+  Avoid vague umbrella names such as `publishers`, `jobs`, or
+  `project_workloads` unless that named step expands immediately to the exact
+  leaf entrypoints in the same resolved config.
 - **Cleanup class rule:** Model cleanup as its own class or sibling app when it
   removes durable data. Cleanup config should name watermarks, UUIDs, table
   partitions, bucket/key roots, and allowed ownership boundaries. It should use
@@ -410,7 +424,7 @@ for the full doctrine.
 - **Guideline:** The sanctioned operator flow is: copy one example pack, then edit it locally.
   - Example: `cp -r conf/context_conf_examples/default_conf conf/context_conf/default_conf`
 - **Guideline:** App-scoped service-shape toggles such as `debug_mode` and `local_mount` should remain app-level config values and be overridden from the active `context_conf` pack, not promoted into a global topological tier.
-- **Guideline (Commented Inverse Developer Toggles):** When a local `developer.conf` or `context_conf_examples/<name>/developer.conf` exposes lifecycle step booleans for operator convenience, keep the app/ecosystem default as the inherited behavior and place the opposite value next to it as a commented override. Commented means "inherit the canonical default"; uncommented means "activate this local inverse." To return to the inherited default, re-comment the line rather than writing the default value explicitly. This keeps local toggles visible without making `developer.conf` a stale copy of app/domain defaults.
+- **Guideline (Commented Counter-Default Developer Toggles):** When a local `developer.conf` or `context_conf_examples/<name>/developer.conf` exposes lifecycle step booleans, placement toggles, publisher switches, or other operator conveniences, keep the app/ecosystem default as inherited behavior and place the counter-default value next to it as a commented override. Commented means "inherit the canonical default"; uncommented means "activate this local counter-default." To return to the inherited default, re-comment the line rather than writing the default value explicitly. This keeps local toggles visible without making `developer.conf` a stale copy of app/domain defaults. If a live ignored context intentionally activates the counter-default, keep an adjacent comment naming the inherited default so the local deviation remains obvious.
   ```hocon
   protenix_topological_predictions {
     deploy_steps {

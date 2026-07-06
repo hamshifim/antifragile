@@ -238,6 +238,18 @@ decisions in one generic loop.
 * For reactive DAGs, order `apply` so shared surfaces and app-owned topics are
   ready before durable streaming jobs, and durable streaming jobs are ready
   before services or publishers emit normal work traffic.
+* Keep the distinction between readiness and workload emission explicit in the
+  selected step profile. `apply` realizes the selected resolved configuration:
+  a readiness-only profile should stop at a ready system slice, while a test or
+  project profile that names concrete run/publisher leaves should execute those
+  workloads during `apply`. The `run` family is the narrower workload-only
+  re-trigger path for an already-ready system. Scripts should not infer hidden
+  publisher work merely because `-w apply` was selected.
+* When a parent step emits work, its expansion should name concrete dispatcher
+  or publisher entrypoints in config, for example
+  `research_pack_workload_dispatch` or `protenix_predictions_publisher`.
+  Avoid opaque Python lists or umbrella labels whose leaf publishers cannot be
+  inspected from resolved HOCON.
 * Keep publisher/test entrypoints focused on normal work messages. Do not empty
   topics, publish delete commands, or perform hidden storage cleanup inside a
   publisher just to make a scenario pass.

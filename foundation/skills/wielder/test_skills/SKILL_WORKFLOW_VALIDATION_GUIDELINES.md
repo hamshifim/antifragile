@@ -101,6 +101,17 @@ Within that doctrine:
 - **Rule:** Avoid framing local wielder runs as "fake tests" and cloud wielder runs as "real tests." In Wielder, they are the same harness modulated across different surfaces and operational bounds.
 - **Rule:** Wielder `test` mode is an overlay selector, not an action selector. `-t` should load the ecosystem fixture from `conf/test/<domain>/<ecosystem>/test.conf`; `-w` still independently chooses `plan`, `apply`, `delete`, or another action.
 - **Rule:** Ecosystem test fixtures should override developer and ephemeral context for fixture-specific DAGs, batch identity, scale, validation toggles, and expected inputs. They should not smuggle topology modes or actions that belong to the Wielder command surface.
+- **Rule:** `apply` realizes the selected resolved configuration. A vanilla
+  profile may bring the configured system to readiness without publishing model
+  or research workloads because that is what its selected step list says. A
+  test or project profile may include concrete run/publisher steps in its
+  `apply` list so a single `-t -w apply` command validates the whole path. The
+  step list must make that terminal workload phase visible.
+- **Rule:** Test step profiles that emit work should name the exact configured
+  publisher or dispatcher surfaces they exercise. `project_workloads` is
+  acceptable only when it expands in the same resolved config to concrete
+  entrypoints such as `research_pack_workload_dispatch`; broad hidden
+  publisher buckets are not an adequate proof surface.
 
 ## 5. Delete Then Apply
 
