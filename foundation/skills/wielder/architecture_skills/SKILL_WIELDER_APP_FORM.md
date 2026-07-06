@@ -201,6 +201,13 @@ app's existing monitor entrypoints. It should not reconstruct topic names,
 Kubernetes selectors, local pid files, or Spark log paths itself. Those details
 belong to the child app's resolved monitor contract.
 
+For model inference and other black-box runs, monitoring is part of the app
+phenotype. Apply the runtime-event pattern from
+[Runtime Event Logging](../ops_skills/SKILL_RUNTIME_EVENT_LOGGING.md): start,
+heartbeat, finish, failure, reuse/skip, output evidence, and optional runtime
+stats should be typed, config-owned, and reusable across local, Kubernetes, and
+cloud expressions.
+
 ## Aggregating Wielder App Form
 
 An app may aggregate multiple entrypoints when the domain functionality is naturally a mix-and-match capability rather than one fixed route.

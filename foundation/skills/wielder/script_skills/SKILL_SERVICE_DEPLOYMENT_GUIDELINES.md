@@ -58,6 +58,15 @@ deploy endpoint.
 - Keep cleanup scoped to the spec's configured outputs. A service-spec `delete`
   should not imply infrastructure teardown.
 
+## Runtime Observability
+
+Use [Runtime Event Logging](../ops_skills/SKILL_RUNTIME_EVENT_LOGGING.md) for
+long-running services, model workers, black-box subprocesses, Kafka consumers,
+Spark jobs, and workflow steps whose lifecycle is otherwise hidden behind a
+quiet log. A deployment surface should expose or compose the app's own typed
+status, heartbeat, monitor, and runtime-stat contracts instead of reconstructing
+them in the parent workflow.
+
 ## Operator GUI Apply And Version Locks
 
 Operator-facing GUI apply is a deployment operation, not a build operation.
