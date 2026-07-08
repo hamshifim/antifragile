@@ -195,6 +195,19 @@ For local server/client loops:
 - If both server and client are started by one configured Wielder entrypoint,
   prefer handing off that single entrypoint over separate `npm` and API commands.
 
+For Wielder-wrapped model, workflow, or service apps:
+
+- Default operator runs go through the Wielder lifecycle entrypoint, not the
+  native local app/package entrypoint.
+- Use matching context packs when needed: the domain app context owns the
+  experiment or payload contract, while the Wielder context owns lifecycle,
+  wrapper ecosystem, selected steps, cleanup/delete scope, and child-app
+  handoff.
+- Native local app entrypoints are diagnostic/internal surfaces unless the
+  operator explicitly asks to isolate the app outside Wielder lifecycle.
+- When reporting internal native-app validation, translate the operator command
+  back to the Wielder entrypoint if a Wielder wrapper exists.
+
 For mixed local/AWS hybrid ecosystems:
 
 - Keep local restart handoffs separate from AWS runtime build/apply handoffs.
