@@ -4,6 +4,7 @@ description: Wielder doctrine for planning and provisioning durable infrastructu
 ---
 
 [Read lifecycle scope guidelines](../config_skills/SKILL_LIFECYCLE_SCOPE_GUIDELINES.md) when deciding whether a resource is project-, ecosystem-, app-, context-, or test-owned.
+[Read Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md) for the canonical `storage_role` ontology and the independent location, storage-tier, availability, and replication dimensions. Provisioning must reference that vocabulary rather than restating it.
 
 # Provisioning Guidelines
 
@@ -28,6 +29,11 @@ like a shopping list.
 
 - Provider-owned modules remain reusable units: buckets, registries, pub/sub,
   clusters, front doors, auth, DNS, Spark, and similar durable resources.
+- Bucket provisioning owns physical container facts such as provider, project,
+  location, storage class, lifecycle, and deletion protection. Dataset and
+  key-prefix contracts own `storage_role`, availability, authority, and
+  replication; do not assign one bucket-wide role when a bucket contains mixed
+  artifact responsibilities.
 - App and ecosystem config chooses bundles/modules by name; Python should
   resolve and order those configured selections, not hard-code one-off resource
   paths per workflow.
@@ -46,6 +52,9 @@ like a shopping list.
 - `plan` must expose the selected shopping list before or alongside provider
   output: bundle names, resolved module names, durable-resource intent, and
   whether each module will create resources, update state only, or do nothing.
+- When provisioned storage is Nabu-addressable, `plan` should report its
+  configured location and availability separately from replication. A global
+  availability contract must not silently provision regional replicas.
 
 ## Ecosystem Boundary
 
