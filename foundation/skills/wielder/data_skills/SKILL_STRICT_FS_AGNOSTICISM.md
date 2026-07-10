@@ -22,10 +22,51 @@ Storage identity is semantic first and physical second.
 - `Path` means a real local filesystem contract. Use it only when the config,
   function name, logs, and caller contract are explicitly local-only.
 
+## Versioned Storage-Role Ontology
+
+`storage_role` is the semantic responsibility of an artifact or key prefix. It
+is not an IAM/RBAC role, provider, location, storage class, availability level,
+or replication policy. Treat this list as the canonical version 1 controlled
+vocabulary; unknown values must fail strict config validation.
+
+- `control_backend`: Small operational state needed to control or reproduce a
+  system, such as Terraform state, manifests, configuration provenance, and
+  coordination metadata. It is normally critical, durable, and versioned.
+- `dataset_authority`: The authoritative, irreplaceable copy of canonical raw
+  or harmonized data. It owns write authority and the strongest preservation
+  policy; other copies are replicas.
+- `distribution_source`: A packaged, reproducible artifact intended to be
+  fetched or hydrated into runtime storage, such as an MSA database copied from
+  an object bucket onto a production volume. The package is durable, while
+  hydrated runtime copies may be ephemeral.
+- `working`: Disposable intermediate storage such as Spark staging, temporary
+  indexes, caches, shuffle material, and recomputable outputs. It must not be
+  mistaken for an authoritative dataset.
+
+Assign `storage_role` at the artifact, dataset, or key-prefix boundary rather
+than to an entire bucket when the bucket contains mixed responsibilities.
+Extend this vocabulary only through a versioned doctrine and typed-contract
+change.
+
+Keep these independent storage dimensions beside `storage_role`:
+
+- `location`: The physical locality, including conceptual `local` for
+  workstation-local storage and provider regions such as `us-central1`.
+- `storage_tier`: The provider-neutral or provider-mapped cost/performance tier.
+- `availability`: `local`, `regional`, or `global`. `global` means discoverable
+  and transferable through Nabu from configured locations; it does not mean a
+  copy exists in every region.
+- `replication`: The explicit authority and replica policy. Prefer one
+  authoritative location and read-only replicas; do not infer replication from
+  availability.
+
 ## Required Practice
 
 - Keep durable config leaves and test fixtures in key vocabulary: `bucket`,
   `object_key`, `base_key`, `artifact_subkey`, `table_key`, `output_key`.
+- Validate versioned storage contracts strictly before side effects. Unknown
+  `storage_role` leaves, unexpected fields, and contradictory authority or
+  replication declarations must fail closed.
 - Report bucket, key, table/catalog id, and URI separately in plan/apply/test
   logs. Do not concatenate bucket and key into a pseudo-path for generic
   surfaces.
