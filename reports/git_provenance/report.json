@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-07-03T19:16:04Z",
+  "created_at": "2026-07-10T09:25:48Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -8,15 +8,17 @@
     "model": "GPT-5"
   },
   "scope": {
-    "super_repo": "/home/gideon/dev/culture",
+    "super_repo": "/home/gideon/pan_msa/culture",
     "repository": "antifragile",
-    "branch": "feature/project_input/main",
+    "branch": "dev",
     "paths": [
-      "foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md",
+      "foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md",
+      "foundation/skills/wielder/data_skills/SKILL_STRICT_FS_AGNOSTICISM.md",
+      "foundation/skills/wielder/ops_skills/SKILL_PROVISIONING_GUIDELINES.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
-      "ecosystem": "wielder_doctrine",
+      "ecosystem": "wielder doctrine",
       "stage_tier": "dev",
       "context_conf": "not_applicable",
       "security": "standard",
@@ -27,21 +29,24 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Document Topology Lens notebook convention",
+      "subject": "Define the storage role ontology",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Extended notebook guidance with the BioContext Biochem Topology Lens convention: relevant molecular-topology notebooks should surface one canonical picker, embed, or handoff high in the notebook.",
+    "summary": "Defined the canonical version 1 storage_role vocabulary and separated semantic role from location, storage tier, availability, and replication policy across storage, config, and provisioning doctrine.",
     "included": [
-      "Notebook skill guidance for high-up Topology Lens picker/embed/handoff cells",
-      "Provenance report"
+      "control_backend, dataset_authority, distribution_source, and working meanings",
+      "global availability as Nabu discoverability and transferability",
+      "explicit replication and single-authority guidance",
+      "provisioning references to the canonical storage skill",
+      "provenance report"
     ],
     "excluded": [
-      "No runtime code, secrets, local configs, notebook outputs, or generated artifacts staged."
+      "No runtime code, local config, secrets, provider state, or data artifacts."
     ],
     "risks": [
-      "Doctrine-only change; enforcement depends on future notebook authors following the skill."
+      "Vocabulary evolution requires coordinated doctrine and typed-contract versioning."
     ],
     "uncommitted_leftovers": []
   },
@@ -49,12 +54,7 @@
     {
       "command": "git diff --check",
       "result": "passed",
-      "notes": "Whitespace check passed in antifragile."
-    },
-    {
-      "command": "sed -n '1,260p' foundation/skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md",
-      "result": "passed",
-      "notes": "Read-back confirmed the Topology Lens extension is present."
+      "notes": "Whitespace audit passed in antifragile."
     }
   ]
 }
