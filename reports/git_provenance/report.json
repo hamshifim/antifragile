@@ -1,60 +1,52 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-07-10T09:25:48Z",
+  "created_at": "2026-07-14T08:53:08Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
     "platform": "OpenAI Codex",
-    "model": "GPT-5"
+    "model": "unavailable in session"
   },
   "scope": {
-    "super_repo": "/home/gideon/pan_msa/culture",
-    "repository": "antifragile",
-    "branch": "dev",
+    "super_repo": "antifragile",
+    "submodules": [],
     "paths": [
-      "foundation/skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md",
-      "foundation/skills/wielder/data_skills/SKILL_STRICT_FS_AGNOSTICISM.md",
-      "foundation/skills/wielder/ops_skills/SKILL_PROVISIONING_GUIDELINES.md",
+      "FOUNDATIONS.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
-      "ecosystem": "wielder doctrine",
-      "stage_tier": "dev",
+      "ecosystem": "doctrine",
+      "stage_tier": "not_applicable",
       "context_conf": "not_applicable",
-      "security": "standard",
+      "security": "not_applicable",
       "canary": "not_applicable"
     }
   },
   "commits": [
     {
       "repo": "antifragile",
-      "sha": "self: commit containing this report",
-      "subject": "Define the storage role ontology",
-      "kind": "submodule"
+      "sha": "self",
+      "subject": "Anchor Wielder operational foundations",
+      "kind": "standalone"
     }
   ],
   "audit": {
-    "summary": "Defined the canonical version 1 storage_role vocabulary and separated semantic role from location, storage tier, availability, and replication policy across storage, config, and provisioning doctrine.",
-    "included": [
-      "control_backend, dataset_authority, distribution_source, and working meanings",
-      "global availability as Nabu discoverability and transferability",
-      "explicit replication and single-authority guidance",
-      "provisioning references to the canonical storage skill",
-      "provenance report"
-    ],
-    "excluded": [
-      "No runtime code, local config, secrets, provider state, or data artifacts."
-    ],
+    "summary": "Reviewed the complete FOUNDATIONS.md diff, branch tracking, task scope, and absence of unrelated antifragile changes before staging.",
+    "uncommitted_leftovers": [],
     "risks": [
-      "Vocabulary evolution requires coordinated doctrine and typed-contract versioning."
-    ],
-    "uncommitted_leftovers": []
+      "AWS and GCP operational evidence is explicitly recorded as point-in-time operator-confirmed proof, not continuous deployment status."
+    ]
   },
   "validation": [
     {
       "command": "git diff --check",
       "result": "passed",
-      "notes": "Whitespace audit passed in antifragile."
+      "notes": "Documentation diff has no whitespace errors."
+    },
+    {
+      "command": "required doctrine target inspection",
+      "result": "passed",
+      "notes": "FOUNDATIONS.md structure and testing terminology were reviewed directly."
     }
   ]
 }
