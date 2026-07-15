@@ -1,17 +1,19 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-07-14T08:53:08Z",
+  "created_at": "2026-07-15T03:52:48Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
     "platform": "OpenAI Codex",
-    "model": "unavailable in session"
+    "model": "GPT-5"
   },
   "scope": {
-    "super_repo": "antifragile",
-    "submodules": [],
+    "super_repo": "/home/gideon/dev/culture",
+    "repository": "antifragile",
+    "branch": "dev",
     "paths": [
-      "FOUNDATIONS.md",
+      "docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md",
+      "foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
@@ -26,27 +28,27 @@
     {
       "repo": "antifragile",
       "sha": "self",
-      "subject": "Anchor Wielder operational foundations",
-      "kind": "standalone"
+      "subject": "Reject pass-through config adapter drift",
+      "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Reviewed the complete FOUNDATIONS.md diff, branch tracking, task scope, and absence of unrelated antifragile changes before staging.",
+    "summary": "Reviewed the scripting doctrine and antipattern diff, confirmed the two-way link, and found no unrelated antifragile changes.",
     "uncommitted_leftovers": [],
     "risks": [
-      "AWS and GCP operational evidence is explicitly recorded as point-in-time operator-confirmed proof, not continuous deployment status."
+      "The doctrine requires judgment about whether a config adapter owns durable policy; it intentionally does not ban substantive foreign-app or compatibility boundaries."
     ]
   },
   "validation": [
     {
-      "command": "git diff --check",
-      "result": "passed",
-      "notes": "Documentation diff has no whitespace errors."
+      "command": "tests",
+      "result": "not_run",
+      "notes": "Operator explicitly requested no tests for this full-provenance commit."
     },
     {
-      "command": "required doctrine target inspection",
+      "command": "git diff --check",
       "result": "passed",
-      "notes": "FOUNDATIONS.md structure and testing terminology were reviewed directly."
+      "notes": "Pre-commit whitespace audit passed."
     }
   ]
 }
