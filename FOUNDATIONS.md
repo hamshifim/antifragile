@@ -12,6 +12,31 @@ An ephemeral super-cluster is a configurable, multi-surface, multi-tier distribu
 
 The same machinery can also maintain long-lived production surfaces in situ. The difference is carried by configuration and policy, not by switching to a different architectural species.
 
+## Operational Evidence: Pan, Maui, And Provider Ephemerality
+
+Status: `OPERATING` as point-in-time operational proof.
+
+Pan is a reusable provisioning and lifecycle abstraction. Maui is a working instance of Pan. AWS and GCP implementations have each been operationally tested as ephemeral production systems at points in time through the complete lifecycle:
+
+```text
+zero provider infrastructure
+    -> provision the full production environment
+    -> deploy and run production workloads
+    -> validate observable production behavior
+    -> destroy the environment
+    -> return to zero provider infrastructure
+```
+
+Point-in-time operational proof does not mean that both environments must remain continuously deployed. The stronger property is reconstructability: declared configuration, controlled state, and shared application semantics can repeatedly express a real production phenotype, validate it, and remove it cleanly.
+
+This evidence spans three related forms of portability:
+
+- **provider portability** across concrete provider implementations such as AWS and GCP;
+- **execution portability** across local, container, Kubernetes, Spark, GPU, managed-compute, and hybrid surfaces;
+- **lifecycle portability** across plan, provision, operate, validate, and destroy.
+
+Topological applications consume this capability substrate; they do not need to contain every provider implementation themselves. The absence of a provider adapter from one application or checkout is not evidence that the wider system lacks that operational capability.
+
 ## Glossary
 
 - `app`: the enduring managed unit in Wielder configuration. An app can be built, deployed, deleted, rebuilt, monitored, load-tested, or maintained while remaining the same configured unit.
@@ -26,7 +51,7 @@ The same machinery can also maintain long-lived production surfaces in situ. The
 Wielder workflows are a unified validation, testing, and execution surface for distributed systems.
 
 The same workflow family can operate as:
-- a unit test
+- a unit-scale deterministic probe
 - an integration test
 - a system test
 - a load test
@@ -54,11 +79,37 @@ This reduces the delta between:
 
 One direct consequence is a lower probability of "it worked on my computer" bugs, because the workstation path converges earlier with the real build, deploy, and runtime path.
 
-The same workflow can be epigenetically phenotyped by configuration into a unit test, an integration test, a system test, or a load test without becoming a different workflow species.
+The same workflow can be epigenetically phenotyped by configuration into a unit-scale probe, an integration test, a system test, or a load test without becoming a different workflow species.
 
 The same doctrine extends to mix-and-match deployment across multi-tiered DAGs. Different tiers, services, and transports can be recombined by configuration while remaining inside the same workflow family.
 
 The same doctrine also explains why Wielder keeps the primary noun as `app`. An app is the enduring managed unit. Deployment is one important operational expression of that app inside an ephemeral or persistent distributed environment.
+
+## Testing Epistemology: Live System Modulation
+
+Wielder does not use the conventional unit-test pyramid as its governing proof model. The authoritative test is configurable execution of the real system. A true load or system test is primary; integration-scale, unit-scale, and function-scale checks are reduced modulations or diagnostic projections of that test, not an independent foundation from which production confidence is inferred.
+
+Scale may shrink while architectural integrity remains real. A reduced scenario may use fewer records, smaller capacity, shorter pressure windows, less concurrency, or fewer active DAG branches. It should continue to exercise the same application path, resolved configuration, schemas, storage contracts, provider or local implementation, native executable or service, and lifecycle controls.
+
+Mocks, bypass implementations, fabricated native outputs, and hand-authored success artifacts are not operational evidence. Pure leaf checks can localize behavior and failure, but they do not replace live workflow, topology, infrastructure, and lifecycle evidence.
+
+Wielder `-t/--test` is therefore a scenario overlay on the normal action surface, not a parallel testing architecture. The same endpoint remains wieldable through `plan`, `apply`, execution and observation, and `delete`, while test configuration modulates scenario identity, scale, pressure, capacity, timeouts, and cleanup policy.
+
+Live test products must be attributable, human-readable, watermarked when durable, filesystem-agnostic, behaviorally asserted, and paired with precise lifecycle-owned cleanup. The strongest proof begins at zero, constructs the system, exercises and observes it, and returns to zero.
+
+## Interpretation Constraint
+
+Configuration, scripting, architecture, provisioning, testing, data, and notebook doctrine are different views of this foundation. Improving one view must not silently redefine the system-level objective.
+
+Agents and maintainers should:
+
+- distinguish verified current behavior, verified point-in-time behavior, intended architecture, and proposed improvement;
+- distinguish implementation debt from invalidation of the architecture;
+- trace capabilities through ecosystems, lifecycle contracts, concrete implementations, resolved configuration, and live evidence;
+- keep provider selection and filesystem geometry behind their responsible configuration and adapter boundaries;
+- use prevalent tools and patterns when they improve implementation mechanics, but not treat prevalence alone as evidence of architectural fitness;
+- state which foundational invariants a material change preserves;
+- return genuine changes to the system thesis to the operator instead of introducing them as local refactors.
 
 ## HOCON as the Canonical Tree
 

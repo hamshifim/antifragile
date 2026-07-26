@@ -42,6 +42,7 @@ Operational scripts become fragile when they grow a second understanding of conf
 * When a script must orchestrate a child repo, strongly suggest loading that child repo through the child repo's own canonical accessor rather than inventing a second local reader.
 * Strongly suggest treating such cross-repo access as explicit dependency wiring, not as a generic framework feature. The script should read foreign owned fields, not absorb the foreign app's whole config identity.
 * If the bridge logic is only a few lines, keep it WET and local on purpose. A garden of tiny explicit bridges is healthier than a premature generic loader that hides ownership.
+* Antipattern: do not create an app-local `*_conf.py`, `get_conf()`, or similarly named adapter that only parses ordinary Wielder modes and forwards them unchanged to the project-local `get_app_conf()`. A named configuration boundary must own real policy, validation, translation, foreign-app wiring, or sanctioned defaults. Otherwise call the canonical accessor visibly in the entrypoint and keep the few lines WET. See [Pass-Through Config Adapter Drift](../../../../docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md#pass-through-config-adapter-drift).
 * When incorporating an app from another repo, use [App Incorporation](../utility_skills/SKILL_APP_INCORPORATION.md) to decide what belongs in the project, functional ecosystem, concrete ecosystem, app baseline, and test overlay before writing the entrypoint.
 
 ### 2.1.0 Project-Level App Config Entrypoint

@@ -50,6 +50,25 @@ config. If a topology switch is genuinely required, override only that narrow
 dimension and document why. If the downstream entrypoint needs a durable choice,
 add it to the owning config rather than smuggling it through a wrapper.
 
+## Pass-Through Config Adapter Drift
+
+**Smell:** An app gains a dedicated `*_conf.py`, `get_conf()`, or config-loader
+class that merely parses standard Wielder modes and forwards them unchanged to
+the project-local `get_app_conf()`.
+
+**Why it is harmful:** The extra name implies policy and ownership that do not
+exist. It obscures the canonical accessor, multiplies places where CLI and
+resolver behavior can drift, and encourages further boilerplate around a
+boundary the project already owns. Its apparent reuse attenuates development by
+making deletion and direct reading feel unsafe without providing a capability.
+
+**Preferred move:** Call the project-local `get_app_conf(APP_NAME)` visibly from
+the thin entrypoint. Keep a few lines of ordinary mode parsing WET where needed.
+Create a named config adapter only when it owns a durable responsibility such as
+strict validation, policy-bearing defaults, schema translation, foreign-app
+wiring, or compatibility behavior sanctioned by the project. See the
+[Wielder scripting skill](../../foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md#21-thin-script-single-loader).
+
 ## Stale Summary Mock Escape
 
 **Smell:** An agent avoids expensive upstream work by creating, reusing, or
