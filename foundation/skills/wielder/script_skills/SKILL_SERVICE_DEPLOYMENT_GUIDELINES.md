@@ -111,6 +111,19 @@ not as ordinary GUI apply.
 
 - Resolve the service through the canonical app accessor, usually `get_app_conf("<app>")`.
 - Durable behavior belongs in HOCON: selected jobs, provider surfaces, triggers, identities, timeouts, polling, delete flags, and image app names.
+- **Culture local/Kubernetes convention:** When a Culture app or one-shot job has
+  the established binary choice between a workstation process and its
+  Kubernetes workload, use the app-owned `run_locally = true|false` leaf (or
+  the existing `<app>.service_contract.run_locally` form). `true` selects the
+  workstation process and `false` selects the Kubernetes workload. Do not add
+  a parallel `placement = "workstation"|"kubernetes"` vocabulary for that same
+  binary choice. This is a Culture app/deployment convention, not a Wielder
+  core requirement.
+- Keep transport reachability independent from placement. A wrapper or ignored
+  transient context that switches `run_locally` must explicitly select the
+  corresponding Kafka endpoint (`outer` for the workstation, `inner` for an
+  in-cluster workload); Python must not infer or silently rewrite one from the
+  other.
 - In hybrid ecosystems, service placement is per service. The deploy surface
   should read its own resolved placement contract, such as local process,
   Kubernetes Deployment/StatefulSet/Job, Spark job, or provider-managed runtime.

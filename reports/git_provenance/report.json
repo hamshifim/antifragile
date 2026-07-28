@@ -1,23 +1,22 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-07-15T03:52:48Z",
+  "created_at": "2026-07-28T04:31:46Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
     "platform": "OpenAI Codex",
-    "model": "GPT-5"
+    "model": "gpt-5.6-sol"
   },
   "scope": {
     "super_repo": "/home/gideon/dev/culture",
     "repository": "antifragile",
     "branch": "dev",
     "paths": [
-      "docs/antipatterns/known_codex_unwanted_tendancies_antipattern.md",
-      "foundation/skills/wielder/script_skills/SKILL_WIELDER_SCRIPTS.md",
+      "foundation/skills/wielder/script_skills/SKILL_SERVICE_DEPLOYMENT_GUIDELINES.md",
       "reports/git_provenance/report.json"
     ],
     "modes": {
-      "ecosystem": "doctrine",
+      "ecosystem": "Culture deployment doctrine",
       "stage_tier": "not_applicable",
       "context_conf": "not_applicable",
       "security": "not_applicable",
@@ -27,28 +26,21 @@
   "commits": [
     {
       "repo": "antifragile",
-      "sha": "self",
-      "subject": "Reject pass-through config adapter drift",
+      "sha": "self: commit containing this report",
+      "subject": "Standardize Culture local and Kubernetes selection",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Reviewed the scripting doctrine and antipattern diff, confirmed the two-way link, and found no unrelated antifragile changes.",
+    "summary": "Document the existing Culture run_locally convention for binary workstation versus Kubernetes selection while keeping Kafka reachability explicit and independent.",
     "uncommitted_leftovers": [],
-    "risks": [
-      "The doctrine requires judgment about whether a config adapter owns durable policy; it intentionally does not ban substantive foreign-app or compatibility boundaries."
-    ]
+    "risks": []
   },
   "validation": [
     {
-      "command": "tests",
-      "result": "not_run",
-      "notes": "Operator explicitly requested no tests for this full-provenance commit."
-    },
-    {
       "command": "git diff --check",
       "result": "passed",
-      "notes": "Pre-commit whitespace audit passed."
+      "notes": "No whitespace errors in the doctrine change."
     }
   ]
 }
