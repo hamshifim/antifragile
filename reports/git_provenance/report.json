@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-07-28T04:31:46Z",
+  "created_at": "2026-08-12T05:55:25Z",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -12,27 +12,20 @@
     "repository": "antifragile",
     "branch": "dev",
     "paths": [
-      "foundation/skills/wielder/script_skills/SKILL_SERVICE_DEPLOYMENT_GUIDELINES.md",
+      "foundation/skills/wielder/data_skills/SKILL_STRICT_FS_AGNOSTICISM.md",
       "reports/git_provenance/report.json"
-    ],
-    "modes": {
-      "ecosystem": "Culture deployment doctrine",
-      "stage_tier": "not_applicable",
-      "context_conf": "not_applicable",
-      "security": "not_applicable",
-      "canary": "not_applicable"
-    }
+    ]
   },
   "commits": [
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Standardize Culture local and Kubernetes selection",
+      "subject": "Require source provenance on durable data",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Document the existing Culture run_locally convention for binary workstation versus Kubernetes selection while keeping Kafka reachability explicit and independent.",
+    "summary": "Document that durable outputs inherit committed source SHAs from resolved configuration rather than live Git inspection or parallel version tokens.",
     "uncommitted_leftovers": [],
     "risks": []
   },
@@ -40,7 +33,7 @@
     {
       "command": "git diff --check",
       "result": "passed",
-      "notes": "No whitespace errors in the doctrine change."
+      "notes": "No whitespace errors in the scoped documentation diff."
     }
   ]
 }

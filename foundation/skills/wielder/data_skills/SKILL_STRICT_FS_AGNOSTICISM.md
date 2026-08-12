@@ -70,6 +70,12 @@ Keep these independent storage dimensions beside `storage_role`:
 - Report bucket, key, table/catalog id, and URI separately in plan/apply/test
   logs. Do not concatenate bucket and key into a pseudo-path for generic
   surfaces.
+- Persist committed source provenance with every durable data output and its
+  manifest. Project the super-repository SHA and every owning submodule SHA
+  from the canonical resolved `conf.git` tree; do not inspect the live worktree
+  or invent a parallel version token. An output generated from dirty code must
+  not claim the preceding committed SHA, so commit the owning source and parent
+  gitlink before materializing reproducible data.
 - Route object discovery, existence checks, reads, writes, and cleanup through
   Bucketeer or a domain accessor layered on Bucketeer.
 - Make storage accessors fail honestly. A missing object, failed download, or
