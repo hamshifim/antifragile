@@ -1,39 +1,10 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-08-12T05:55:25Z",
+  "created_at": "2026-08-12T06:37:04Z",
   "operator": "Gideon",
-  "agent": {
-    "commit": true,
-    "platform": "OpenAI Codex",
-    "model": "gpt-5.6-sol"
-  },
-  "scope": {
-    "super_repo": "/home/gideon/dev/culture",
-    "repository": "antifragile",
-    "branch": "dev",
-    "paths": [
-      "foundation/skills/wielder/data_skills/SKILL_STRICT_FS_AGNOSTICISM.md",
-      "reports/git_provenance/report.json"
-    ]
-  },
-  "commits": [
-    {
-      "repo": "antifragile",
-      "sha": "self: commit containing this report",
-      "subject": "Require source provenance on durable data",
-      "kind": "submodule"
-    }
-  ],
-  "audit": {
-    "summary": "Document that durable outputs inherit committed source SHAs from resolved configuration rather than live Git inspection or parallel version tokens.",
-    "uncommitted_leftovers": [],
-    "risks": []
-  },
-  "validation": [
-    {
-      "command": "git diff --check",
-      "result": "passed",
-      "notes": "No whitespace errors in the scoped documentation diff."
-    }
-  ]
+  "agent": {"commit": true, "platform": "OpenAI Codex", "model": "gpt-5.6-sol"},
+  "scope": {"super_repo": "/home/gideon/dev/culture", "repository": "antifragile", "branch": "dev", "paths": ["foundation/skills/wielder/data_skills/SKILL_STRICT_FS_AGNOSTICISM.md", "reports/git_provenance/report.json"]},
+  "commits": [{"repo": "antifragile", "sha": "self: commit containing this report", "subject": "Define versioned experiment replacement", "kind": "submodule"}],
+  "audit": {"summary": "Document transient experiment versions, stage-owned replacement prefixes, and reuse of the canonical resolved-config publisher.", "uncommitted_leftovers": [], "risks": []},
+  "validation": [{"command": "git diff --check", "result": "passed", "notes": "Doctrine diff is clean."}]
 }

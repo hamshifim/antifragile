@@ -78,6 +78,14 @@ Keep these independent storage dimensions beside `storage_role`:
   gitlink before materializing reproducible data.
 - Route object discovery, existence checks, reads, writes, and cleanup through
   Bucketeer or a domain accessor layered on Bucketeer.
+- For experiment or analysis products, let transient config select a compound
+  experiment `unique_name` and explicit version. Each stage owns a bounded
+  prefix beneath that experiment root; applying the same version replaces that
+  stage prefix, while incrementing the version retains the earlier analysis.
+- Every experiment data-producing stage must publish the complete resolved
+  HOCON through the configured Bucketeer resolved-config publisher and record
+  the returned bucket, immutable key, latest key, and config hash in its
+  manifest. Do not create a second config serializer or provenance path.
 - Make storage accessors fail honestly. A missing object, failed download, or
   incomplete materialization should raise or return a typed failed state that
   names the bucket and key; it should not print a filename, return a vague
