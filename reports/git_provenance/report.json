@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-08-14T05:54:55Z",
+  "created_at": "2026-08-17T13:36:04+03:00",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -20,12 +20,12 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Clarify notebook presentation boundaries",
+      "subject": "Clarify reader-first notebook presentation",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Require adjacent human explanations and minimal presentation cells without hiding scientific calculations.",
+    "summary": "Define a reader-first notebook opening and a compute, explain, display order that keeps interpretation adjacent to each result.",
     "uncommitted_leftovers": [],
     "risks": []
   },
@@ -33,7 +33,7 @@
     {
       "command": "git diff --check",
       "result": "passed",
-      "notes": "Notebook-doctrine diff is clean."
+      "notes": "Notebook-guideline diff is clean."
     }
   ]
 }
