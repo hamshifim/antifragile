@@ -1,6 +1,6 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-08-17T13:36:04+03:00",
+  "created_at": "2026-08-24T07:23:51+03:00",
   "operator": "Gideon",
   "agent": {
     "commit": true,
@@ -20,12 +20,12 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Clarify reader-first notebook presentation",
+      "subject": "Clarify reusable analysis notebook structure",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Define a reader-first notebook opening and a compute, explain, display order that keeps interpretation adjacent to each result.",
+    "summary": "Document versioned notebook templates, experiment WET copies, plain-language output descriptions, and a separate final interpretation section.",
     "uncommitted_leftovers": [],
     "risks": []
   },
