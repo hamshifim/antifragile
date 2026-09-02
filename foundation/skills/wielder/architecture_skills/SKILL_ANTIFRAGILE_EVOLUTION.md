@@ -63,4 +63,9 @@ This is antifragile because the system improves from stress:
 
 This skill complements Workflow Validation Doctrine. Workflow validation says the workflow is a real test harness. Antifragile evolution adds that the harness is also a sanctioned place to learn and improve the system while it is under real pressure.
 
+For exploration notebooks, also read
+`../utility_skills/SKILL_NOTEBOOK_TEMPLATE_EVOLUTION.md`. It applies this
+repair-and-promote loop to versioned templates and experiment WET copies while
+protecting scientific evidence boundaries.
+
 Use [Wielder App Form](SKILL_WIELDER_APP_FORM.md) when live pressure exposes a new app phenotype, aggregate entrypoint set, or source-transform-sink form. Use the local [Reactive Manifesto 2.0](the-reactive-manifesto-2.0.pdf) as background for reactive design vocabulary, not as a replacement for Wielder-specific contracts.
