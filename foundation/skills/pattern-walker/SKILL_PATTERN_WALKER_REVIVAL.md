@@ -37,6 +37,70 @@ Pattern Walker revival is local-first and evidence-led:
    loop is healthy.
 9. Record versioning and handoff notes once the stack is demonstrably healthier.
 
+## Context And Data Preflight
+
+Run this preflight before treating a disconnected or empty client as a server
+failure. A process can be healthy while resolving a context whose serving
+materialization is empty, and a populated server can be invisible when the
+client deposit points at a different access port.
+
+1. **Name the intended phenotype.** Record the wrapper ecosystem, context pack,
+   test overlay, stage tier, domain app, expected entity set, and access port.
+   Do not rely on a shell's previous defaults.
+2. **Prove that the context exists.** Locate the named context pack and the
+   relevant app/ecosystem overlays, then run the nearest canonical entrypoint
+   with the intended `-es`, `-cc`, `-st`, and `-t` selectors in `-w plan` mode.
+   The plan should expose the resolved source identity, artifact or serving
+   root, bind/access port, and client-config deposit.
+3. **Check data at the resolved root.** Inspect the configured source,
+   harmonized, and Pattern Walker materialization roots. Check for the expected
+   manifests, metadata ledger, entity inventory, and representative stream
+   files. Never infer deletion from an empty UI before checking the resolved
+   storage contract.
+4. **Seed only the missing layer.** If source data exists but the serving
+   bundle does not, rematerialize Pattern Walker data. If source data is absent,
+   run the configured fetch or synthesis, ingestion, harmonization, and
+   materialization chain. Prefer the domain's `-t` scenario when it owns the
+   smallest honest visible fixture.
+5. **Start the server with the same selectors.** Do not start a domain server
+   under a neutral/default context after validating a named context. Keep the
+   server's resolved access port aligned with the client deposit.
+6. **Probe before opening the browser.** Require non-empty discovery plus at
+   least one representative binary payload:
+
+   ```bash
+   curl -fsS http://localhost:<port>/metadata
+   curl -fsS http://localhost:<port>/domain/items
+   curl -fsS http://localhost:<port>/domain/systems
+   curl -fsS -o /dev/null http://localhost:<port>/trajectory/<entity_id>?granularity=0\&frame=0
+   curl -fsS -o /dev/null http://localhost:<port>/visuals/<entity_id>?granularity=0
+   ```
+
+   A domain may legitimately populate only items or only systems, but the
+   expected discovery collection must be non-empty.
+7. **Verify the client deposit.** Inspect the generated/local client config and
+   confirm every server id, host, and access port matches the live endpoints.
+   Then load each domain in the browser and confirm that its metadata,
+   discovery, and representative visuals are parsed without errors.
+
+For a multi-domain stack, repeat steps 1-7 independently for every server. The
+aggregate runtime stack proves only that its configured processes started; it
+does not prove that every desired domain was included, that each domain used a
+populated context, or that the client points at the resulting ports.
+
+### Fast Failure Classification
+
+| Observation | Most likely boundary | Next check |
+| --- | --- | --- |
+| Connection refused | Process or port | Runtime plan, PID/log, bind and access ports |
+| `/metadata` works; discovery is empty | Context or serving materialization | Resolved context, source identity, ledger and stream roots |
+| Discovery is populated; a stream fails | Materialization or protocol payload | Representative file, manifest, typed stream audit |
+| HTTP probes pass; client says disconnected | Client deposit or browser state | Server id/host/port, metadata compatibility, browser logs |
+| One domain works and another is empty | Per-domain context mismatch | Plan and storage checks for the empty domain only |
+
+Stop diagnosis at the first failed boundary. Do not rerun ingestion, delete
+artifacts, or modify server code until the preflight localizes the failure.
+
 ## Visible Data Workflow
 
 A revival plan must make it clear how a clean local workspace gets something to
