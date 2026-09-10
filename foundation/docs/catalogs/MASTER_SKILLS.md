@@ -65,6 +65,8 @@ To ensure architectural alignment across varying Python execution environments a
    *Scope:* Spark-specific doctrine for treating unit, integration, system, and load execution as one configurable validation family driven by the same pipeline core, source/sink contracts, and pressure settings.
 
 11. **[Interactive Notebook Hygiene](../../skills/wielder/utility_skills/SKILL_NOTEBOOK_GUIDELINES.md)**
+
+    Related: [Notebook Catalog Organization](../../skills/wielder/utility_skills/SKILL_NOTEBOOK_CATALOG_ORGANIZATION.md) — stable overview, sparse harmonized inventory, source navigation and WSL notebook handoffs.
    *Scope:* Banning multi-display DOM memory leaks, `# %%` script duality parsing, and the fundamental rejection of defensive error wrappers (`if not df.empty`) inside Jupyter analytical cells.
 
 12. **[Raw Data Ingestion Tiering](../../skills/wielder/data_skills/SKILL_DATA_INGESTION_GUIDELINES.md)**
