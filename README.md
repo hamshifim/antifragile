@@ -84,6 +84,7 @@ PYTHONPATH=src python -c "from wielder_antifragile.personas.object import Person
 
 ## Primary Docs
 
+- [Culture Is All You Need — paper source and preservation status](foundation/docs/papers/culture-is-all-you-need/README.md)
 - [Foundation Manifesto](docs/foundation-manifesto.md)
 - [Implementation Architecture](docs/implementation-architecture.md)
 - [Ephemeral Super Cluster Architecture](docs/ephemeral-super-cluster-wielder.md)

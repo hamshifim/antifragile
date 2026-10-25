@@ -1,18 +1,18 @@
 {
   "schema": "wielder.git_provenance.v1",
-  "created_at": "2026-09-05T10:10:11+03:00",
+  "created_at": "2026-10-25",
   "operator": "Gideon",
   "agent": {
     "commit": true,
-    "platform": "OpenAI Codex",
-    "model": "gpt-5.6-sol"
+    "platform": "OpenAI Codex"
   },
   "scope": {
     "super_repo": "/home/gideon/dev/culture",
     "repository": "antifragile",
-    "branch": "dev",
+    "branch": "feature/dockerize_pattern_walker/main",
     "paths": [
-      "foundation/skills/pattern-walker/SKILL_PATTERN_WALKER_REVIVAL.md",
+      "README.md",
+      "foundation/docs/papers/culture-is-all-you-need/README.md",
       "reports/git_provenance/report.json"
     ]
   },
@@ -20,20 +20,20 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Document Pattern Walker startup preflight",
+      "subject": "Reference Culture Is All You Need paper and preservation status",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Document context, storage, materialization, endpoint, port, and browser checks that distinguish empty data from a broken Pattern Walker runtime.",
+    "summary": "Scoped paper source reference; publication record verified in browser; full PDF not yet retrieved or read.",
     "uncommitted_leftovers": [],
-    "risks": []
+    "risks": ["PDF preservation and complete formal-framework reading remain blocked by retrieval failure.", "Parent gitlink left uncommitted; no push requested."]
   },
   "validation": [
     {
       "command": "git -C antifragile diff --check",
       "result": "passed",
-      "notes": "Pattern Walker revival guidance and provenance JSON are clean."
+      "notes": "Documentation-only change; also validate JSON and review exact staged scope before commit."
     }
   ]
 }
