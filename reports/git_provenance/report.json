@@ -11,8 +11,9 @@
     "repository": "antifragile",
     "branch": "feature/dockerize_pattern_walker/main",
     "paths": [
-      "README.md",
       "foundation/docs/papers/culture-is-all-you-need/README.md",
+      "foundation/docs/papers/culture-is-all-you-need/culture-is-all-you-need-2026-02-13.pdf",
+      "foundation/docs/papers/culture-is-all-you-need/culture-is-all-you-need-2026-02-13.txt",
       "reports/git_provenance/report.json"
     ]
   },
@@ -20,20 +21,20 @@
     {
       "repo": "antifragile",
       "sha": "self: commit containing this report",
-      "subject": "Reference Culture Is All You Need paper and preservation status",
+      "subject": "Archive latest Drive submission of Culture Is All You Need",
       "kind": "submodule"
     }
   ],
   "audit": {
-    "summary": "Scoped paper source reference; publication record verified in browser; full PDF not yet retrieved or read.",
+    "summary": "Archive latest relevant Drive submission found (modified 2026-02-13), unchanged PDF export and complete extracted text. Read opening formal framework; checked 11-page PDF structure and cover rendering; recorded source and PDF checksum. No runtime changes.",
     "uncommitted_leftovers": [],
-    "risks": ["PDF preservation and complete formal-framework reading remain blocked by retrieval failure.", "Parent gitlink left uncommitted; no push requested."]
+    "risks": ["Drive export not verified byte-identical to PhilArchive edition.", "Parent gitlink left uncommitted; no push requested."]
   },
   "validation": [
     {
-      "command": "git -C antifragile diff --check",
+      "command": "git diff --check -- README.md reports/git_provenance/report.json foundation/docs/papers/culture-is-all-you-need/README.md; JSON parse; PDF parse/render; SHA-256",
       "result": "passed",
-      "notes": "Documentation-only change; also validate JSON and review exact staged scope before commit."
+      "notes": "Source text retains author whitespace; whitespace lint applies to repository-authored metadata, not the preserved extraction. PDF: 11 pages, 237132 bytes. SHA-256 recorded in paper README."
     }
   ]
 }
