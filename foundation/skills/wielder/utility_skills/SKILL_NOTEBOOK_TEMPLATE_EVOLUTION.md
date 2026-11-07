@@ -31,9 +31,10 @@ new question to the wrong analysis.
 5. If no template honestly fits, add a clearly named versioned variant. Reuse
    shared components while keeping the distinct question and evidence contract
    explicit.
-6. Execute the companion script first, generate the notebook with the Wielder
-   converter, execute it against real artifacts when available, and visually
-   inspect the rendered outputs.
+6. Execute the authoritative notebook from a fresh kernel against real artifacts
+   when available and visually inspect the rendered outputs. A companion script
+   is optional. For an established script-first template, execute its source and
+   generate the notebook with the Wielder converter before notebook validation.
 
 ## Scientific boundary
 
