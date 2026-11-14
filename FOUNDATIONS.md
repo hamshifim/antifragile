@@ -274,6 +274,28 @@ The word *deterministic* applies to the committed substrate — policies, thresh
 
 When all four rungs operate, the system is deployable, adaptive over operational state, and capable of repairing source-level faults over time while remaining auditable and reproducible. Today, rungs 1–2 deliver the operational and transient-adaptive half of that sentence. The source-repair half is the wager — a deliberate convex bet on agent competence, cheap if it stalls and large if it arrives, not a claim about the present.
 
+## Maintaining the Doctrine
+
+Instructions should preserve the architecture while allowing implementation
+techniques and agent capabilities to improve. Distinguish three kinds of guidance:
+
+- **Principles:** properties to preserve, such as explicit ownership, reproducible
+  configuration, evidence fidelity and operator authority.
+- **Conventions:** preferred ways to achieve those properties. Explain the reason;
+  alternatives may be appropriate when they preserve the same properties.
+- **Temporary mitigations:** workarounds for an observed failure. State the failure,
+  affected scope and evidence that would justify retiring the workaround.
+
+A repeated mistake can justify a targeted safeguard, but not automatically a
+universal prohibition. Review mitigations against representative current tasks;
+do not retain them solely because an earlier agent needed them, or remove them
+solely because a newer model is presumed more capable.
+
+Keep consequential safety and authorization boundaries explicit. Reduce repeated
+orientation, reporting templates and implementation prescriptions when they add
+no distinct protection. Specialized skills should explain the decisions peculiar
+to their task rather than restating this foundation.
+
 ## Design Biases
 
 `wielder-antifragile` favors:

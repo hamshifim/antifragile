@@ -1,6 +1,10 @@
 # Master Skills Index
 
-To ensure architectural alignment across varying Python execution environments and frameworks, ALL agents operating within the `domain-data` Data Lake ecosystem must formally implement the following Operational Skills. These strict guardrails replace ad-hoc reasoning and improve precision across physical artifacts and logic nodes.
+Use this catalogue to select guidance for the task at hand. Read the host safety
+contract and [Foundations](../../../FOUNDATIONS.md), then the skills governing
+the surfaces being changed. This is an index, not a checklist to execute in full.
+Distinguish architectural principles, implementation conventions and temporary
+mitigations as described in Foundations.
 
 ## Defined Engineering Skills
 
@@ -85,7 +89,7 @@ To ensure architectural alignment across varying Python execution environments a
    *Scope:* First-principles live integration tests for distributed reactive flows, using simple node descriptions, provenance nuggets, explicit wait conditions, meaningful logs, and accumulated human-readable state reports.
 
 16. **[Domain Scope & Boundary Preservation Constants](../../skills/wielder/architecture_skills/SKILL_SCOPE_GUIDELINES.md)**
-   *Scope:* Eradicating scope creep, isolating execution pipelines to assigned architectures, enforcing Einstein Simplicity, and explicitly acknowledging epistemic humility.
+   *Scope:* Task ownership, necessary cross-repository changes, scope boundaries and proportional validation claims.
 
 17. **[Einstein Simplicity](../../skills/wielder/architecture_skills/SKILL_EINSTEIN_SIMPLICITY.md)**
    *Scope:* Simplicity discipline for distributed orchestration: thin outer layers, boundary-local branching, responsible-layer ownership, convergence over coordination, and abstraction restraint.
@@ -94,7 +98,7 @@ To ensure architectural alignment across varying Python execution environments a
    *Scope:* Architectural form doctrine for Wielder apps as domain or subdomain functionality expressed into ecosystem phenotypes through modes, including service, Spark, ingestion, harmonization, materialization, aggregate reactive step mixes, source-transform-sink pipeline form, minimal app config, core ecosystem contracts, aggregated workflows, and thin surface wrappers.
 
 18. **[Naming Doctrine](../../skills/wielder/utility_skills/SKILL_NAMING_GUIDELINES.md)**
-   *Scope:* Layer-aware naming for domain, operational, and infrastructure code, with review heuristics for ambiguity, boundary state, and provenance/security-sensitive symbols.
+   *Scope:* Cohesive names, visible side effects, consequential state distinctions and safe API renames.
 
 19. **[Stepping Stone Parcelling Strategy](../../skills/wielder/architecture_skills/SKILL_PARCELLING_GUIDELINES.md)**
    *Scope:* Forbidding massive multi-file refactors and requiring incremental, test-gated stepping stones with explicit builder-to-skeptic handoff boundaries.
@@ -136,10 +140,10 @@ To ensure architectural alignment across varying Python execution environments a
    *Scope:* Generic workstation model tooling, app-owned model artifact provision steps, idempotent existing-cache behavior, and WClone/rclone/Hugging Face/Ollama cache surfaces.
 
 32. **[Context Initiation Alignment](../../skills/wielder/agent_human_skills/SKILL_CONTEXT_INITIATION_ALIGNMENT.md)**
-   *Scope:* Establishing minimal agent base context for a Wielder/Antifragile project through a light project/module role skim, abstraction-layer recognition, configuration ecology orientation, a short gestalt recap, and a final new-work-vs-recovery question.
+   *Scope:* Proportional workspace orientation, repository ownership and task-specific doctrine selection.
 
 33. **[Context Recovery Alignment](../../skills/wielder/agent_human_skills/SKILL_CONTEXT_RECOVERY_ALIGNMENT.md)**
-   *Scope:* Recovering lost Workspace Codex thread context through concise alignment summaries over doctrine, task artifacts, dirty super-repo and submodule diffs, and recent commits before running Grill Me until the recovered goal is confirmed.
+   *Scope:* Recovering intent and current state from repository evidence, resuming within existing authorization, and clarifying material ambiguity.
 
 34. **[Antifragile Workstation Control Plane](../../skills/wielder/ops_skills/SKILL_ANTIFRAGILE_WORKSTATION_CONTROL_PLANE.md)**
    *Scope:* Designing, rebuilding, and recovering a human workstation that also acts as an infrastructure control plane, with explicit local-state taxonomy, auth/tooling validation, snapshots, and crash-recovery discipline.

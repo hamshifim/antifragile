@@ -1,5 +1,5 @@
 ---
-description: Wielder PyHocon Configuration Guidelines (Strict Architectural SOP)
+description: Wielder configuration ownership, composition, precedence and operational contracts.
 ---
 
 [Read lifecycle scope guidelines](SKILL_LIFECYCLE_SCOPE_GUIDELINES.md) when deciding where a durable resource, ecosystem phenotype, app default, context override, or test fixture belongs.
@@ -7,7 +7,7 @@ description: Wielder PyHocon Configuration Guidelines (Strict Architectural SOP)
 [Read Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md) when config names buckets, object keys, table keys, paths, URIs, mounts, artifact roots, or storage providers.
 [Read Unique Name Identity](../architecture_skills/SKILL_UNIQUE_NAME_IDENTITY.md) when config defines `project`, `unique_name`, image tags, artifact versions, resolved-conf roots, Terraform state names, Kubernetes resource names, or context-specific runtime siloing.
 
-# Wielder PyHocon Configuration Guidelines
+# Wielder Configuration Guidelines
 
 The Wielder framework relies on a configuration layer whose resolution should be deterministic within a given version, while remaining evolvable under real workflow pressure. Configuration is the coded modulation layer that activates, suppresses, routes, and parameterizes system functionalities into concrete operational phenotypes. Because this layer is powerful and complexity-prone, its transient modulation mechanisms must stay explicit, bounded, and inspectable so the system can evolve toward antifragility without drifting into hidden configuration paths.
 
@@ -17,7 +17,8 @@ Wielder configuration names enduring managed units as `apps`. A deployment is an
 
 ## Part 1: The Resolving Configuration Ecology
 
-To support a distributed super-repo architecture where applications concurrently bridge different sets of bare-metal development workstations, remote K8s clusters, and localized shadow deployments, Wielder enforces a hyper-granular, predictable resolution hierarchy.
+To support applications across local and distributed surfaces, Wielder combines
+configuration layers in an explicit precedence order.
 
 ### The Actual Resolution Order
 
@@ -499,13 +500,23 @@ Operational monitors often need both Wielder topology and a small local action v
 - **Guideline:** Strongly suggest avoiding ad hoc argv rewriting, synthetic parser stacking, or manual flag merging between a local operational CLI and the Wielder CLI surface.
 - **Guideline:** When a script has a single dominant interactive behavior such as traffic monitoring, strongly suggest defaulting direct invocation to that behavior and reserving extra actions for explicit internal calls or clearly separated entrypoints.
 
-### 9. The `__file__` Context Drift Antipattern
-Legacy python patterns frequently use `os.path.dirname(__file__)` to trace project directories relative to the execution script. In a unified orchestration topology, **this is a catastrophic antipattern**.
-- **The Bug:** If a module (like `Wielder`) is globally `pip install`ed, `__file__` will traverse backward into the system Python or PyEnv directories (e.g., `~/.pyenv/versions/...`), completely severing the script from the actual codebase root and corrupting staging directories or Docker contexts.
-- **Guideline:** NEVER deduce project geometry or staging roots using `__file__`.
-- **Guideline:** There is only ONE source of local Filesystem Truth: **The PyHocon Configuration Stream**. Roots must be strictly evaluated at the configuration source (`conf.super_project_root` or `conf.stage_root`) and statically passed down to orchestrators and SDK execution proxies.
+### 9. Project and Working Directories
 
-### 10. Inline Import Discipline
-Inline imports (import statements nested inside functions or methods) obscure dependency trees, trigger unpredictable parsing latency during execution sequences, and fracture static analysis graphs.
-- **Guideline:** NEVER use inline imports natively within Wielder execution graphs or applications. ALL imports must be physically hoisted to the global `HEAD` of the module.
-- **Exceptions:** Inline imports are strictly forbidden unless mathematically necessary to break confirmed circular dependencies, isolate heavily localized Process/Thread initializations, or conditionally load massive multi-gigabyte Data Lake libraries (e.g., `PyTorch` or `Tensorflow` in a lightweight REST API). Short of those exact hardware/memory constraints, use global imports natively.
+The project accessor owns the initial directory bindings. It may use its known
+checkout layout to establish opinionated defaults. Build, staging, provisioning
+and storage consumers should use the resulting configured paths and honor
+explicit overrides, rather than independently rediscovering those directories.
+
+Deriving a caller's checkout from an installed Wielder package is unreliable:
+the package may reside elsewhere. Keep that decision at the caller boundary.
+Using __file__ for package-owned resources or a documented checkout bootstrap
+is a different use and is not prohibited.
+
+### 10. Import Placement
+
+Prefer module-level imports so dependencies are visible. Local imports are
+appropriate when they serve a concrete purpose, such as delaying a heavy optional
+dependency, isolating a worker runtime or breaking an unavoidable import cycle.
+Explain non-obvious placement locally; do not require special approval for the
+technique itself. Investigate import-time cost or cycles when they are observed,
+rather than assuming every local import is a defect.
