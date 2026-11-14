@@ -64,7 +64,7 @@ Leaf scripts should import the project/submodule accessor instead of calling
 `wielder.wield.wield_conf.get_app_conf(...)` directly. The project accessor
 owns `project_root`, `conf_root`, `project_name`, runtime defaults, project-local
 ontology injections, and any sanctioned compatibility options such as `mute`,
-`module_paths`, `app_conf_root`, and `resolve`.
+`conf_overlays`, `app_conf_root`, and `resolve`.
 
 Local operator verbs may have a small positional vocabulary, but Wielder action
 selection should still enter config before execution, usually through
