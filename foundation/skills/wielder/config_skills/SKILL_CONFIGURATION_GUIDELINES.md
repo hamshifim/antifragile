@@ -23,7 +23,7 @@ To support a distributed super-repo architecture where applications concurrently
 
 The Wielder resolver has two passes: a project/topography pass, then an app pass. List order below is lowest priority to highest priority.
 
-Project/topography pass (`get_wield_project_conf()`):
+Project/topography pass (`get_project_conf()`):
 
 1. generated runtime defaults
 2. `conf/project.conf`
@@ -40,11 +40,11 @@ Project/topography pass (`get_wield_project_conf()`):
 
 Routing note: `ecosystem`, `stage_tier`, `security`, `destroy`, `canary`, `context_conf`, and `test` are selected from CLI first, then already-loaded context packs, then project defaults. The selected ecosystem manifest is loaded after this routing decision.
 
-App pass (`get_wield_app_conf()`):
+App pass (`get_app_conf()`):
 
 1. `conf/apps/<app>/app.conf`
 2. `conf/apps/<app>/test.conf`, only when `test` is enabled
-3. resolved project/topography config from `get_wield_project_conf(resolve=False)`
+3. resolved project/topography config from `get_project_conf(resolve=False)`
 4. explicit `module_paths`, in call order, as the highest app-level overlays
 5. final PyHOCON substitution resolution
 
@@ -267,7 +267,7 @@ Historically, the Wielder architecture minimized CLI bindings to protect the mat
 - **Guideline (Test Mode Is Endpoint-Universal):** Any Wielder endpoint that resolves config through the canonical parser/accessor path should become test-scenarioable without adding bespoke CLI flags. Carry `test` through `build_cli_overrides(...)` and `build_cli_overrides_from_conf(...)` alongside `ecosystem`, `stage_tier`, `security`, `destroy`, `canary`, `context_conf`, and `action`. A child app invoked by a parent test endpoint should inherit the same Wielder mode envelope unless the parent intentionally switches a topology dimension through a narrow `cli_overrides` boundary.
 - **Guideline (Transitional Workflow Fallbacks):** A dedicated runtime subtree such as `model_workflow.publisher_job` is cleaner than legacy workflow-owned DAG arrays, but during migration an in-cluster runtime may intentionally fall back to included workflow DAG lists from the active context pack. If that fallback is still part of the working contract, document it explicitly rather than “fixing” it by assumption.
 - **Guideline (Accessor Preference):** Strongly suggest resolving application or service configuration through the canonical accessor (`get_app_conf()`, `get_service_conf()`, or peer helpers) rather than manually reconstructing HOCON layers inside leaf scripts.
-- **Guideline (Project/Submodule Accessor):** Each project or submodule should wrap Wielder's generic loader with its own `core.configurer.get_app_conf(...)`, as in `starget_wielder.core.configurer`. Leaf entrypoints should import that local accessor and call `get_app_conf(APP_NAME)` so the submodule owns `project_root`, `conf_root`, `project_name`, runtime defaults, ontology injections, and sanctioned compatibility arguments (`mute`, `module_paths`, `app_conf_root`, `resolve`). Direct leaf imports of `get_wield_app_conf(...)` are a framework-boundary smell unless the file is itself implementing the project accessor.
+- **Guideline (Project/Submodule Accessor):** Each project or submodule should wrap Wielder's generic loader with its own `core.configurer.get_app_conf(...)`, as in `starget_wielder.core.configurer`. Leaf entrypoints should import that local accessor and call `get_app_conf(APP_NAME)` so the submodule owns `project_root`, `conf_root`, `project_name`, runtime defaults, ontology injections, and sanctioned compatibility arguments (`mute`, `module_paths`, `app_conf_root`, `resolve`). Direct leaf imports of `wielder.wield.wield_conf.get_app_conf(...)` are a framework-boundary smell unless the file is itself implementing the project accessor.
 - **Guideline (One Accessor Doctrine):** There should be one canonical accessor path for a given config contract. This is not aesthetic minimalism. It preserves one source of truth, one resolution order, one predictable failure boundary for missing variables, and one place to debug precedence. Multiple accessors for the same contract create hidden override paths, unreadable local-vs-ecosystem-vs-app precedence, and eventual configuration drift across modules.
 - **Guideline (Operational Reason):** The single accessor rule exists to preserve reproducibility, debuggability, and locality of reasoning in a multi-repo, multi-agent system. If two helpers can resolve the same contract from different file sets, debugging becomes forensics instead of engineering.
 - **Guideline (Cross-Repo Ownership):** In a super-repo, the orchestrating repo may need to read config owned by a child repo. That is valid, but ownership must stay explicit. Load the child repo's app conf through the child repo's own canonical accessor, then extract only the owned subtree or fields required by the orchestrator.

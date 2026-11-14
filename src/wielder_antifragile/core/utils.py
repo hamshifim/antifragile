@@ -11,7 +11,7 @@ from typing import Any
 from pyhocon import ConfigFactory
 
 from wielder.util.wgit import WGit, is_repo
-from wielder.wield.wield_conf import get_wield_project_conf
+from wielder.wield import wield_conf
 
 TypedConfig = Any
 
@@ -98,7 +98,7 @@ def get_project_conf(conf_root: Path | None = None) -> TypedConfig:
         conf_root = _resolve_conf_root()
 
     project_root = conf_root.parent
-    project_conf = get_wield_project_conf(
+    project_conf = wield_conf.get_project_conf(
         project_root=project_root.as_posix(),
         conf_root=conf_root.as_posix(),
         project_name="wielder-antifragile",

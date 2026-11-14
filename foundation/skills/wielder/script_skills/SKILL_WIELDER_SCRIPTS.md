@@ -61,7 +61,7 @@ def main() -> None:
 ```
 
 Leaf scripts should import the project/submodule accessor instead of calling
-`wielder.wield.wield_conf.get_wield_app_conf(...)` directly. The project accessor
+`wielder.wield.wield_conf.get_app_conf(...)` directly. The project accessor
 owns `project_root`, `conf_root`, `project_name`, runtime defaults, project-local
 ontology injections, and any sanctioned compatibility options such as `mute`,
 `module_paths`, `app_conf_root`, and `resolve`.
