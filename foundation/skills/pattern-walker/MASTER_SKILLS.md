@@ -91,6 +91,9 @@ entrypoint can be phenotyped by test config.
 
 ## Local Skill Index
 
+- [Information Presentation](../wielder/utility_skills/SKILL_INFORMATION_PRESENTATION.md):
+  shared reader-facing principles for Pattern Walker and notebooks.
+
 - [Pattern Walker Server](SKILL_PATTERN_WALKER_SERVER.md): build and review
   reverse API servers and domain adapters.
 - [Pattern Walker Client](SKILL_PATTERN_WALKER_CLIENT.md): build and review

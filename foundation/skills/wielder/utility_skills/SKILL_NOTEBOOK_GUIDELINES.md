@@ -4,6 +4,10 @@ description: Interactive Exploration & Jupyter Notebook Standards
 
  Jupyter Notebooks & Data Exploration
 
+Read [Information Presentation](SKILL_INFORMATION_PRESENTATION.md) when creating
+or revising reader-facing explanations, tables, plots, titles or interpretations.
+It owns the shared communication principles; this skill owns notebook mechanics.
+
 [Read Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md) when notebooks or companion scripts read, write, display, preview, or link bucket objects, table outputs, Spark artifacts, materializations, or provider URIs.
 
 - **Explore Intent**: In `explore/`-style notebook spaces, notebooks primarily exist for curiosity, analysis, and QA. They are allowed to be WET and investigative; the goal is to make real artifacts and behaviors legible, not to force exploratory work into production-shaped abstractions.

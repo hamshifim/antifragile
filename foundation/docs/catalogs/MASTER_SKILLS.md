@@ -8,6 +8,10 @@ mitigations as described in Foundations.
 
 ## Defined Engineering Skills
 
+- **[Information Presentation](../../skills/wielder/utility_skills/SKILL_INFORMATION_PRESENTATION.md)**
+  *Scope:* Shared scientific explanations, terminology, overview/detail ordering,
+  honest evidence coverage and readable views for notebooks and Pattern Walker.
+
 1. **[Configuration & Datastore Lineage](../../skills/wielder/config_skills/SKILL_CONFIGURATION_GUIDELINES.md)**
    *Scope:* Wielder PyHocon constraint mapping, local environment sandboxing (`developer.conf`), explicit failure rules over protective exceptions, and `<run_uuid>` partition isolation parameters.
 

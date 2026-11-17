@@ -62,6 +62,10 @@ least one stream family.
 
 ## UI Rules
 
+Read [Information Presentation](../wielder/utility_skills/SKILL_INFORMATION_PRESENTATION.md)
+for titles, subtitles, info entries, legends, scientific views and navigational
+context. Keep those principles shared with notebooks rather than duplicating them.
+
 - Generate labels, tabs, scales, layer names, and temporal controls from server
   metadata.
 - Keep domain examples in fixtures, docs, or HOCON, not in reusable client
