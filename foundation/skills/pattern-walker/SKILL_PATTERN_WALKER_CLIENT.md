@@ -65,6 +65,9 @@ least one stream family.
 Read [Information Presentation](../wielder/utility_skills/SKILL_INFORMATION_PRESENTATION.md)
 for titles, subtitles, info entries, legends, scientific views and navigational
 context. Keep those principles shared with notebooks rather than duplicating them.
+Apply its question-to-evidence reading order through collection context, scene
+information and legends; a scene should remain understandable when revisited
+without the conversation that produced it.
 
 - Generate labels, tabs, scales, layer names, and temporal controls from server
   metadata.

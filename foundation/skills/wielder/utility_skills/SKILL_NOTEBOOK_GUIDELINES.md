@@ -7,6 +7,8 @@ description: Interactive Exploration & Jupyter Notebook Standards
 Read [Information Presentation](SKILL_INFORMATION_PRESENTATION.md) when creating
 or revising reader-facing explanations, tables, plots, titles or interpretations.
 It owns the shared communication principles; this skill owns notebook mechanics.
+Use its question-to-evidence reading order and return-reader check rather than
+relying on explanations preserved only in the chat.
 
 [Read Strict FS Agnosticism](../data_skills/SKILL_STRICT_FS_AGNOSTICISM.md) when notebooks or companion scripts read, write, display, preview, or link bucket objects, table outputs, Spark artifacts, materializations, or provider URIs.
 

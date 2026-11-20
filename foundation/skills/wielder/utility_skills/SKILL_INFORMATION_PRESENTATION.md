@@ -19,7 +19,28 @@ easier computation or silently narrow the population, dimensions or history.
 
 ## Explain from the question down
 
+- Establish a compact **context at a glance** before results: biological material,
+  measured versus inferred representation, model and its training populations
+  (or explicitly no model), preprocessing/harmonization, cohorts and their roles,
+  and consequential sampling or feature restrictions. Distinguish populations
+  used for fitting, normalization/reference, testing and display-only context.
+  A cohort appearing in a plot does not explain its role in the analysis.
+- Extract this context from the actual artifact lineage and computation, not
+  from the investigation's name or remembered history. Reusing a preparation
+  does not imply reusing its model or representation. Explain inherited labels
+  such as “reference” or “held-out” when they no longer describe the current task.
+- Surface consequential changes of model, representation or population before
+  execution, not only in the final notebook. On revisiting, put the few facts
+  needed to regain orientation first; keep hashes and detailed lineage below.
+- Give a short reading route when an investigation has several parts:
+  question → terms → available evidence → how to read it → interpretation →
+  next test. This is a reasoning order, not a mandatory set of headings.
+  State the biological material and scope before discussing its implications.
 - State the question, what was measured, and how to read the view, in that order.
+- Introduce an experiment before referring to its results: what population and
+  inputs it used, what it tried to predict or compare, how it was evaluated, and
+  why it belongs here. “The previous prediction” or “as discussed” is not context
+  for a new reader. Links provide depth; they do not replace this local introduction.
 - Define a short term once, then use it consistently in titles, axes and prose.
   For example, define **Healthy Center** as the mean expression vector of the
   training healthy reference in the stated sex/cell-type group. Say whether cells
@@ -32,6 +53,14 @@ easier computation or silently narrow the population, dimensions or history.
   cell types unless the method actually defines them that way.
 - Explain acronyms on first use and give the practical meaning. Keep equations
   and implementation detail available below the essential explanation.
+- Disambiguate terms that invite a wrong mental model: a baseline predictor is
+  not a healthy reference; a gene present in the matrix is not necessarily
+  detected in cells; an expression signature is not direct pathway activity.
+  Define only distinctions relevant to this investigation, not a textbook glossary.
+- Explain metrics operationally: what is compared, how the score is constructed,
+  its units, which direction is better, and a useful anchor. For example, an
+  average category error of 1 means one category away; AUC 0.5 means chance
+  ranking, not 50% diagnostic accuracy. Identify what uncertainty bars vary over.
 - A cumulative donor fraction counts donors at or below the horizontal value;
   it does not add distances. State this beside a cumulative plot.
 
@@ -47,6 +76,18 @@ Use meaningful rounding and units; put IDs, hashes, machine column names and
 fine-grained diagnostics in secondary detail. Preserve access to that detail.
 Choose side-by-side views when comparison is the reader's task. Do not imply
 that an average or distance magnitude retains full-vector direction or shape.
+
+Before a prediction result, make the label meanings, independent donor counts
+and missing labels visible. Compare the baseline and added features on matched
+evaluation evidence; a strong combined score alone does not show added value.
+Label existing results, proposed features and uncomputed views distinctly so a
+candidate table cannot be mistaken for measured evidence.
+
+Do not avoid an informative unfamiliar visualization because it needs explanation.
+Introduce what one mark means and walk through one reading operation, then let
+the figure carry the detail. Keep the explanation adjacent and reuse its short
+terms in the title and axes. Simplicity should reduce reading effort, not erase
+distributional information or change the scientific question.
 
 ## Describe separately from interpreting
 
@@ -79,5 +120,11 @@ hardcoding. Preserve navigation state while changing independent controls.
 Store result-specific interpretation, artifact selectors and notebook lineage
 beside the investigation. Keep reusable presentation principles here, linked
 from notebook and Pattern Walker skills. Do not rely on conversation summaries
-or copy transient results into this skill. Before handing off, ask: could a
-reader returning after a month explain what one mark means and find its source?
+or copy transient results into this skill. An entry review should link to deeper
+methods and precedents, explaining what transfers and what differs rather than
+forcing the reader to reconstruct the history. End with what is known and the
+next discriminating test, not a recap of the conversation.
+
+Before handing off, ask: could a reader returning after a month explain the
+question, what one mark means, the comparison/reference, the observed finding
+and what remains uncomputed, and find the source without reopening the chat?
